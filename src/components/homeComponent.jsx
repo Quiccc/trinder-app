@@ -3,9 +3,8 @@ import { Carousel, Card, Button } from "react-bootstrap";
 import { Github, Linkedin, FileRuledFill } from "react-bootstrap-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles.css";
-class HomeComponent extends Component {
-  state = {};
-  render() {
+
+function HomeComponent() {
     return (
       <>
         <Carousel pause="hover" wrap="false">
@@ -111,6 +110,5 @@ class HomeComponent extends Component {
       </>
     );
   }
-}
 
 export default HomeComponent;

@@ -1,62 +1,94 @@
-.carouselStyle {
-  justify-content: center;
-  max-width: 1920px;
-  max-height: 620px;
-}
-.cardDiv {
-  width: 100%;
-  display: inline-flex;
-  justify-content: center;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
-.cardStyle {
-  display: inline-block;
-  height: 50%;
-  width: 50%;
-  border-radius: 100%;
-  margin: 0 1%;
-  background: rgb(34, 193, 195);
-  background: linear-gradient(
-    0deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(211, 45, 253, 1) 100%
-  );
-  border-radius: 50%;
-  border-color: grey;
-  border-width: .5rem;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  text-align: center;
-}
-.cardText {
-  color: antiquewhite;
-  margin-left: 3%;
-  margin-right: 3%;
-}
-.cardImg {
-  margin-top: 3%;
-  width: 120px;
-  height: 140px;
-}
-.footerStyle {
-  display: inline-flex;
-  justify-content: center;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
-.footerLink {
-  margin-left: 4%;
-  margin-right: 4%;
-  padding: 0.5%;
-  background-color: grey;
-  border-color: grey;
-  border-radius: 50%;
-}
-.footerText {
-  color: grey;
-  text-align: center;
-  font-family: Georgia, "Times New Roman", Times, serif;
-}
+/* ======================== Home ========================
+   ======================== Page ======================== */
+   .carouselStyle {
+    justify-content: center;
+    max-width: 1920px;
+    max-height: 620px;
+  }
+  .cardDiv {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  .cardStyle {
+    display: inline-block;
+    height: 50%;
+    width: 50%;
+    border-radius: 100%;
+    margin: 0 1%;
+    background: rgb(34, 193, 195);
+    background: linear-gradient(
+      0deg,
+      rgba(34, 193, 195, 1) 0%,
+      rgba(211, 45, 253, 1) 100%
+    );
+    border-radius: 50%;
+    border-color: grey;
+    border-width: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+  }
+  .cardText {
+    color: antiquewhite;
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+  .cardImg {
+    margin-top: 3%;
+    width: 120px;
+    height: 140px;
+  }
+  .footerStyle {
+    display: inline-flex;
+    justify-content: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  .footerLink {
+    margin-left: 4%;
+    margin-right: 4%;
+    padding: 0.5%;
+    background-color: grey;
+    border-color: grey;
+    border-radius: 50%;
+  }
+  .footerText {
+    color: grey;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", Times, serif;
+  }
+/* ======================== Home ========================
+   ======================== Page ======================== */
+
+
+
+/* ======================== Nav ========================
+   ======================== Bar ======================== */
+  
+/* ======================== Nav ========================
+   ======================== Bar ======================== */
+
+
+
+/* ======================== Login ========================
+   ======================== Page ======================== */
+   .login-footer{
+    display: flex;
+    justify-content: left;
+    margin-top: 2%;
+    margin-bottom: 2%;
+   }
+   .login-modal{
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+   }
+/* ======================== Login ========================
+   ======================== Page ======================== */
+
 .root {
   background-color: rgb(225, 225, 225);
 }
