@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Search } from "react-bootstrap-icons";
 import { Plus } from "react-bootstrap-icons";
 import { GeoAltFill } from "react-bootstrap-icons";
-import logo from "../logo.png";
+
 class NavbarComponent extends Component {
   render() {
     return (
@@ -14,7 +14,7 @@ class NavbarComponent extends Component {
             <Navbar.Brand href="/">
               <img
                 alt=""
-                src={logo}
+                src="./images/Logo.png"
                 width="30"
                 height="30"
                 className="d-inline-block align-top"

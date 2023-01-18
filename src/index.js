@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import HomeComponent from "./components/homeComponent";
 import NavbarComponent from "./components/navbarComponent";
-import Home from "./pages/home";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.Fragment>
     <NavbarComponent />
-    <Home />
+    <HomeComponent />
   </React.Fragment>
 );
