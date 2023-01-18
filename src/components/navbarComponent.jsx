@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Navbar, Container, Form, Button, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Search } from "react-bootstrap-icons";
-import { Plus } from "react-bootstrap-icons";
+import { Camera } from "react-bootstrap-icons";
 import { GeoAltFill } from "react-bootstrap-icons";
 
 class NavbarComponent extends Component {
@@ -21,7 +21,7 @@ class NavbarComponent extends Component {
               />{" "}
             </Navbar.Brand>
             <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
+              <Dropdown.Toggle variant="dark" id="dropdown-basic">
                 <GeoAltFill className="align-baseline" /> Select Location
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -32,17 +32,17 @@ class NavbarComponent extends Component {
           </div>
           <Form className="d-flex">
             <Form.Control type="text" placeholder="Search" />
-            <Button variant="success">
+            <Button variant="dark">
               <Search className="align-baseline" />
             </Button>
           </Form>
           <div>
-            <Button variant="success" className="rounded-pill">
+            <Button variant="dark" className="rounded-pill">
               Login
             </Button>{" "}
             {""}
-            <Button variant="success" className="rounded-pill">
-              <Plus className="align-top" size={25} /> New
+            <Button variant="dark" className="rounded-pill">
+              <Camera className="align-top" size={25} /> New
             </Button>
           </div>
         </Container>
