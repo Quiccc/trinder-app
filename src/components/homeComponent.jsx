@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Carousel, Card, Button } from "react-bootstrap";
 import { Github, Linkedin, FileRuledFill } from "react-bootstrap-icons";
 import "bootstrap/dist/css/bootstrap.min.css";

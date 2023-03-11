@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from 'react';
 import { Navbar, Container, Form, Button, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Search } from "react-bootstrap-icons";
@@ -8,6 +8,7 @@ import LoginComponent from "./loginComponent";
 import "../styles.css";
 
 function NavbarComponent() {
+
   return (
     <Navbar className="shadow p-3 mb-5 bg-body rounded">
       <Container>
