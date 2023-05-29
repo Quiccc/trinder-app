@@ -25,7 +25,7 @@ const CreateNewTopic = () => {
         createTopic(sanitizedContent, values.topicHeader,values.topicCategoryId).then((response) => {
             setComment('');
             if (response) {
-                alertSuccess("Topic created successfully, after admin approval it will be visible");
+                alertSuccess("Topic created successfully.");
             } else {
                 alertError("Error occured while creating topic");
             }

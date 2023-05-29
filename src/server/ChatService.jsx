@@ -122,7 +122,7 @@ export const createContact = async (advertId) => {
 
 export const sendReport = async (chatId, reportText, reportedUser) => {
     const reportRef = collection(db, "reports");
-    if(reportedUser == 0){
+    if(reportedUser === 0){
         await addDoc(reportRef, {
             userId: chatId.data().messagerId,
             senderID: auth.currentUser.uid,

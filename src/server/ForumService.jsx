@@ -1,6 +1,7 @@
 import { addDoc, collection, doc, getCountFromServer, getDoc, getDocs, limit, orderBy, query, serverTimestamp, startAfter, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "./config/FirebaseConfig";
 import algoliasearch from 'algoliasearch/lite';
+import { convertTimeStampToDateForumComment } from "./UtilsService";
 const algoliaClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_SEARCH_KEY);
 const indexTopicComments = algoliaClient.initIndex('topicComments');
 
@@ -86,16 +87,16 @@ export const getTopicCommentsByTopicId = async (topicId,pageNumber,pageSize,last
     if(pageNumber !== 0){
         console.log("lastIndexId",lastIndexId);
         let lastIndexDoc = await getDoc(doc(db, 'topicComments', lastIndexId));
-        q = query(q, orderBy('createdAt', 'desc'), limit(pageSize), startAfter(lastIndexDoc));
+        q = query(q, orderBy('createdAt', 'asc'), limit(pageSize), startAfter(lastIndexDoc));
     }else{
-        q = query(q, orderBy('createdAt', 'desc'), limit(pageSize));
+        q = query(q, orderBy('createdAt', 'asc'), limit(pageSize));
     }    
     const topicCommentSnapshot = await getDocs(q);
     let topicCommentList = [];
     for (let i = 0; i < topicCommentSnapshot.docs.length; i++) {
         topicCommentList.push(topicCommentSnapshot.docs[i].data());
         //Set date to date string, createdAt is a timestamp
-        topicCommentList[i].createdAt = new Date(topicCommentList[i].createdAt.seconds * 1000).toLocaleDateString();
+        topicCommentList[i].createdAt = convertTimeStampToDateForumComment(topicCommentList[i].createdAt);
         topicCommentList[i].id = topicCommentSnapshot.docs[i].id;
         //Get user info from firestore user collection by createdBy
         const userRef = doc(db, 'user', topicCommentList[i].createdBy);
@@ -148,7 +149,7 @@ export const createComment = async (topicID, sanitizedContent) => {
     let comment = await addDoc(topicCommentRef, {
         topicId: topicID,
         comment: sanitizedContent,
-        isActive: false,
+        isActive: true,
         createdBy: auth.currentUser.uid,
         createdAt: serverTimestamp(),
     });
@@ -172,7 +173,7 @@ export const createTopic = async (comment, topicHeader,topicCategoryId) => {
     let topicComment = await addDoc(topicCommentRef, {
         topicId: topic.id,
         comment: comment,
-        isActive: false,
+        isActive: true,
         createdBy: auth.currentUser.uid,
         createdAt: serverTimestamp(),
     });

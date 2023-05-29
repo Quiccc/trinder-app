@@ -38,3 +38,14 @@ export const convertTimeStampToDateAdvertCardWithYear = (timestamp) => {
     //New Format is dd "month", month can be Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
     return date.getDate() + " " + date.toLocaleString('default', { month: 'short' }) + " " + date.getFullYear();
 };
+
+export const convertTimeStampToDateForumComment = (timestamp) => {
+    //Format is dd/ "month" hh:mm, month can be Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
+    let date = null;
+    if (timestamp?.seconds ) {
+        date = new Date(timestamp.seconds * 1000);
+    }else {
+        date = new Date(timestamp);
+    }
+    return (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + " " + date.toLocaleString('default', { month: 'short' }) + " " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes())
+};
