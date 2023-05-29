@@ -1,0 +1,71 @@
+.recordPageContainer {
+    height: 100%;
+    min-height: 80vh;
+    margin: -11vw auto 2vw auto;
+    background-color: white;
+    width: 100%;
+  }
+  .reportNumber {
+    width: 90%;
+    height: fit-content;
+    margin: 1vw auto;
+    border-radius: 1vw;
+    background-color: #f5f5f5;
+    padding: 1vw 0;
+  }
+  .reportNumber div {
+    margin: 0 1vw;
+  }
+  .menuContainer {
+    width: 100%;
+  }
+  .menu {
+    width: 100%;
+  }
+  .menuColumn {
+    margin-bottom: 2vw;
+  }
+  .recordContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+  }
+  .recordImage {
+    width: 80%;
+    margin-top: 1vw;
+  }
+  .warning {
+    color: red;
+    font-size: 1.5vw;
+    margin-top: 1vw;
+  }
+  .description {
+    font-size: 1.5vw;
+  }
+  .buttonGroup button {
+    margin: 1vw;
+  }
+  .record {
+    width: 80%;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .recordPageContainer {
+      margin-top: 0;
+    }
+    .warning {
+      font-size: 4vw;
+    }
+    .description {
+      font-size: 3.5vw;
+    }
+    .buttonGroup button {
+      margin: 1vw 1vw 3vw 1vw;
+      padding: 1vw;
+    }
+    .record {
+      margin-bottom: 3vw;
+    }
+  }
