@@ -1,0 +1,92 @@
+.registerContainer {
+    margin-top: -13vw;
+    background-color: #f5f5f5;
+  }
+  .registerColumn {
+    margin-bottom: 5vw;
+  }
+  .header {
+    color: #3e4581;
+    font-size: 3vw;
+    margin: 1vw auto;
+  }
+  .formContainer {
+    margin-bottom: 1vw;
+  }
+  .formDescription {
+    color: #707070;
+    font-family: sans-serif;
+    font-size: 1vw;
+  }
+  .registerInput {
+    border-radius: 0.5vw;
+    font-family: sans-serif;
+  }
+  .formContainer li {
+    text-align: start !important;
+    font-family: sans-serif !important;
+  }
+  .ageInput span,
+  .genderInput span,
+  .regionInput span {
+    font-family: sans-serif;
+    text-align: left;
+  }
+  .registerButton {
+    background-color: #55e6c1;
+    color: #3e4581;
+    border-radius: 0.5vw;
+    border: none;
+    width: 40%;
+    padding: 0.5vw 0;
+    font-size: 1vw;
+    cursor: pointer;
+  }
+  .description {
+    width: 80%;
+    color: #707070;
+    font-size: 1vw;
+    font-family: sans-serif;
+  }
+  .loginLink {
+    color: #3e4581;
+  }
+  .loginLink:hover {
+    color: #3e4581;
+    opacity: 0.8;
+  }
+  @media only screen and (max-width: 820px) {
+    .registerContainer {
+      margin-top: 0;
+    }
+    .formDescription {
+      font-size: 2.5vw;
+    }
+    .registerButton {
+      font-size: 2.5vw;
+    }
+    .description {
+      font-size: 2vw;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .header {
+      font-size: 6vw;
+    }
+    .formDescription {
+      font-size: 3.5vw;
+    }
+    .registerInput {
+      border-radius: 2vw;
+    }
+    .registerButton {
+      border-radius: 2vw;
+      width: 50%;
+      padding: 0.5vw 0;
+      font-size: 4.5vw;
+    }
+    .description {
+      font-size: 3vw;
+    }
+  }
+  

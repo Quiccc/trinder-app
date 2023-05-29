@@ -1,0 +1,57 @@
+.container {
+    background-color: white;
+    border-radius: 0.5vw;
+    padding: 1vw;
+  }
+  .verifyHeader {
+    color: #3e4581;
+    font-size: 1.4vw;
+  }
+  .verifyDescription {
+    color: #707070;
+    font-size: 1vw;
+    margin-bottom: 1vw;
+    margin-top: 1vw;
+  }
+  .promoInput {
+    border-radius: 0.5vw;
+    padding: 0.5vw;
+    font-family: sans-serif;
+    font-size: 1vw;
+  }
+  .verifyButton {
+    background-color: #3e4581;
+    color: white;
+    border-radius: 0.5vw;
+    border: none;
+    width: 40%;
+    padding: 0.5vw 0;
+    font-size: 1vw;
+    cursor: pointer;
+  }
+  @media only screen and (max-width: 768px) {
+    .container {
+      padding: 2vw;
+      border-radius: 2vw;
+    }
+    .verifyHeader {
+      font-size: 5vw;
+    }
+    .verifyDescription {
+      font-size: 4vw;
+    }
+    .promoInput {
+      font-size: 3.5vw;
+      border-radius: 2vw;
+      padding: 1vw;
+    }
+    .promoInput span {
+      font-size: 5vw;
+    }
+    .verifyButton {
+      font-size: 4vw;
+      border-radius: 2vw;
+      padding: 2vw 0;
+    }
+  }
+  

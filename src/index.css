@@ -1,0 +1,69 @@
+* {
+  font-family: sans-serif, Arial, Helvetica;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+.ant-carousel .slick-next::before, .ant-carousel .slick-prev::before {
+  color: #ffffff;
+}
+
+/* .ant-carousel .slick-next:hover::before, .ant-carousel .slick-prev:hover::before {
+  color: #000000;
+} */
+
+.ant-carousel .slick-prev::before {
+  font-size: 5rem;
+  font-weight: 400;
+  left: 2vw;
+  z-index: 100000;
+}
+
+.ant-carousel .slick-next::before {
+  font-size: 5rem;
+  font-weight: 400;
+  right: 3vw;
+  z-index: 100000;
+}
+
+/* .ant-select-selector {
+
+  justify-content: center !important;
+  align-items: center !important;
+  display: flex !important;
+  align-content: center !important;
+}
+
+.ant-select-selection-search-input {
+  text-align: center !important;
+  font-size: 1.4rem !important;
+  font-weight: 500 !important;
+} */
+/* 
+.ant-select-selector {
+  width: 15vw !important;
+  height: 1.5vw !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.ant-select-selection-search-input {
+  display: flex !important;
+  align-items: center !important;
+  text-align: center !important;
+  font-size: 1.4rem !important;
+  font-weight: 500 !important;
+} */

@@ -1,0 +1,84 @@
+.userKnowledgeContainer {
+    width: 100%;
+    background-color: white;
+    border-radius: 0.5vw;
+    padding: 1vw;
+  }
+  .userKnowledgeColumn {
+    width: 100%;
+  }
+  .userKnowledgeHeader {
+    color: #3e4581;
+    font-size: 1.4vw;
+    margin-bottom: 1vh;
+  }
+  .formColumn {
+    margin-bottom: 3vw;
+  }
+  .formContainer {
+    margin-bottom: 1vw;
+  }
+  .formDescription {
+    color: #707070;
+    font-family: sans-serif;
+    font-size: 1vw;
+  }
+  .registerInput {
+    border-radius: 0.5vw;
+    font-family: sans-serif;
+  }
+  .ageInput span,
+  .genderInput span,
+  .regionInput span {
+    font-family: sans-serif;
+    text-align: left;
+  }
+  
+  .updateButton {
+    background-color: #3e4581;
+    color: white;
+    border-radius: 0.5vw;
+    border: none;
+    width: 40%;
+    padding: 0.5vw 0;
+    font-size: 1vw;
+    cursor: pointer;
+  }
+  .description {
+    width: 60%;
+    color: #707070;
+    font-size: 1vw;
+    font-family: sans-serif;
+  }
+  .loginLink {
+    color: #3e4581;
+  }
+  .loginLink:hover {
+    color: #3e4581;
+    opacity: 0.8;
+  }
+  @media only screen and (max-width: 768px) {
+    .userKnowledgeContainer {
+      border-radius: 2vw;
+      padding: 2vw;
+    }
+    .userKnowledgeHeader {
+      font-size: 5vw;
+    }
+    .formColumn {
+      display: flex;
+      justify-content: center;
+    }
+    .formContainer {
+      width: 90%;
+    }
+    .registerInput {
+      border-radius: 2vw;
+    }
+    .updateButton {
+      font-size: 4vw;
+      border-radius: 2vw;
+      padding: 2vw 0;
+    }
+  }
+  
