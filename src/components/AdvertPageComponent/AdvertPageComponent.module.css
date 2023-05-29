@@ -1,0 +1,218 @@
+.headerContainer {
+  margin: -11vw auto 0 auto;
+}
+.detailHeader {
+  font-size: 3rem;
+  color: #3e4581;
+  margin-left: 4vw;
+}
+.carouselContainer {
+  height: 60vh;
+  width: 50vw;
+  background-color: #2C2C2C;
+  border-radius: 0.4vw;
+  margin: 1vw;
+  margin-left: 7.6vw;
+}
+.prefix{
+  color: #3e4581;;
+}
+.title{
+  margin-left: 7.6vw;
+  margin-top: -2vw;
+  font-size: 2.5rem;
+  color: #2C2C2C;
+}
+.carouselContainer img {
+  height: 60vh;
+  object-fit: contain;
+}
+.modalInput{
+  border-radius: 0.5vw;
+  padding: 0.5vw;
+  font-family: sans-serif;
+  font-size: 1vw;
+  margin: 2vw 0;
+}
+.modalButton {
+  background-color: #3e4581;
+  color: #ffffff;
+  border-radius: 0.5vw;
+  border: none;
+  padding: 0.5vw 3vw;
+  font-size: 1vw;
+  cursor: pointer;
+}
+.userAvatar{
+  width: 4vw;
+  height: 4vw;
+  border-radius: 50%;
+  margin-right: 1vw;
+}
+  .cardTitle {
+    color: #000000;
+    font-size: 1.9rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 2.5vh;
+    text-align: left;
+  }
+  .cardPrice{
+    color: #000000;
+    font-size: 2.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 1vh;
+  }
+  .cardLocation{
+    color: #3e4581;;
+    font-size: 2.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 1vh;
+  }
+  .cardSubheadersLeft{
+    color: #000000;
+    font-size: 1.2rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+  }
+  .cardDescription{
+    color: #000000;
+    font-size: 1.2rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    margin-left: 0.5vw;
+  }
+  .cardSubheadersRight{
+    color: #000000;
+    font-size: 1.2rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: right;
+  }
+  .reportText{
+    color: #dd0505;;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: right;
+    margin-right: 2vw;
+    margin-top: -1.2vh;
+  }
+  .loadMoreButton{
+    cursor: pointer;
+    font-size: 1rem;
+    color: #3e4581;
+    background-color: #eceeff; 
+    border-radius: 0.5vw;
+    font-weight: 600;
+    margin-bottom: 1vh;
+  }
+  .cardSubheadersLeftBig{
+    font-size: 2rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    margin-left: 0.5vw;
+    margin-bottom: 1vh;
+  }
+  .navyBlue{
+    color: #3e4581;;
+  }
+  .cardSubheadersRightBig{
+    color: #000000;
+    font-size: 2rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: right;
+    margin-right: 0.5vw;
+    margin-bottom: 1vh;
+  }
+.contentContainer {
+  margin: -11vw auto 0 auto;
+  background-color: #f5f5f5;
+  padding: 3vw 0;
+  display: flex;
+  align-items: center;
+}
+.imageContainer{
+  margin: 5vh;
+  width: 100%;
+  height: 100%;
+}
+.advertDetailContainer {
+  background-color: white;
+  border-radius: 1vw;
+  width: 50%;
+  margin: auto;
+  margin-bottom: 2vw;
+  padding: 1vw;
+}
+.advertDetailCard {
+  background-image: url("/public/images/hero-bg.png");
+  background-color: rgb(255, 255, 255);
+  border-style: solid;
+  border-color: rgb(115, 115, 115);
+  border-radius: 0.3vw;
+  border-width: 0.1vw;
+  width: 90%;
+  height: 18vh;
+  padding: 1vw;
+  margin-bottom: 1vw;
+  margin-left: 1vw;
+  margin-right: 2vw;
+}
+.advertDetailCardBig{
+  background-image: url("/public/images/hero-bg.png");
+  background-color: rgb(255, 255, 255);
+  border-style: solid;
+  border-color: rgb(115, 115, 115);
+  border-radius: 0.3vw;
+  border-width: 0.1vw;
+  padding: 1vw;
+  height: 25vh;
+  width: 50vw;
+  border-radius: 0.4vw;
+  margin-left: 7.6vw;
+  margin-top: +5vw;
+}
+.line{
+  height: 1px;
+  background-color: #000000;
+  margin-top: 0.5vw;
+  margin-bottom: 0.5vw;
+}
+/* @media only screen and (max-width: 820px) {
+  .headerContainer {
+    margin: 0 auto;
+    background-color: #f5f5f5;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .advertDetailContainer {
+    justify-content: center;
+    border-radius: 2vw;
+  }
+  .detailHeader {
+    font-size: 2rem;
+  }
+} */
