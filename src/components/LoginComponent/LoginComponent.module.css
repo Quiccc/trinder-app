@@ -1,0 +1,136 @@
+.loginContainer {
+    margin-top: -13vw;
+    background-color: #f5f5f5;
+    min-height: 70vh;
+  }
+  .header {
+    color: #3e4581;
+    font-size: 3vw;
+    margin: 1vw auto;
+  }
+  .formContainer {
+    margin-bottom: 1vw;
+  }
+  .loginInput {
+    border-radius: 0.5vw;
+    font-family: sans-serif;
+    font-size: 1vw;
+  }
+  .loginButton {
+    background-color: #55e6c1;
+    color: #3e4581;
+    border-radius: 0.5vw;
+    border: none;
+    width: 40%;
+    padding: 0.5vw 0;
+    font-size: 1vw;
+    cursor: pointer;
+  }
+  .description {
+    width: 60%;
+    color: #707070;
+    font-size: 1vw;
+    font-family: sans-serif;
+  }
+  .registerLink {
+    color: #3e4581;
+  }
+  .registerLink:hover {
+    color: #3e4581;
+    opacity: 0.8;
+  }
+  .forgotPassword {
+    color: #707070;
+    font-size: 1vw;
+    font-family: sans-serif;
+    cursor: pointer;
+    margin-bottom: 3vw;
+  }
+  .modalInput {
+    border-radius: 0.5vw;
+    padding: 0.5vw;
+    font-family: sans-serif;
+    font-size: 1vw;
+    margin: 2vw 0;
+  }
+  .modalButton {
+    background-color: #55e6c1;
+    color: #3e4581;
+    border-radius: 0.5vw;
+    border: none;
+    padding: 0.5vw 3vw;
+    font-size: 1vw;
+    cursor: pointer;
+    text-align: center;
+  }
+  @media only screen and (max-width: 1480px) {
+    .loginContainer {
+      min-height: 85vh;
+    }
+  }
+  @media only screen and (max-width: 820px) {
+    .loginContainer {
+      margin-top: 0;
+    }
+    .loginInput span {
+      font-size: 2vw;
+      margin: 0 1vw;
+    }
+    .loginButton {
+      border-radius: 2vw;
+      width: 50%;
+      padding: 1vw 0;
+      font-size: 2vw;
+    }
+    .description {
+      width: 60%;
+      font-size: 1.5vw;
+    }
+    .forgotPassword {
+      font-size: 1.5vw;
+    }
+    .modalInput {
+      border-radius: 2vw;
+      padding: 1vw;
+      font-family: sans-serif;
+      font-size: 3vw;
+      margin: 6vw 0;
+    }
+    .modalButton {
+      border-radius: 2vw;
+      padding: 1vw 5vw;
+      font-size: 2vw;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .header {
+      font-size: 6vw;
+    }
+    .loginInput {
+      border-radius: 2vw;
+    }
+    .loginInput span {
+      font-size: 4vw;
+      margin: 0 1vw;
+    }
+    .loginButton {
+      border-radius: 2vw;
+      width: 50%;
+      padding: 1vw 0;
+      font-size: 4.5vw;
+    }
+    .description {
+      width: 60%;
+      font-size: 3vw;
+    }
+    .forgotPassword {
+      font-size: 3vw;
+      margin-bottom: 3vw;
+    }
+    .modalButton {
+      border-radius: 2vw;
+      padding: 1vw 5vw;
+      font-size: 2.8vw;
+    }
+  }
+  

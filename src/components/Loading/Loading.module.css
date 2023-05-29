@@ -1,0 +1,39 @@
+.loadingContainer {
+    height: 100vh;
+  }
+  .container {
+    width: 100%;
+  }
+  .loading {
+    width: 25%;
+  }
+  .payment {
+    font-size: 1.5vw;
+    margin-bottom: 2vw;
+    color: #e6555f;
+  }
+  /* .paymentSuccess {
+    font-size: 1vw;
+    margin-bottom: 2vw;
+    color: #3e4581;
+  }
+  .paymentError {
+    font-size: 1.5vw;
+    margin-bottom: 2vw;
+    color: #e6555f;
+  } */
+  @media only screen and (max-width: 768px) {
+    .waveLoading {
+      width: 20%;
+    }
+    .payment {
+      font-size: 4vw;
+    }
+    /* .paymentSuccess {
+      font-size: 4vw;
+    }
+    .paymentError {
+      font-size: 6vw;
+    } */
+  }
+  

@@ -1,0 +1,148 @@
+.landPageContainer {
+    /* min-height: 80vh; */
+    margin-top: -30vw;
+    margin-bottom: 10vh;
+  }
+  .container {
+    margin-left: 11vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .mottoContainer {
+    font-size: 2rem;
+    padding-bottom: 0.5vw;
+    color: #3e4581;
+  }
+  .highlight {
+    color: #55e6c1;
+  }
+  .description {
+    color: #3e4581;
+    font-size: 1.2rem;
+    margin-bottom: 1vw;
+  }
+  .buttonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .mottoLoginButton {
+    font-size: 1rem;
+    padding: 0.5vw 1vw;
+    min-width: 6vw;
+    text-align: center;
+    border: 1px solid #3e4581;
+    color: #3e4581;
+    cursor: pointer;
+    height: fit-content;
+    margin: 0 0.5vw;
+    border-radius: 0.5vw;
+  }
+  .userFrequencyButton {
+    font-size: 1rem;
+    padding: 0.6vw 1vw;
+    min-width: 6vw;
+    text-align: center;
+    background-color: #55e6c1;
+    color: #3e4581;
+    cursor: pointer;
+    height: fit-content;
+    margin-right: 0.5vw;
+    border-radius: 0.5vw;
+  }
+  .userFrequencyButton:hover {
+    color: #3e4581;
+  }
+  .registerButton {
+    font-size: 1rem;
+    padding: 0.6vw 1vw;
+    min-width: 6vw;
+    text-align: center;
+    background-color: #55e6c1;
+    color: #3e4581;
+    cursor: pointer;
+    height: fit-content;
+    margin: 0 0.5vw;
+    border-radius: 0.5vw;
+  }
+  .mottoLoginButton:hover,
+  .registerButton:hover {
+    color: #3e4581;
+  }
+  .loginButton {
+    display: none;
+    font-size: 1rem;
+  }
+  .humanContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 40vh;
+    overflow: hidden;
+  }
+  
+  .heroImage {
+    display: inline-block;
+    height: 100%;
+    max-height: 70vh !important;
+    position: absolute;
+  }
+  @media only screen and (max-width: 990px) {
+    .landPageContainer {
+      margin-top: -40vw;
+    }
+    .container {
+      margin-top: 5vw;
+      margin-left: 0;
+      margin: 5vw auto;
+    }
+    .mottoContainer {
+      width: 90%;
+      margin: auto;
+      text-align: center;
+    }
+    .description {
+      width: 90%;
+      margin: auto;
+      /* font-size: 3.5vw; */
+      text-align: center;
+      margin-bottom: 2vw;
+    }
+    .buttonContainer {
+      display: flex;
+      justify-content: center;
+    }
+    .mottoLoginButton,
+    .userFrequencyButton,
+    .registerButton {
+      border-radius: 2vw;
+      padding: 0.5vw 2vw;
+    }
+    .registerButton {
+      border-radius: 2vw;
+      padding: 0.8vw 3vw;
+    }
+    .loginButton {
+      display: block;
+      border-radius: 2vw;
+      padding: 0.5vw 2vw;
+      min-width: 6vw;
+      text-align: center;
+      border: 1px solid #3e4581;
+      color: #3e4581;
+      cursor: pointer;
+      height: fit-content;
+      margin: 0 0.5vw;
+    }
+    .loginButton:hover {
+      color: #3e4581;
+    }
+  }
+  @media only screen and (max-width: 820px) {
+    .landPageContainer {
+      margin-top: 0;
+    }
+  }
+  
