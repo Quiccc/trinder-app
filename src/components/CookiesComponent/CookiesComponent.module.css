@@ -1,0 +1,10 @@
+.cookieContainer {
+    background-color: #3e4581 !important;
+  }
+  .cookiesButton {
+    border-radius: 2vw !important;
+    background-color: #e6555f !important;
+    color: white !important;
+    font-weight: bold;
+  }
+  
