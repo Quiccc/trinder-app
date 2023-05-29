@@ -1,15 +1,23 @@
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Row, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getChatMessages, sendMessage, subscribeToChat } from '../../server/ChatService';
-import { auth } from '../../server/config/FirebaseConfig';
+import { sendReport } from '../../server/ChatService';
+import useNotification from '../../hooks/UseNotification';
+import { auth, db } from '../../server/config/FirebaseConfig';
 import styles from './ChatMessagesComponent.module.css';
+import { doc, getDoc } from 'firebase/firestore';
+import { WarningOutlined } from '@ant-design/icons';
 
 const ChatMessagesComponent = ({ chatId }) => {
     const [chatMessages, setChatMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [advert, setAdvert] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [resetLoading, setResetLoading] = useState(false)
+    const {alertSuccess, alertError} = useNotification();
     const navigate = useNavigate();
 
     const handleMessageSend = async () => {
@@ -45,6 +53,37 @@ const ChatMessagesComponent = ({ chatId }) => {
         const element = document.getElementsByClassName(styles.chatMessagesContainer)[0];
         element.scrollTo(0, element.scrollHeight);
     }, [chatMessages]);
+
+    const handleOk = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleReport = async () => {
+        const chatRef = doc(db, "chats", chatId);
+        const chat = await getDoc(chatRef);
+        const text = document.getElementById('report-text').value;
+        setResetLoading(true);
+        try {
+            if (auth.currentUser.uid == chat.data().advertOwnerId) {
+                await sendReport(chat,text,0);
+            }
+            else {
+                await sendReport(chat,text,1);
+            }
+            alertSuccess("Your report has been sent successfully, we will review it as soon as possible");
+            setResetLoading(false)
+        } catch (err) {
+            console.log(err);
+            alertError("Report could not be sent, please try again later");
+            setResetLoading(false)
+        }
+        setIsModalOpen(false);
+    };
+
     return (
         <Col xxl={18} xl={18} lg={18} md={22} sm={22} xs={22} justify='center' align='center'>
             {
@@ -97,6 +136,9 @@ const ChatMessagesComponent = ({ chatId }) => {
                         })
                     }
                     <Row className={styles.messageInputContainer} align='end' justify='end'>
+                    <Col>
+                            <WarningOutlined className={styles.warningIcon} onClick={() => {setIsModalOpen(true)}}/>
+                        </Col>
                         <Col flex='auto'>
                             <TextArea
                                 maxLength={255}
@@ -118,7 +160,19 @@ const ChatMessagesComponent = ({ chatId }) => {
                             </Button>
                         </Col>
                     </Row>
-                </Col>
+                </Col>              
+                <Modal open={isModalOpen}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
+                        footer={false}
+                    >
+                        <TextArea className={styles.modalInput} type="text" placeholder="Report Reason" autoSize={{ minRows: 3, maxRows: 3 }} id="report-text" />
+                        <Row align='center'>
+                            <button onClick={handleReport} className={styles.modalButton}>
+                                {resetLoading ? <LoadingOutlined /> : "Send Report"}
+                            </button>
+                        </Row>
+            </Modal>
             </Row>
         </Col>
     );

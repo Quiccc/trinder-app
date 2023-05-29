@@ -182,6 +182,7 @@ export const sendReport = async (advert, reportText) => {
         reportText: reportText,
         reportFrom: "advert",
         createdAt: serverTimestamp(),
+        isActive: true
     });
 };
 

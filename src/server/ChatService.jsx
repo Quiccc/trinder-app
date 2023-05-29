@@ -1,4 +1,4 @@
-import { collection, getDoc, getDocs, query, where, doc, onSnapshot, updateDoc, addDoc } from "firebase/firestore";
+import { collection, getDoc, getDocs, query, where, doc, onSnapshot, updateDoc, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "./config/FirebaseConfig";
 import { convertTimeStampToDate, convertTimeStampToDateAdvertCard, convertTimeStampToDateChat } from "./UtilsService";
 
@@ -118,4 +118,27 @@ export const createContact = async (advertId) => {
         });
         return newChatRef.id;
     }
+};
+
+export const sendReport = async (chatId, reportText, reportedUser) => {
+    const reportRef = collection(db, "reports");
+    if(reportedUser == 0){
+        await addDoc(reportRef, {
+            userId: chatId.data().messagerId,
+            senderID: auth.currentUser.uid,
+            reportText: reportText,
+            reportFrom: "user",
+            createdAt: serverTimestamp(),
+            isActive: true
+        });
+    }
+    else
+    await addDoc(reportRef, {
+        userId: chatId.data().advertOwnerId,
+        senderID: auth.currentUser.uid,
+        reportText: reportText,
+        reportFrom: "user",
+        createdAt: serverTimestamp(),
+        isActive: true
+    });
 };

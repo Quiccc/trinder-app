@@ -8,6 +8,7 @@ import { CrownOutlined, MessageOutlined, SearchOutlined } from "@ant-design/icon
 
 const Navbar = ({ design, onData, onSearchData }) => {
   const { currentUser, userDetails } = useAuth();
+  const isAdmin = userDetails.isAdmin;
   const [options, setOptions] = useState([]);
   const navigate = useNavigate();
   const handleSearch = value => {
@@ -72,6 +73,7 @@ const Navbar = ({ design, onData, onSearchData }) => {
             {
               currentUser ? (
                 <Row align='middle' wrap={false}>
+                  {isAdmin && <Link to={'/panel'} className={styles.messageIcon}><MessageOutlined /></Link>}
                   <Link to={'/chat'} className={styles.messageIcon}><MessageOutlined /></Link>
                   <Link to={'/profile'} className={styles.userName}>{`${userDetails.name} ${userDetails.surname}`} {userDetails.premiumID !== null && <CrownOutlined />}</Link>
                   <Link to={'/post'} className={styles.appButton}>Advert</Link>

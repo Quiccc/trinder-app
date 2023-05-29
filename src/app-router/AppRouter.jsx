@@ -47,10 +47,10 @@ const AppRouter = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/advert/:id" element={<AdvertPage />} />>
+                <Route path="/advert/:id" element={<AdvertPage />} />
                 <Route element={<PrivateRouter />}>
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/admin" element={<AdminPanel />} />
+                    <Route path="/panel" element={<AdminPanel />} />
                     <Route path="/chat" element={<ChatPage />} />
                     <Route path="/success" element={<Successful />} />
                     <Route path="/post" element={<CreateAdvertPage />} >
