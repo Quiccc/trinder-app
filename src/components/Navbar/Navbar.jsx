@@ -5,6 +5,7 @@ import styles from './Navbar.module.css'
 import cityData from '../../assets/formatted_city_data.json'
 import { useState } from "react";
 import { CrownOutlined, MessageOutlined, SearchOutlined } from "@ant-design/icons";
+import { AdminPanelSettings } from "@mui/icons-material";
 
 const Navbar = ({ design, onData, onSearchData }) => {
   const { currentUser, userDetails } = useAuth();
@@ -62,10 +63,10 @@ const Navbar = ({ design, onData, onSearchData }) => {
         <Col xxl={13} xl={13} lg={13} md={0} sm={0} xs={0} align='middle' >
           <Row align='middle' justify='space-between'>
             {/* <EnvironmentOutlined className={styles.locationIcon} /> */}
-            <AutoComplete style={{ width: '30%' }}
+            <AutoComplete style={{ width: '30%', border: '1px solid #3e4581', borderRadius: '.5vw'}}
             options={options} placeholder="Search" onSearch={handleSearch} optionFilterProp="value" onSelect={handleSelect} defaultValue={localStorage.getItem('selectedLocation') || ''}>
             </AutoComplete>
-            <Input className={styles.searchInput} placeholder="Search" suffix={<SearchOutlined />} onPressEnter={handleSearchAdvert} />
+            <Input className={styles.stringSearchInput} placeholder="Search" suffix={<SearchOutlined />} onPressEnter={handleSearchAdvert} />
           </Row>
         </Col>
         <Col xxl={7} xl={7} lg={7} md={0} sm={0} xs={0}>
@@ -73,10 +74,10 @@ const Navbar = ({ design, onData, onSearchData }) => {
             {
               currentUser ? (
                 <Row align='middle' wrap={false}>
-                  {isAdmin && <Link to={'/panel'} className={styles.messageIcon}><MessageOutlined /></Link>}
+                  {isAdmin && <Link to={'/panel'} className={styles.messageIcon}><AdminPanelSettings style={{fontSize: '3rem'}} /></Link>}
                   <Link to={'/chat'} className={styles.messageIcon}><MessageOutlined /></Link>
                   <Link to={'/profile'} className={styles.userName}>{`${userDetails.name} ${userDetails.surname}`} {userDetails.premiumID !== null && <CrownOutlined />}</Link>
-                  <Link to={'/post'} className={styles.appButton}>Advert</Link>
+                  <Link to={'/post'} className={styles.appButton}>Create</Link>
                 </Row>
               ) : (
                 <>

@@ -9,12 +9,12 @@ const LandPage = () => {
             <Col xxl={10} lg={10} md={24} sm={24} xs={24} className={styles.container}>
                 {
                         <div className={styles.mottoContainer}>
-                            Discover a world of <b><span className={styles.highlight}> 3D</span></b> models and services
+                            Discover the world of <b><span className={styles.highlight}> 3D Printing</span></b> with Trinder.
                         </div> 
                 }
                 {
                         <div className={styles.description}>
-                            <span className={styles.highlight}><b>Get</b></span> or <span className={styles.highlight}><b>Buy</b></span> <b>professional 3D modeling and printing services from TRINDER</b>
+                            <span className={styles.highlight}><b>Sell</b></span> <b>your products or</b> <span className={styles.highlight}><b>Purchase</b></span> <b>professionally produced prints from enthusiasts TODAY.</b>
                         </div> 
                 }
     
