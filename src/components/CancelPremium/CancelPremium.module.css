@@ -1,0 +1,55 @@
+.deleteUserContainer {
+    width: 100%;
+    background-color: white;
+    border-radius: 0.5vw;
+    padding: 1vw;
+  }
+  .firstDescription {
+    width: 100%;
+    color: #707070;
+    font-size: 1.5vw;
+    margin-bottom: 2vh;
+  }
+  .list {
+    width: 100%;
+    color: #707070;
+    font-size: 1.5vw;
+  }
+  .warning {
+    color: #e6555f;
+    width: 100%;
+    font-size: 1.5vw;
+  }
+  .confirmButton {
+    color: white;
+    padding: 0.5vw 3vw;
+    margin-right: 1vw;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.5vw;
+    background-color: #e6555f;
+    font-size: 1vw;
+  }
+  @media only screen and (max-width: 768px) {
+    .deleteUserContainer {
+      border-radius: 2vw;
+      padding: 2vw;
+    }
+    .firstDescription {
+      font-size: 5vw;
+    }
+    .list {
+      font-size: 4vw;
+      width: 100%;
+      margin-left: 4vw;
+    }
+    .warning {
+      font-size: 4vw;
+    }
+    .confirmButton {
+      font-size: 4vw;
+      border-radius: 2vw;
+      padding: 1vw 5vw;
+    }
+  }
+  

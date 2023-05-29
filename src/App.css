@@ -1,0 +1,83 @@
+.pageContainer {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 85%,
+      rgba(85, 230, 193, 0.22) 100%
+    );
+  }
+  .slick-arrow.slick-prev {
+    font-size: 0.5vw;
+  }
+  .slick-dots-bottom {
+    bottom: -1.5vw !important;
+  }
+  .ant-carousel .slick-prev::before {
+    display: block;
+    position: relative;
+    font-size: 2vw;
+    content: "<" !important;
+    color: #3e4581;
+    background-color: white;
+  }
+  .slick-arrow.slick-next {
+    font-size: 0.5vw;
+  }
+  .ant-carousel .slick-next::before {
+    display: block;
+    position: relative;
+    font-size: 2vw;
+    content: ">" !important;
+    color: #3e4581;
+    background-color: white;
+  }
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-radius: 0.5vw !important;
+  }
+  .ant-modal-header {
+    border-radius: 0.5vw !important;
+  }
+  .ant-modal-content {
+    border-radius: 0.5vw !important;
+  }
+  .ant-modal-footer button {
+    background-color: #55e6c1;
+    color: #3e4581;
+    font-size: 0.8vw;
+    border: none;
+    border-radius: 0.5vw;
+    height: fit-content;
+  }
+  .ant-modal-footer button:hover {
+    background-color: #55e6c1;
+  }
+  /* special package count down style */
+  .ant-statistic-content {
+    color: white !important;
+    font-size: 1vw !important;
+    margin-left: 0.5vw;
+  }
+  /* small screen menu width configuration default width 378px */
+  .ant-drawer-content-wrapper {
+    max-width: 100% !important;
+  }
+  .ant-table-wrapper {
+    width: 100%;
+    overflow-x: scroll !important;
+  }
+  @media only screen and (max-width: 820px) {
+    .ant-carousel .slick-next::before,
+    .ant-carousel .slick-prev::before {
+      font-size: 5vw;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      border-radius: 2vw !important;
+    }
+    /* special package count down style */
+    .ant-statistic-content {
+      font-size: 4vw !important;
+    }
+  }
+  

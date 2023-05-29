@@ -1,0 +1,138 @@
+.footerContainer {
+    /* background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 65%,
+      rgba(85, 230, 193, 0.22) 100%
+    ); */
+    padding: 1vw 1.5vw;
+    background-color: transparent;
+    margin-top: auto;
+  }
+  .displayNone {
+    display: none;
+  }
+  .linkContainer {
+    width: 100%;
+    margin: auto;
+    background-color: transparent;
+  }
+  .logoContainer {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+  .logoContainer img {
+    width: 40%;
+  }
+  .footerPagination {
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    color: #3e4581;
+    font-size: 1.8rem;
+    margin-bottom: 3vh;
+    transition: 300ms;
+    border-bottom: 2px solid transparent;
+  }
+  .footerPagination:hover {
+    border-color: #3e4581;
+    color: #3e4581;
+  }
+  .socialMediaIcon {
+    font-size: 1.5vw;
+    margin-right: 3vw;
+    color: #3e4581;
+  }
+  .youtubeIcon {
+    font-size: 1.5vw;
+    color: #3e4581;
+  }
+  .documentContainer {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 1.5vw;
+  }
+  .footerDocument {
+    color: #707070;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.8vw;
+    margin: 0 1vw;
+  }
+  .designedBy {
+    width: 100%;
+    color: #707070;
+    /* cursor: pointer; */
+    font-family: "Poppins", sans-serif;
+    font-size: 0.8vw;
+  }
+  .designedBy span {
+    margin-left: 0.5vw;
+  }
+  .designedBy p {
+    margin-bottom: 0;
+  }
+  .allRightReserved {
+    width: 10%;
+  }
+  .bilisimAcademy {
+    color: #707070;
+  }
+  @media only screen and (max-width: 820px) {
+    .logoContainer img {
+      width: 60%;
+    }
+    .footerPagination {
+      font-size: 1.5vw;
+      border: none;
+    }
+    .socialMediaIcon {
+      font-size: 2.5vw;
+    }
+    .youtubeIcon {
+      font-size: 2.5vw;
+    }
+    .footerDocument {
+      font-size: 1.5vw;
+    }
+    .designedBy {
+      font-size: 1.5vw;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .logoContainer {
+      margin-bottom: 3vw;
+    }
+    .logoContainer img {
+      width: 40%;
+    }
+    .footerPagination {
+      width: 100%;
+      text-align: center;
+      font-size: 5vw;
+    }
+    .socialMediaRow {
+      display: flex;
+      justify-content: center;
+    }
+    .socialMediaIcon {
+      font-size: 8vw;
+    }
+    .youtubeIcon {
+      font-size: 8vw;
+    }
+    .footerDocument {
+      font-size: 3vw;
+      margin: 2vw;
+    }
+    .designedBy {
+      width: 100%;
+      justify-content: center;
+      font-size: 3.5vw;
+    }
+    .designedBy span {
+      color: #3e4581;
+      font-size: 5vw;
+      margin-left: 1vw;
+    }
+  }
+  
