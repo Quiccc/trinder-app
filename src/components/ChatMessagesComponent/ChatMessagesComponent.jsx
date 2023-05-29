@@ -68,7 +68,7 @@ const ChatMessagesComponent = ({ chatId }) => {
         const text = document.getElementById('report-text').value;
         setResetLoading(true);
         try {
-            if (auth.currentUser.uid == chat.data().advertOwnerId) {
+            if (auth.currentUser.uid === chat.data().advertOwnerId) {
                 await sendReport(chat,text,0);
             }
             else {

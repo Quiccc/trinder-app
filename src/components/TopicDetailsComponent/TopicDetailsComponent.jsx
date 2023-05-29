@@ -44,7 +44,8 @@ const TopicDetailsComponent = ({ topicID }) => {
             createComment(topicID, sanitizedContent).then((response) => {
                 setComment('');
                 if (response) {
-                    alertSuccess("Comment created successfully, after admin approval it will be visible");
+                    setCount(count + 1);
+                    alertSuccess("Comment created successfully.");
                 } else {
                     alertError("Error occured while creating comment");
                 }
@@ -87,7 +88,7 @@ const TopicDetailsComponent = ({ topicID }) => {
         getIsTopicLocked(topicID).then((response) => {
             setIsTopicLocked(response);
         });
-    }, [topicID]);
+    }, [topicID, count]);
 
     return (
         <Col>
