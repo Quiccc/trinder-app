@@ -116,6 +116,7 @@ export const sendReportForum = async (comment,reportText) => {
         commentId: comment.id,
         senderId: auth.currentUser.uid,
         createdAt: serverTimestamp(),
+        isActive: true
     });
     return report;
 };
