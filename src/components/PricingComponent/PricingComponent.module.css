@@ -1,0 +1,227 @@
+.pricingContainer {
+    margin: -11vw auto 0 auto;
+  }
+  .pricingHeader {
+    font-size: 3rem;
+    color: #3e4581;
+    margin-left: 4vw;
+  }
+  .cardContainerRow {
+    background-color: #f5f5f5;
+    padding: 5vw 0;
+  }
+  .title {
+    color: #3e4581;
+    font-size: 2.5rem;
+    margin-bottom: 3vw;
+  }
+  .description {
+    color: #707070;
+    font-size: 1.5rem;
+  }
+  .popularCard {
+    background-color: #3e4581;
+    color: white;
+    border-radius: 0.5vw;
+    padding: 1.5vw 1vw;
+    margin: 0 2vw;
+    padding: 1vw;
+  }
+  .firstTitle {
+    color: #55e6c1;
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+  }
+  .AdvertPrice {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .descriptionFirst,
+  .descriptionSecond {
+    color: white;
+    font-family: sans-serif;
+    font-size: 1rem;
+    text-transform: capitalize;
+    margin-bottom: 1.5rem;
+  }
+  .usageDate {
+    color: white;
+    font-size: 1rem;
+    text-transform: capitalize;
+    position: relative;
+    animation: flash 1.5s linear infinite;
+    margin-bottom: 1rem;
+  }
+  .popularPromoPlus {
+    color: white;
+    font-size: 2rem;
+    margin: 1vw auto;
+  }
+  .pricingPromo {
+    position: relative;
+    color: #e6555f;
+  }
+  .tax {
+    color: white;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+  }
+  .popularCardButton {
+    background-color: #55e6c1;
+    color: #3e4581;
+    font-size: 1rem;
+    width: 75%;
+    padding: 0.5vw 1vw;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+  }
+  .popularCardButtonDisabled{
+    background-color: #a8a8a8;
+    color: #3e4581;
+    font-size: 1rem;
+    width: 75%;
+    padding: 0.5vw 1vw;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: not-allowed;
+  }
+  .regularCard {
+    color: #3e4581;
+    border-radius: 0.5vw;
+    background-color: white;
+    margin: 0 2vw;
+    padding: 1vw;
+  }
+  .regularCardAdvertPrice {
+    color: #3e4581;
+    font-size: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .regularCardDescriptionFirst,
+  .regularCardDescriptionSecond,
+  .regularCardUsageDate {
+    color: #3e4581;
+    font-family: sans-serif;
+    font-size: 1rem;
+    text-transform: capitalize;
+  }
+  .regularCardUsageDate {
+    font-size: 1rem;
+    position: relative;
+    animation: flash 1.5s linear infinite;
+    margin-bottom: 1rem;
+  }
+  .promoPlus {
+    color: #3e4581;
+    font-size: 2rem;
+    margin: 1vw auto;
+  }
+  .regularCardTax {
+    font-family: sans-serif;
+    font-size: 0.8rem;
+  }
+  .regularCardButton {
+    border-radius: 0.5vw;
+    color: #3e4581;
+    border: 1px solid #55e6c1;
+    background-color: white;
+    width: 75%;
+    padding: 0.5vw 1vw;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  @-webkit-keyframes flash {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes flash {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @media only screen and (max-width: 1199px) {
+    /* .pricingRow {
+      width: 100%;
+      overflow-y: scroll;
+      display: flex;
+      justify-content: flex-start;
+    } */
+  }
+  @media only screen and (max-width: 991px) {
+    .regularCard {
+      display: block;
+    }
+    .popularCard {
+      display: block;
+    }
+  }
+  @media only screen and (max-width: 820px) {
+    .pricingContainer {
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+    .description {
+      font-size: 1rem;
+    }
+    .regularCard {
+      border-radius: 2vw;
+      margin: 3vw auto;
+    }
+    .popularCard {
+      border-radius: 2vw;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .pricingHeader {
+      font-size: 2rem;
+      margin-bottom: 2vw;
+    }
+    .cardContainerRow {
+      padding-top: 0;
+    }
+    .title {
+      font-size: 2rem;
+      margin-bottom: 0;
+    }
+    .description {
+      width: 90%;
+      margin-bottom: 0;
+    }
+  
+    .regularCard {
+      border-radius: 5vw;
+      margin: 5vw auto;
+    }
+    .regularCardButton {
+      border-radius: 3vw;
+      margin-bottom: 3vw;
+    }
+    .popularCard {
+      border-radius: 5vw;
+      margin: 5vw auto;
+    }
+    .popularCardButton {
+      border-radius: 3vw;
+      margin-bottom: 3vw;
+    }
+  }
+  

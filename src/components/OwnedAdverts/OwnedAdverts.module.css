@@ -1,0 +1,49 @@
+.advertsContainer {
+    width: 100%;
+    background-color: white;
+    border-radius: 0.5vw;
+    padding: 1vw;
+  }
+  .advertsHeader {
+    color: #3e4581;
+    font-size: 2vw;
+  }
+  .titleWrapper{
+    display: flex;
+    overflow: hidden;
+  }
+  .updateButton{
+    cursor: pointer;
+    font-size: 1rem;
+    color: #3e4581;
+    background-color: #eceeff; 
+    border-radius: 0.5vw;
+    font-weight: 600;
+  }
+  .title{
+    flex: 1;
+    max-width: 3vw;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .descriptionWrapper {
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .description {
+    flex: 1;
+    max-width: 7vw;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  @media only screen and (max-width: 768px) {
+    .advertsContainer {
+      padding: 2vw;
+      border-radius: 2vw;
+    }
+    .advertsHeader {
+      font-size: 5vw;
+    }
+  }
+  
