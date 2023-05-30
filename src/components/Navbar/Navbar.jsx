@@ -6,6 +6,7 @@ import cityData from '../../assets/formatted_city_data.json'
 import { useState } from "react";
 import { CrownOutlined, MessageOutlined, SearchOutlined } from "@ant-design/icons";
 import { AdminPanelSettings } from "@mui/icons-material";
+import NotificationComponent from "../NotificationComponent/NotificationComponent";
 
 const Navbar = ({ design, onData, onSearchData }) => {
   const { currentUser, userDetails } = useAuth();
@@ -76,6 +77,7 @@ const Navbar = ({ design, onData, onSearchData }) => {
                 <Row align='middle' wrap={false}>
                   {isAdmin && <Link to={'/panel'} className={styles.messageIcon}><AdminPanelSettings style={{fontSize: '3rem'}} /></Link>}
                   <Link to={'/chat'} className={styles.messageIcon}><MessageOutlined /></Link>
+                  <NotificationComponent />
                   <Link to={'/profile'} className={styles.userName}>{`${userDetails.name} ${userDetails.surname}`} {userDetails.premiumID !== null && <CrownOutlined />}</Link>
                   <Link to={'/post'} className={styles.appButton}>Create</Link>
                 </Row>
