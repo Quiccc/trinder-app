@@ -1,10 +1,12 @@
-import { collection, getDoc, getDocs, query, where, doc, onSnapshot, updateDoc, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, getDoc, getDocs, query, where, doc, addDoc, serverTimestamp, orderBy, limit, updateDoc } from "firebase/firestore";
 import { auth, db } from "./config/FirebaseConfig";
 import { convertTimeStampToDate, convertTimeStampToDateAdvertCard, convertTimeStampToDateChat } from "./UtilsService";
+import { getUserNameById } from "./UserService"
+import { getTopicById, getCommentById} from "./ForumService";
 
-export const getUserNotifications = async () => {
+export const getActiveUserNotifications = async () => {
     const notificationRef = collection(db, "notifications");
-    const q = query(notificationRef, where("to", "==", auth.currentUser.uid));
+    const q = query(notificationRef, where("to", "==", auth.currentUser.uid), where("isActive", "==", true), orderBy("sentAt", "desc"), limit(5));
     const querySnapshot = await getDocs(q);
     let notifications = [];
     for(let i = 0; i < querySnapshot.docs.length; i++){
@@ -29,29 +31,39 @@ export const sendChatNotification = async (chatId, message) => {
     await addDoc(notificationRef, {
         content: message.message,
         from: auth.currentUser.uid,
+        senderName: await getUserNameById(auth.currentUser.uid),
         isActive: true,
         sentAt: message.sentAt,
         to: receiverId,
+        type: "chat",
     });
 };
 
 export const sendForumNotification = async (topicId, comment, responseId) => {
-    const topicRef = doc(db, "topic", topicId);
-    const topic = await getDoc(topicRef);
-    const receiverId = topic.data().createdBy;
+    const topic = await getTopicById(topicId);
+    const receiverId = topic.createdBy;
 
-    const responseRef = doc(db, "topicComments", responseId);
-    const response = await getDoc(responseRef);
-    const senderId = response.data().createdBy;
-    
+    const response = await getCommentById(responseId);
+    const senderId = response.createdBy;
+     
     if(senderId === receiverId) 
     return;
     const notificationRef = collection(db, "notifications");
     await addDoc(notificationRef, {
+        topicHeader: topic.topicHeader,
         content: comment,
         from: senderId,
+        senderName: await getUserNameById(senderId),
         isActive: true,
         sentAt: serverTimestamp(),
-        to: receiverId
+        to: receiverId,
+        type: "forum",
+    });
+};
+
+export const deactivateNotification = async (notificationId) => {
+    const notificationRef = doc(db, "notifications", notificationId);
+    await updateDoc(notificationRef, {
+        isActive: false,
     });
 };
