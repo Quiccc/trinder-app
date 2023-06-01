@@ -40,7 +40,7 @@ const TopicComponent = ({ category, handleSelectTopic, searchValue }) => {
                             handleSelectTopic(topic.id);
                         }}>
                             <Row>
-                                <Col span={1} style={{ textAlign: 'center' }}>
+                                <Col span={1}>
                                     <CaretUpFilled className={styles.upIcon} onClick={(e) => {
                                         e.stopPropagation();
                                         if(auth.currentUser === null) {

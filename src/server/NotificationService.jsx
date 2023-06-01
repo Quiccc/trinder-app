@@ -1,12 +1,11 @@
-import { collection, getDoc, getDocs, query, where, doc, addDoc, serverTimestamp, orderBy, limit, updateDoc } from "firebase/firestore";
+import { collection, getDoc, getDocs, query, where, doc, addDoc, serverTimestamp, orderBy, limit, deleteDoc } from "firebase/firestore";
 import { auth, db } from "./config/FirebaseConfig";
-import { convertTimeStampToDate, convertTimeStampToDateAdvertCard, convertTimeStampToDateChat } from "./UtilsService";
 import { getUserNameById } from "./UserService"
 import { getTopicById, getCommentById} from "./ForumService";
 
 export const getActiveUserNotifications = async () => {
     const notificationRef = collection(db, "notifications");
-    const q = query(notificationRef, where("to", "==", auth.currentUser.uid), where("isActive", "==", true), orderBy("sentAt", "desc"), limit(5));
+    const q = query(notificationRef, where("to", "==", auth.currentUser.uid), orderBy("sentAt", "desc"), limit(5));
     const querySnapshot = await getDocs(q);
     let notifications = [];
     for(let i = 0; i < querySnapshot.docs.length; i++){
@@ -14,7 +13,7 @@ export const getActiveUserNotifications = async () => {
         notification.id = querySnapshot.docs[i].id;
         notifications.push(notification);
     }
-    return notifications
+    return notifications;
 };
 
 export const sendChatNotification = async (chatId, message) => {
@@ -36,6 +35,7 @@ export const sendChatNotification = async (chatId, message) => {
         sentAt: message.sentAt,
         to: receiverId,
         type: "chat",
+        chatId: chatId,
     });
 };
 
@@ -58,12 +58,48 @@ export const sendForumNotification = async (topicId, comment, responseId) => {
         sentAt: serverTimestamp(),
         to: receiverId,
         type: "forum",
+        topicId: topicId,
     });
 };
 
-export const deactivateNotification = async (notificationId) => {
-    const notificationRef = doc(db, "notifications", notificationId);
-    await updateDoc(notificationRef, {
-        isActive: false,
+export const sendWarningAdvertReportNotification = async (advertId,userId) => {
+    const advertRef = await getDoc(doc(db, "adverts", advertId));
+    const advert = advertRef.data();
+    const advertTitle = advert.title;
+    const notificationRef = collection(db, "notifications");
+    await addDoc(notificationRef, {
+        isActive: true,
+        type: "warningAdvertReport",
+        sentAt: serverTimestamp(),
+        to: userId,
+        content: `You have been warned for inappropriate advert: ${advertTitle}. If you continue to send inappropriate adverts, your account will be banned.`,
     });
+}
+
+export const sendWarningChatReportNotification = async (userId) => {
+    const notificationRef = collection(db, "notifications");
+    await addDoc(notificationRef, {
+        isActive: true,
+        type: "warningChatReport",
+        sentAt: serverTimestamp(),
+        to: userId,
+        content: "You have been warned for inappropriate chat message. If you continue to send inappropriate messages, your account will be banned.",
+    });
+}
+
+export const sendWarningForumReportNotification = async (userId) => {
+    const notificationRef = collection(db, "notifications");
+    await addDoc(notificationRef, {
+        isActive: true,
+        type: "warningForumReport",
+        sentAt: serverTimestamp(),
+        to: userId,
+        content: "You have been warned for inappropriate forum comment. If you continue to send inappropriate comments, your account will be banned.",
+    });
+}
+
+export const deactivateNotification = async (notificationId) => {
+    console.log(notificationId);
+    const notificationRef = doc(db, "notifications", notificationId);
+    await deleteDoc(notificationRef);
 };

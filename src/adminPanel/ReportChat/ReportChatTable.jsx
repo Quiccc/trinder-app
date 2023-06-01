@@ -1,6 +1,6 @@
 import { Button, Col, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
-import { banUser, getReportsFromChat, sendWarning } from "../../server/AdminService";
+import { banUser, deleteReport, getReportsFromChat, sendWarningChatReport } from "../../server/AdminService";
 import styles from "./ReportChatTable.module.css";
 
 const ReportChatTable = () => {
@@ -40,20 +40,34 @@ const ReportChatTable = () => {
         <Col>
           <Button onClick={() => showConfirmModal("sendWarning", text)}>Send Warning</Button>
           <Button onClick={() => showConfirmModal("ban", record.userId)}>Ban User</Button>
+          <Button onClick={() => showConfirmModal("deleteReport", text)}>Delete Report</Button>
         </Col>
       ),
     },
   ];
 
   const handleSendWarning = (chatId) => {
-    sendWarning(chatId).then((res) => {
+    sendWarningChatReport(chatId).then((res) => {
       // Handle success or failure, if needed
+      getReportsFromChat().then((res) => {
+        setData(res);
+      });
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
       // Handle success or failure, if needed
+      getReportsFromChat().then((res) => {
+        setData(res);
+      });
+    });
+  };
+  const handleDeleteReport = (reportId) => {
+    deleteReport(reportId).then((res) => {
+      getReportsFromChat().then((res) => {
+        setData(res);
+      });
     });
   };
 
@@ -68,6 +82,8 @@ const ReportChatTable = () => {
       handleSendWarning(selectedItemId);
     } else if (selectedAction === "ban") {
       handleBanUser(selectedItemId);
+    } else if (selectedAction === "deleteReport") {
+      handleDeleteReport(selectedItemId);
     }
 
     setConfirmModalVisible(false);

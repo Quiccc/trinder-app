@@ -41,6 +41,9 @@ const UsersTable = () => {
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
       // Handle success or failure, if needed
+      getUsersForAdmin().then((res) => {
+        setData(res);
+      });
     });
   };
 

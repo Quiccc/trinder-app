@@ -9,9 +9,8 @@ import TopicComponent from '../TopicComponent/TopicComponent';
 import TopicDetailsComponent from '../TopicDetailsComponent/TopicDetailsComponent';
 import styles from './ForumComponent.module.css'
 
-const ForumComponent = () => {
+const ForumComponent = ({ topicId }) => {
     //Options are "3D Models", "3D Printers", "Filaments"
-    //Personal options are, My Posts, My Comments, My Likes
     const [forumMenuOptions, setMenuOptions] = useState(null);
     const [selectedTopicID, setSelectedTopicID] = useState(null);
     const [isCreateTopicVisible, setIsCreateTopicVisible] = useState(false);
@@ -29,7 +28,11 @@ const ForumComponent = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
+    useEffect(() => {
+        if (topicId) {
+            setSelectedTopicID(topicId);
+        }
+    }, [topicId]);
     const handleSearch = (e) => {
         setSearchValue(e.target.value);
         setSelectedTopicID(null);

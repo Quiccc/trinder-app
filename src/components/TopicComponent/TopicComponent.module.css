@@ -2,7 +2,7 @@
     display: inline-block;
     border-radius: 1vw;
     background-color: white;
-    padding: 1.1vw;
+    padding: 0.7rem;
     border: 1.5px solid #eceeff;
     width: 75%;
     margin-left: 12.5%;
@@ -35,16 +35,14 @@
   }
   .upIcon{
     color: #55e6c1;
-    font-size: 1.5rem;
-    text-overflow: ellipsis;
+    font-size: 1.4rem;
     overflow: hidden;
     white-space: nowrap;
     font-weight: 700;
   }
   .downIcon{
     color: #ac151f;
-    font-size: 1.5rem;
-    text-overflow: ellipsis;
+    font-size: 1.4rem;
     overflow: hidden;
     white-space: nowrap;
     font-weight: 700;
@@ -53,7 +51,6 @@
     color: #55e6c1;
     font-size: 1.2rem;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
     font-weight: 700;
   }
@@ -61,7 +58,6 @@
     color: #ac151f;
     font-size: 1.2rem;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
     font-weight: 700;
   }

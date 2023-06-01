@@ -1,6 +1,6 @@
 import { Button, Col, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
-import { banUser, deleteComment, getReportsFromForum } from "../../server/AdminService";
+import { banUser, deleteComment, deleteReport, getReportsFromForum } from "../../server/AdminService";
 import styles from "./ReportForumTable.module.css";
 
 const ReportForumTable = () => {
@@ -37,6 +37,7 @@ const ReportForumTable = () => {
         <Col>
           <Button onClick={() => showConfirmModal("deleteComment", record.commentId)}>Delete Comment / Send Warning</Button>
           <Button onClick={() => showConfirmModal("ban", record.comment.createdBy)}>Ban User</Button>
+          <Button onClick={() => showConfirmModal("deleteReport", text)}>Delete Report</Button>
         </Col>
       ),
     },
@@ -45,12 +46,27 @@ const ReportForumTable = () => {
   const handleDeleteComment = (commentId) => {
     deleteComment(commentId).then((res) => {
       // Handle success or failure, if needed
+      getReportsFromForum().then((res) => {
+        setData(res);
+      });
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
       // Handle success or failure, if needed
+      getReportsFromForum().then((res) => {
+        setData(res);
+      });
+    });
+  };
+
+  const handleDeleteReport = (reportId) => {
+    deleteReport(reportId).then((res) => {
+      // Handle success or failure, if needed
+      getReportsFromForum().then((res) => {
+        setData(res);
+      });
     });
   };
 
@@ -65,7 +81,9 @@ const ReportForumTable = () => {
       handleDeleteComment(selectedItemId);
     } else if (selectedAction === "ban") {
       handleBanUser(selectedItemId);
-    }
+    } else if (selectedAction === "deleteReport") {
+      handleDeleteReport(selectedItemId);
+    }  
 
     setConfirmModalVisible(false);
   };

@@ -39,6 +39,9 @@ code {
   z-index: 100000;
 }
 
+.ant-dropdown-menu {
+  width: 17vw !important;
+}
 /* .ant-select-selector {
 
   justify-content: center !important;

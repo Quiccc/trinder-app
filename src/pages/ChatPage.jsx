@@ -5,6 +5,7 @@ import Footer from "../components/Footer/Footer";
 
 const ChatPage = () => {
     const location = useLocation();
+
     return (
         <>
             <Navbar design={true} />

@@ -32,9 +32,8 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
-            getDetails().then(() => {
-                setLoading(false);
-            });
+            getDetails();
+            setLoading(false);
         });
 
         const storedUser = localStorage.getItem('currentUser');

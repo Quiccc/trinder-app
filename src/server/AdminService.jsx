@@ -1,6 +1,7 @@
 import { collection, doc, getCountFromServer, getDoc, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "./config/FirebaseConfig";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { sendWarningAdvertReportNotification, sendWarningChatReportNotification, sendWarningForumReportNotification } from "./NotificationService";
 
 export const getReportsFromForum = async () => {
     const reportRef = collection(db, 'reports');
@@ -85,6 +86,7 @@ export const getAdvertsForAdmin = async () => {
         const userRef = doc(db, 'user', advert.user_id);
         const userSnapshot = await getDoc(userRef);
         advert.userName = userSnapshot.data().name + ' ' + userSnapshot.data().surname;
+        advert.userId = userSnapshot.data().id;
         advertList.push(advert);
     }
     return advertList;
@@ -107,13 +109,6 @@ export const getReportsCount = async () => {
     return { forumCount: forumCount, advertCount: advertCount, userCount: userCount };
 };
 
-export const deleteAdvert = async (advertId) => {
-    const functions = getFunctions();
-    const deleteAdvert = httpsCallable(functions, "deleteAdvert");
-    let result = await deleteAdvert({ advertId: advertId });
-    return result;
-};
-
 export const banUser = async (userId) => {
     const functions = getFunctions();
     const disableUser = httpsCallable(functions, "disableUser");
@@ -121,16 +116,28 @@ export const banUser = async (userId) => {
     return result;
 };
 
-export const sendWarning = async (userId) => {
-    //Send notification with userId, and maybe text content
-
+export const deleteAdvert = async (advertId) => {
+    const functions = getFunctions();
+    const advert = await getDoc(doc(db, 'adverts', advertId));
+    const userId = advert.data().user_id;
+    const deleteAdvert = httpsCallable(functions, "deleteAdvert");
+    await sendWarningAdvertReportNotification(advertId,userId);
+    let result = await deleteAdvert({ advertId: advertId });
+    return result;
 };
 
 export const deleteComment = async (commentId) => {
     const functions = getFunctions();
+    const comment = await getDoc(doc(db, 'topicComments', commentId));
+    const userId = comment.data().createdBy;
     const deleteComment = httpsCallable(functions, "deleteComment");
+    await sendWarningForumReportNotification(userId);
     let result = await deleteComment({ commentId: commentId });
     return result;
+};
+
+export const sendWarningChatReport = async (userId) => {
+    await sendWarningChatReportNotification(userId);
 };
 
 export const deleteReport = async (reportId) => {

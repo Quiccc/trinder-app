@@ -30,6 +30,7 @@ const ChatMessagesComponent = ({ chatId }) => {
     useEffect(() => {
         getChatMessages(chatId).then((res) => {
             setChatMessages(res.messages);
+            console.log(res.advert);
             setAdvert(res.advert);
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,7 +96,7 @@ const ChatMessagesComponent = ({ chatId }) => {
                     }}>
                         <img
                             className={styles.advertImage}
-                            src={advert?.image || 'images/no_image.png'}
+                            src={advert?.images?.[0]?.url ||'images/no_image.png'}
                             alt={advert?.title} />
                         <Col className={styles.advertInfo}>
                         <p className={styles.advertTitle}>{advert?.title}</p>

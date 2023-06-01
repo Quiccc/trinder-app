@@ -2,6 +2,8 @@
 import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import useNotification from '../../hooks/UseNotification';
+import { isCurrentUserVerified } from '../../server/UtilsService';
 import CreateAdvertDetailsBuyer from '../CreateAdvertDetails/CreateAdvertDetailsBuyer';
 import CreateAdvertDetailsSellerModel from '../CreateAdvertDetails/CreateAdvertDetailsSellerModel';
 import CreateAdvertDetailsSellerService from '../CreateAdvertDetails/CreateAdvertDetailsSellerService';
@@ -10,19 +12,35 @@ import styles from './CreateAdvert.module.css';
 const CreateAdvert = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { alertError } = useNotification();
     const [screenId, setScreenId] = useState(0); //0 - choose advert type, 1 - advert sell service, 2 - advert sell model, 3 - advert buy
     //Check if url is post or post/details
     useEffect(() => {
-        if (location.pathname === '/post/details/advert-service') {
-            setScreenId(1);
-        } else if (location.pathname === '/post/details/advert-model') {
-            setScreenId(2);
-        } else if (location.pathname === '/post/details/advert-request') {
-            setScreenId(3);
-        } else {
-            setScreenId(0);
-        }
+        isCurrentUserVerified().then((res) => {
+            if (!res) {
+                alertError("You need to verify your account to create an advert!");
+            } else {
+                if (location.pathname === '/post/details/advert-service') {
+                    setScreenId(1);
+                } else if (location.pathname === '/post/details/advert-model') {
+                    setScreenId(2);
+                } else if (location.pathname === '/post/details/advert-request') {
+                    setScreenId(3);
+                } else {
+                    setScreenId(0);
+                }
+            }
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
+    useEffect(() => {
+        isCurrentUserVerified().then((res) => {
+            if(!res){
+                alertError("You need to verify your account to create an advert!");
+            }
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <div>
             {

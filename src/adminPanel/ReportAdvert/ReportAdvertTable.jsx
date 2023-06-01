@@ -1,7 +1,7 @@
 import { Button, Col, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { banUser, deleteAdvert, getReportsFromAdvert } from "../../server/AdminService";
+import { banUser, deleteAdvert, deleteReport, getReportsFromAdvert } from "../../server/AdminService";
 import styles from "./ReportAdvertTable.module.css";
 
 const ReportAdvertTable = () => {
@@ -32,6 +32,7 @@ const ReportAdvertTable = () => {
         <Col>
           <Button onClick={() => showConfirmModal("delete", record.advertID)}>Delete Advert / Send Warning</Button>
           <Button onClick={() => showConfirmModal("ban", record.user_id)}>Ban User</Button>
+          <Button onClick={() => showConfirmModal("deleteReport", record.id)}>Delete Report</Button>
         </Col>
       ),
     },
@@ -39,15 +40,27 @@ const ReportAdvertTable = () => {
 
   const handleDeleteAdvert = (advertId) => {
     deleteAdvert(advertId).then((res) => {
-      // Handle success or failure, if needed
+      getReportsFromAdvert().then((res) => {
+        setData(res);
+      });
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
-      // Handle success or failure, if needed
+      getReportsFromAdvert().then((res) => {
+        setData(res);
+      });
     });
   };
+
+  const handleDeleteReport = (reportId) => {
+    deleteReport(reportId).then((res) => {
+      getReportsFromAdvert().then((res) => {
+        setData(res);
+      });
+    });
+  }
 
   const showConfirmModal = (action, itemId) => {
     setSelectedAction(action);
@@ -60,6 +73,8 @@ const ReportAdvertTable = () => {
       handleDeleteAdvert(selectedItemId);
     } else if (selectedAction === "ban") {
       handleBanUser(selectedItemId);
+    } else if (selectedAction === "deleteReport") {
+      handleDeleteReport(selectedItemId);
     }
 
     setConfirmModalVisible(false);

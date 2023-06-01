@@ -1,5 +1,5 @@
 .contentContainer {
-    margin: -11vw auto 0 auto;
+    margin-top: -11vw;
     background-color: #ffffff;
     padding: 3vw 0;
     margin-bottom: 13vh;
@@ -17,7 +17,8 @@
     border-width: 0.1rem;
     align-items: center;
     cursor: pointer;
-    margin-right: 2vw;
+    margin-right: 1vw;
+    margin-left: 1vw;
 }
 .title{
     font-size: 2rem;
