@@ -1,0 +1,34 @@
+.notificationIcon{
+    color: #3e4581;
+    font-weight: 700;
+    display: flex;
+    margin-right: 1vw;
+    font-size: 3vw;
+  }
+.noNotificationContainer{
+  width: 50%;
+  height: 50%;
+  margin-left: 88%;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
+.noNotificationImage{
+  width: 80%;
+  height: 80%;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+.noNotificationText{
+  font-size: 1vw;
+  font-weight: 500;
+  color: #3e4581;
+  display: flex;
+  padding: 1%;
+  justify-content: center;
+}
+.notificationText{
+  font-size:0.9vw;
+  font-weight: 500;
+}
