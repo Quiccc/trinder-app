@@ -108,7 +108,6 @@ export const getReportsCount = async () => {
 };
 
 export const deleteAdvert = async (advertId) => {
-    console.log(advertId);
     const functions = getFunctions();
     const deleteAdvert = httpsCallable(functions, "deleteAdvert");
     let result = await deleteAdvert({ advertId: advertId });
@@ -116,7 +115,6 @@ export const deleteAdvert = async (advertId) => {
 };
 
 export const banUser = async (userId) => {
-    console.log(userId);
     const functions = getFunctions();
     const disableUser = httpsCallable(functions, "disableUser");
     let result = await disableUser({ uid: userId });
@@ -129,7 +127,6 @@ export const sendWarning = async (userId) => {
 };
 
 export const deleteComment = async (commentId) => {
-    console.log(commentId);
     const functions = getFunctions();
     const deleteComment = httpsCallable(functions, "deleteComment");
     let result = await deleteComment({ commentId: commentId });
@@ -137,7 +134,6 @@ export const deleteComment = async (commentId) => {
 };
 
 export const deleteReport = async (reportId) => {
-    console.log(reportId);
     const functions = getFunctions();
     const deleteReport = httpsCallable(functions, "deleteReport");
     let result = await deleteReport({ reportId: reportId });
