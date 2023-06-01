@@ -24,7 +24,7 @@ import Loading from "../components/Loading/Loading";
 import ForumPage from "../pages/ForumPage";
 
 const AppRouter = () => {
-    const { currentUser, loading } = useAuth();
+    const { currentUser, userDetails, loading } = useAuth();
     function PrivateRouter() {
         let location = useLocation();
         if (loading) {
@@ -41,6 +41,23 @@ const AppRouter = () => {
             return <Outlet />;
         }
     };
+
+    function AdminRouter() {
+        let location = useLocation();
+        if (loading) {
+            //Put loading screen here
+            return <Loading />;
+        }
+        if (!currentUser) {
+            return <Navigate to="/404" state={{ from: location }} replace={true} />;
+        } else {
+            if (userDetails.isAdmin) {
+                return <Outlet />;
+            } else {
+                return <Navigate to="/404" state={{ from: location }} replace={true} />;
+            }
+        }
+    }
     return (
         <BrowserRouter>
             <Routes>
@@ -50,7 +67,6 @@ const AppRouter = () => {
                 <Route path="/advert/:id" element={<AdvertPage />} />
                 <Route element={<PrivateRouter />}>
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/panel" element={<AdminPanel />} />
                     <Route path="/chat" element={<ChatPage />} />
                     <Route path="/success" element={<Successful />} />
                     <Route path="/post" element={<CreateAdvertPage />} >
@@ -58,6 +74,9 @@ const AppRouter = () => {
                         <Route path="/post/details/advert-model" element={<CreateAdvertPage />} />
                         <Route path="/post/details/advert-request" element={<CreateAdvertPage />} />
                     </Route>
+                </Route>
+                <Route element={<AdminRouter />}>
+                    <Route path="/panel" element={<AdminPanel />} />
                 </Route>
                 <Route path="/search" element={<AdvertSearchPage />} />
                 <Route path="/pricing" element={<Pricing />} />

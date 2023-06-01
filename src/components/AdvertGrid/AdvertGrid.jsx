@@ -1,8 +1,9 @@
 import { Button, Col, Row } from "antd";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import AdvertCard from "../AdvertCard/AdvertCard";
 import styles from './AdvertGrid.module.css';
 import { getAdverts } from '../../server/AdvertService';
+import PremiumAdvertCard from "../PremiumAdvertCard/PremiumAdvertCard";
 const AdvertGrid = ({ data }) => {
     const [adverts, setAdverts] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
@@ -15,7 +16,8 @@ const AdvertGrid = ({ data }) => {
     }
     useEffect(() => {
         getAdverts(pageNumber, 12, lastIndex, data).then((res) => {
-            setAdverts([...adverts, ...res.adverts])
+            let newAdverts = [...adverts, ...res.adverts]
+            setAdverts(newAdverts.filter((advert, index, self) => index === self.findIndex((t) => (t.advert_id === advert.advert_id))))
             setCount(res.count)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,7 +25,8 @@ const AdvertGrid = ({ data }) => {
 
     useEffect(() => {
         getAdverts(0, 12, null, data).then((res) => {
-            setAdverts(res.adverts)
+            //Delete the duplicate adverts with the advert_id
+            setAdverts(res.adverts.filter((advert, index, self) => index === self.findIndex((t) => (t.advert_id === advert.advert_id))))
             setCount(res.count)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,6 +37,20 @@ const AdvertGrid = ({ data }) => {
             <Row wrap={true} className={styles.advertCardContainer} justify='center' align='middle'>
                 {
                     adverts?.map((advert, index) => {
+                        if (index === 1) {
+                            return (
+                                <Fragment key={index}>
+                                    <Col xxl={5} xl={5} lg={5} md={10} sm={10} xs={18} align='middle' key={index}>
+                                        <PremiumAdvertCard />
+                                    </Col>
+                                    <Col xxl={5} xl={5} lg={5} md={10} sm={10} xs={18} align='middle' key={index}>
+                                        <AdvertCard advert={advert} />
+                                    </Col>
+                                </Fragment>
+
+
+                            )
+                        }
                         return (
                             <Col xxl={5} xl={5} lg={5} md={10} sm={10} xs={18} align='middle' key={index}>
                                 <AdvertCard advert={advert} />

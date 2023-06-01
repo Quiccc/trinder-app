@@ -2,23 +2,33 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Col, Row } from 'antd';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import useNotification from '../../hooks/UseNotification';
+import { auth } from '../../server/config/FirebaseConfig';
 import { checkOut, getIsUserPremium } from '../../server/PaymentService';
 import styles from './PricingComponent.module.css';
 
 const PricingComponent = () => {
     // const navigate = useNavigate();
-    // const { alertError } = useNotification();
+    const { alertError } = useNotification();
     const [loadingSecond, setLoadingSecond] = useState(false);
     const [isUserPremium, setIsUserPremium] = useState(false);
     // Navigate to the Stripe checkout page with the given price id
     const navigateToStripe = async (priceId) => {
-        // Add your navigation logic here
-        await checkOut(priceId);
+        if (auth?.currentUser === null) {
+            alertError('You must be logged in to buy premium.');
+            return;
+        }else if(auth?.currentUser?.emailVerified === false){
+            alertError('You must verify your email to buy premium.');
+            return;
+        }else {
+            setLoadingSecond(true);
+            await checkOut(priceId);
+            setLoadingSecond(false);
+        }
     };
 
     useEffect(() => {
         getIsUserPremium().then((res) => {
-            console.log(res);
             setIsUserPremium(res);
         });
     }, []);
@@ -81,6 +91,9 @@ const PricingComponent = () => {
                                 <p className={styles.usageDate}>
                                     <b>Duration: 1 Month</b>
                                 </p>
+                                <p className={styles.descriptionSecond}>
+                                    <b>Renew Automatically</b>
+                                </p>
                                 <p className={styles.descriptionFirst}>
                                     Reach up to <b>All</b> potential customers
                                 </p>
@@ -88,7 +101,7 @@ const PricingComponent = () => {
                                     <b>Unlimited</b> Advertisements
                                 </p>
                                 <p className={styles.descriptionSecond}>
-                                    <b>Priority</b> on search    
+                                    <b>Priority</b> on search
                                 </p>
                                 <p className={styles.tax}>Taxes are included</p>
                                 <button

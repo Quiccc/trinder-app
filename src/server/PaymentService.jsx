@@ -31,7 +31,7 @@ export const cancelSubscription = async (subscriptionId) => {
     const functions = getFunctions();
     const cancelSubscription = httpsCallable(functions, "cancelSubscription");
     let result = await cancelSubscription({ subscriptionId: subscriptionId });
-    console.log(result);
+    return result.data;
 };
 
 export const getActiveSubscription = async () => {
@@ -75,7 +75,6 @@ export const getIsUserHasActiveSubscription = async () => {
 
 export const getIsUserPremium = async () => {
     //Check the premiumUsers table have document with current user id
-    console.log(auth.currentUser.uid);
     const docRef = doc(db, "premiumUsers", auth.currentUser.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {

@@ -50,6 +50,15 @@
   .record {
     width: 80%;
   }
+  .dividerVertical{
+    width: 10px;
+    height: 100%;
+    background-color: #160c0c;
+  }
+  .reloadButton{
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
   
   @media screen and (max-width: 768px) {
     .recordPageContainer {
