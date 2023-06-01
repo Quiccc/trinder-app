@@ -159,6 +159,13 @@ exports.disableUser = functions.https.onCall(async (data, context) => {
         }
     });
 
+    //Delete all their topics
+    await admin.firestore().collection("topic").where("createdBy", "==", data.uid).get().then(async (querySnapshot) => {
+        for (let i = 0; i < querySnapshot.docs.length; i++) {
+            const doc = querySnapshot.docs[i];
+            await admin.firestore().collection("topic").doc(doc.id).delete();
+        }
+    });
     //Delete all their comments
     await admin.firestore().collection("topicComments").where("createdBy", "==", data.uid).get().then(async (querySnapshot) => {
         for (let i = 0; i < querySnapshot.docs.length; i++) {

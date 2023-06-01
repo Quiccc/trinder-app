@@ -80,7 +80,7 @@ export const changePasswordAuth = async (oldPassword, newPassword) => {
 
 export const emailVerification = async () => {
     await sendEmailVerification(auth.currentUser, {
-        url: "http://localhost:3000/verify",
+        url: "https://trinder-4pp.web.app",
     }).catch((error) => {
         console.log(error);
     });
@@ -88,7 +88,7 @@ export const emailVerification = async () => {
 
 export const resetPasswordFirebase = async (email) => {
     await sendPasswordResetEmail(auth, email, {
-        url: "http://localhost:3000/reset",
+        url: "https://trinder-4pp.web.app",
     }).catch((error) => {
         console.log(error);
     });

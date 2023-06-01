@@ -74,10 +74,12 @@ export const createAdvert = async (advert, type) => {
             const advertsRef = collection(db, "adverts");
             const q = query(advertsRef, where("user_id", "==", auth.currentUser.uid));
             const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                updateDoc(doc(db, "adverts", doc.id), {
-                    is_active: false,
-                });
+            querySnapshot.forEach((docCopy) => {
+                if (docCopy.id !== advert.id){
+                    updateDoc(doc(db, "adverts", docCopy.id), {
+                        is_active: false,
+                    });
+                }
             });
         }
         return {
@@ -87,7 +89,7 @@ export const createAdvert = async (advert, type) => {
     } catch (error) {
         return {
             status: 500,
-            message: error.message,
+            message: "There is an error while creating advert",
         }
     }
 
@@ -389,7 +391,7 @@ export const searchAdverts = async (page, limitNumber, data) => {
     if (data?.sortText && data?.sortText !== '' && data?.sortParam !== null && data?.sortParam !== '') {
         let sortParam1 = data.sortParam.split(' ')[0]; //price
         let sortParam2 = data.sortParam.split(' ')[1]; //asc or desc
-        // console.log(rankingParam);
+
         if (sortParam1 === "price" && sortParam2 === "asc") {
             searchResult = await indexPriceAsc.search(data.value, params);
         } else if (sortParam1 === "price" && sortParam2 === "desc") {

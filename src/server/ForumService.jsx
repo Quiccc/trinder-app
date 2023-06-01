@@ -85,7 +85,6 @@ export const getTopicCommentsByTopicId = async (topicId,pageNumber,pageSize,last
     let q = query(topicCommentRef, where('topicId', '==', topicId), where('isActive', '==', true));
     let qCopy = q;
     if(pageNumber !== 0){
-        console.log("lastIndexId",lastIndexId);
         let lastIndexDoc = await getDoc(doc(db, 'topicComments', lastIndexId));
         q = query(q, orderBy('createdAt', 'asc'), limit(pageSize), startAfter(lastIndexDoc));
     }else{
@@ -162,7 +161,7 @@ export const createTopic = async (comment, topicHeader,topicCategoryId) => {
         topicHeader: topicHeader,
         createdBy: auth.currentUser.uid,
         createdAt: serverTimestamp(),
-        isActive: false,
+        isActive: true,
         isLocked: false,
         likedBy: [],
         unlikedBy: [],
