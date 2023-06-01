@@ -47,7 +47,8 @@ exports.purchasePackageUpdate = functions.firestore
                 for (let i = 0; i < querySnapshot.docs.length; i++) {
                     const doc = querySnapshot.docs[i];
                     admin.firestore().collection("adverts").doc(doc.id).update({
-                        is_active: false
+                        is_active: false,
+                        is_premium: false
                     });
                 }
             });
@@ -57,10 +58,12 @@ exports.purchasePackageUpdate = functions.firestore
                 for (let i = 0; i < querySnapshot.docs.length; i++) {
                     const doc = querySnapshot.docs[i];
                     admin.firestore().collection("adverts").doc(doc.id).update({
-                        is_active: true
+                        is_active: true,
+                        is_premium: false
                     });
                 }
             });
+
 
         }
     });

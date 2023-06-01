@@ -68,6 +68,18 @@ export const createAdvert = async (advert, type) => {
                 model_obj: model_url,
             })
         });
+
+        //If user is not premium, make the other adverts of user is not active
+        if (!advert?.is_premium) {
+            const advertsRef = collection(db, "adverts");
+            const q = query(advertsRef, where("user_id", "==", auth.currentUser.uid));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                updateDoc(doc(db, "adverts", doc.id), {
+                    is_active: false,
+                });
+            });
+        }
         return {
             status: 200,
             message: "Advert created successfully",
