@@ -243,6 +243,12 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
               name="images"
               labelCol={{ span: 24 }}
               label={<label className={styles.label}>You can upload up to 8 images</label>}
+              rules={[
+                {
+                  required: true,
+                  message: "Please upload at least one image.",
+                },
+              ]}
             >
               <Upload
                 fileList={imageList}

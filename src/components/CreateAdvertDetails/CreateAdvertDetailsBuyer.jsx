@@ -250,6 +250,12 @@ const CreateAdvertDetailsBuyer = () => {
               <Form.Item
                 name="image"
                 labelCol={{ span: 24 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please upload at least one image.",
+                  },
+                ]}
                 label={<span className={styles.label}>You can upload up to 8 images</span>}
               >
                 <Upload

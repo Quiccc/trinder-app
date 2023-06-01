@@ -273,6 +273,12 @@ const UpdateAdvertDetailsBuyer = ({ advertPass }) => {
                 name="images"
                 labelCol={{ span: 24 }}
                 label={<label className={styles.label}>Model Images</label>}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please upload at least one image.",
+                  },
+                ]}
               >
                 <Upload
                   fileList={imageList}
