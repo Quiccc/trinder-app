@@ -25,7 +25,7 @@ const AdvertPageComponent = () => {
     const [titlePrefix, setTitlePrefix] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [resetLoading, setResetLoading] = useState(false)
-    const {alertSuccess, alertError} = useNotification();
+    const { alertSuccess, alertError } = useNotification();
     const advertId = location.pathname.split('/')[2];
     const navigate = useNavigate();
 
@@ -46,12 +46,20 @@ const AdvertPageComponent = () => {
     }, [])
 
     const handleContact = async () => {
-        //Navigate to chat page with advert id
-        await createContact(advertId).then((chatId) => {
-            //TODO: Navigate to chat page with chatId
-            navigate(`/chat`, { state: { chatId: chatId } });
-        });
-    };      
+        if (auth.currentUser === null) {
+            alertError("You must be logged in to contact");
+            return;
+        } else if (auth.currentUser.emailVerified === false) {
+            alertError("You must verify your email to contact");
+            return;
+        } else {
+            //Navigate to chat page with advert id
+            await createContact(advertId).then((chatId) => {
+                //TODO: Navigate to chat page with chatId
+                navigate(`/chat`, { state: { chatId: chatId } });
+            });
+        }
+    };
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -60,20 +68,19 @@ const AdvertPageComponent = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    
+
     const handleReport = async () => {
         const text = document.getElementById('report-text').value;
         if (auth.currentUser === null) {
             alertError("You must be logged in to report");
             return;
-        }   
+        }
         setResetLoading(true);
         try {
-            await sendReport(advert,text);
+            await sendReport(advert, text);
             alertSuccess("Your report has been sent successfully, we will review it as soon as possible");
             setResetLoading(false)
         } catch (err) {
-            console.log(err);
             alertError("Report could not be sent, please try again later");
             setResetLoading(false)
         }
@@ -92,7 +99,7 @@ const AdvertPageComponent = () => {
                                 </h1>
                                 <Carousel {...settings} className={styles.carouselContainer}>
                                     {
-                                        advert?.images?.map((image,index) => {
+                                        advert?.images?.map((image, index) => {
                                             return (
                                                 <img
                                                     src={image.url}
@@ -186,7 +193,7 @@ const AdvertPageComponent = () => {
                                     {
                                         advert?.type === 'buyer' && advert?.model_obj && (
                                             //put file here to download
-                                            <p className={styles.cardSubheadersLeftBig} onClick={() => { 
+                                            <p className={styles.cardSubheadersLeftBig} onClick={() => {
                                                 window.open(advert?.model_obj.url);
                                             }}><span className={styles.navyBlue}>Model File:</span> <Button className={styles.loadMoreButton}>Download</Button></p>
                                         )
