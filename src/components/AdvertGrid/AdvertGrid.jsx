@@ -62,7 +62,7 @@ const AdvertGrid = ({ data }) => {
             {
                 count > adverts.length &&
                 <Row justify="center">
-                    <Button className={styles.loadMoreButton} onClick={handleLoadMore}>Load More</Button>
+                    <Button className={styles.loadMoreButton} onClick={handleLoadMore}>Show More Adverts</Button>
                 </Row>
             }
 

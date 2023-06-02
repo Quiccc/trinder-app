@@ -221,3 +221,15 @@ export const getTopicsByText = async (text,pageNumber,pageSize) => {
         count: count,
     }
 };
+
+export const getTopicById = async (topicId) => {
+    const topicRef = doc(db, 'topic', topicId);
+    const topic = await getDoc(topicRef);
+    return topic.data();
+};
+
+export const getCommentById = async (commentId) => {
+    const commentRef = doc(db, 'topicComments', commentId);
+    const comment = await getDoc(commentRef);
+    return comment.data();
+}

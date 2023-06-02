@@ -10,6 +10,7 @@ import useNotification from '../../hooks/UseNotification';
 import TextArea from 'antd/es/input/TextArea';
 import { auth } from '../../server/config/FirebaseConfig';
 import { isCurrentUserVerified } from '../../server/UtilsService';
+import { sendForumNotification } from '../../server/NotificationService';
 
 const TopicDetailsComponent = ({ topicID }) => {
     const [topicComments, setTopicComments] = useState(null);
@@ -50,6 +51,7 @@ const TopicDetailsComponent = ({ topicID }) => {
                 if (response) {
                     setCount(count + 1);
                     alertSuccess("Comment created successfully.");
+                    sendForumNotification(topicID, sanitizedContent, response.id);
                 } else {
                     alertError("Error occured while creating comment");
                 }

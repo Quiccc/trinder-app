@@ -121,6 +121,13 @@ export const getCurrentUserDetails = async () => {
     return returnData;
 };
 
+export const getUserNameById = async (id) => {
+    const userRef = doc(db, "user", id);
+    const user = await getDoc(userRef);
+    
+    return user.data().name + " " + user.data().surname;
+};
+
 
 export const getPremiumDetails = async () => {
     const userRef = doc(db, "premiumUsers", auth.currentUser.uid);

@@ -10,6 +10,7 @@ import { auth, db } from '../../server/config/FirebaseConfig';
 import styles from './ChatMessagesComponent.module.css';
 import { doc, getDoc } from 'firebase/firestore';
 import { WarningOutlined } from '@ant-design/icons';
+import { sendChatNotification } from '../../server/NotificationService';
 
 const ChatMessagesComponent = ({ chatId }) => {
     const [chatMessages, setChatMessages] = useState([]);
@@ -22,6 +23,7 @@ const ChatMessagesComponent = ({ chatId }) => {
 
     const handleMessageSend = async () => {
         await sendMessage(chatId, newMessage);
+        await sendChatNotification(chatId, newMessage);
         setNewMessage(''); // Clear the input after sending the message
     };
 
