@@ -136,7 +136,35 @@ export const getAdverts = async (page, limitNumber, lastIndexId, data) => {
         baseQuery = query(baseQuery, limit(limitNumber), orderBy("created_at", "desc"));
     }
 
+    const snapshot = await getCountFromServer(baseQueryCopy);
+    let countAll = snapshot.data().count;
+    let queryFillSnapshot = null;
+    //Page is 0, and there is not enough adverts to fill the page, get the adverts without concidering location
+    if (snapshot.data().count < limitNumber && page === 0) {
+        const queryFill = query(advertsRef, where("is_active", "==", true), limit(limitNumber - snapshot.data().count), orderBy("created_at", "desc"));
+        queryFillSnapshot = await getDocs(queryFill);
+        countAll = snapshot.data().count + queryFillSnapshot.size;
+    }
     let adverts = [];
+    //If page is 0, get 3 premium adverts and add them to the beginning of the array
+    if (page === 0) {
+        const premiumQuery = query(advertsRef, where("is_active", "==", true), where("is_premium", "==", true), limit(3), orderBy("created_at", "desc"));
+        const premiumQuerySnapshot = await getDocs(premiumQuery);
+        premiumQuerySnapshot.forEach((doc) => {
+            let advertTemp = {
+                title: doc.data().title,
+                image: doc.data().images[0].url,
+                is_premium: doc.data().is_premium,
+                price: doc.data().price,
+                location: doc.data().city + ", " + doc.data().district,
+                date: convertTimeStampToDateAdvertCard(doc.data().created_at),
+                advert_id: doc.id,
+                type: doc.data().type === "service" ? "Sell Service" : doc.data().type === "model" ? "Sell Model" : "Model Request",
+            };
+            adverts.push(advertTemp);
+        });
+    }
+
     const querySnapshot = await getDocs(baseQuery);
     querySnapshot.forEach((doc) => {
         let advertTemp = {
@@ -151,12 +179,27 @@ export const getAdverts = async (page, limitNumber, lastIndexId, data) => {
         };
         adverts.push(advertTemp);
     });
+    if (queryFillSnapshot) {
+        queryFillSnapshot.forEach((doc) => {
+            let advertTemp = {
+                title: doc.data().title,
+                image: doc.data().images[0].url,
+                is_premium: doc.data().is_premium,
+                price: doc.data().price,
+                location: doc.data().city + ", " + doc.data().district,
+                date: convertTimeStampToDateAdvertCard(doc.data().created_at),
+                advert_id: doc.id,
+                type: doc.data().type === "service" ? "Sell Service" : doc.data().type === "model" ? "Sell Model" : "Model Request",
+            };
+            adverts.push(advertTemp);
+        });
+    }
 
-    //Count adverts
 
-    const snapshot = await getCountFromServer(baseQueryCopy);
 
-    return { adverts: adverts, count: snapshot.data().count };
+
+
+    return { adverts: adverts, count: countAll };
 };
 
 export const getOwnedAdverts = async () => {
@@ -268,96 +311,96 @@ export const changeAdvertStatus = async (advertId, status) => {
 };
 
 
-export const searchAdverts = async (page, limitNumber, data)  => {
-  let params = {
-    hitsPerPage: limitNumber,
-    filters: 'is_active:true',
-  };
+export const searchAdverts = async (page, limitNumber, data) => {
+    let params = {
+        hitsPerPage: limitNumber,
+        filters: 'is_active:true',
+    };
 
-  //Check if the location parameter is valid
-  if (data?.location && data?.location !== '') {
-    let district = data.location.includes(',') ? data.location.split(',')[0] : '';
-    let city = data.location.includes(',') ? data.location.split(', ')[1] : data.location;
+    //Check if the location parameter is valid
+    if (data?.location && data?.location !== '') {
+        let district = data.location.includes(',') ? data.location.split(',')[0] : '';
+        let city = data.location.includes(',') ? data.location.split(', ')[1] : data.location;
 
-    if (district !== '') {
-      params = {
-        ...params,
-        filters: `${params.filters || ''} AND district:${district} AND city:${city}`,
-      };
-    } else {
-      params = {
-        ...params,
-        filters: `${params.filters || ''} AND city:${city}`,
-      };
+        if (district !== '') {
+            params = {
+                ...params,
+                filters: `${params.filters || ''} AND district:${district} AND city:${city}`,
+            };
+        } else {
+            params = {
+                ...params,
+                filters: `${params.filters || ''} AND city:${city}`,
+            };
+        }
     }
-  }
 
-  // Check if the minPrice parameter is valid
-  if (data?.minPrice && data?.minPrice !== '') {
-    data.minPrice = parseInt(data.minPrice);
-    params = {
-      ...params,
-      filters: `${params.filters || ''} AND price >= ${data.minPrice}`,
-    };
-  }
-
-  // Check if the maxPrice parameter is valid
-  if (data?.maxPrice && data?.maxPrice !== '') {
-    data.maxPrice = parseInt(data.maxPrice);
-    params = {
-      ...params,
-      filters: `${params.filters || ''} AND price <= ${data.maxPrice}`,
-    };
-  }
-
-  // Check if the type parameter is valid
-  if (data?.type && data?.type !== '' && data?.typeParam !== '' && data?.typeParam !== null) {
-    params = {
-      ...params,
-      filters: `${params.filters || ''} AND type:${data.typeParam}`,
-    };
-  }
-
-  // Check if the page parameter is valid
-  if (page !== 0) {
-    // let lastIndex = await indexAdverts.getObject(lastIndexId);
-    params = {
-      ...params,
-      page: page,
-    };
-  }
-
-   let searchResult = null;
-
-
- // Check if the sortText parameter is valid
-  if (data?.sortText && data?.sortText !== '' && data?.sortParam !== null && data?.sortParam !== '') {
-    let sortParam1 = data.sortParam.split(' ')[0]; //price
-    let sortParam2 = data.sortParam.split(' ')[1]; //asc or desc
-    // console.log(rankingParam);
-    if(sortParam1 === "price" && sortParam2 === "asc"){
-      searchResult = await indexPriceAsc.search(data.value, params);
-    }else if(sortParam1 === "price" && sortParam2 === "desc"){
-      searchResult = await indexPriceDesc.search(data.value, params);
-    }else {  
-      searchResult = await indexAdverts.search(data.value, params);
+    // Check if the minPrice parameter is valid
+    if (data?.minPrice && data?.minPrice !== '') {
+        data.minPrice = parseInt(data.minPrice);
+        params = {
+            ...params,
+            filters: `${params.filters || ''} AND price >= ${data.minPrice}`,
+        };
     }
-  } 
-  else {
-    searchResult = await indexAdverts.search(data.value, params);
-  }
-   const count = searchResult.nbHits;
-   const hits = searchResult.hits;
-  let adverts = hits.map((hit) => ({
-    title: hit.title,
-    image: hit.images[0].url,
-    is_premium: hit.is_premium,
-    price: hit.price,
-    location: `${hit.city}, ${hit.district}`,
-    date: convertTimeStampToDateAdvertCard(hit.created_at),
-    advert_id: hit.objectID,
-    type:
-      hit.type === 'service' ? 'Sell Service' : hit.type === 'model' ? 'Sell Model' : 'Model Request',
-  }));
-  return {adverts, count};
+
+    // Check if the maxPrice parameter is valid
+    if (data?.maxPrice && data?.maxPrice !== '') {
+        data.maxPrice = parseInt(data.maxPrice);
+        params = {
+            ...params,
+            filters: `${params.filters || ''} AND price <= ${data.maxPrice}`,
+        };
+    }
+
+    // Check if the type parameter is valid
+    if (data?.type && data?.type !== '' && data?.typeParam !== '' && data?.typeParam !== null) {
+        params = {
+            ...params,
+            filters: `${params.filters || ''} AND type:${data.typeParam}`,
+        };
+    }
+
+    // Check if the page parameter is valid
+    if (page !== 0) {
+        // let lastIndex = await indexAdverts.getObject(lastIndexId);
+        params = {
+            ...params,
+            page: page,
+        };
+    }
+
+    let searchResult = null;
+
+
+    // Check if the sortText parameter is valid
+    if (data?.sortText && data?.sortText !== '' && data?.sortParam !== null && data?.sortParam !== '') {
+        let sortParam1 = data.sortParam.split(' ')[0]; //price
+        let sortParam2 = data.sortParam.split(' ')[1]; //asc or desc
+        // console.log(rankingParam);
+        if (sortParam1 === "price" && sortParam2 === "asc") {
+            searchResult = await indexPriceAsc.search(data.value, params);
+        } else if (sortParam1 === "price" && sortParam2 === "desc") {
+            searchResult = await indexPriceDesc.search(data.value, params);
+        } else {
+            searchResult = await indexAdverts.search(data.value, params);
+        }
+    }
+    else {
+        searchResult = await indexAdverts.search(data.value, params);
+    }
+    const count = searchResult.nbHits;
+    const hits = searchResult.hits;
+    let adverts = hits.map((hit) => ({
+        title: hit.title,
+        image: hit.images[0].url,
+        is_premium: hit.is_premium,
+        price: hit.price,
+        location: `${hit.city}, ${hit.district}`,
+        date: convertTimeStampToDateAdvertCard(hit.created_at),
+        advert_id: hit.objectID,
+        type:
+            hit.type === 'service' ? 'Sell Service' : hit.type === 'model' ? 'Sell Model' : 'Model Request',
+    }));
+    return { adverts, count };
 };

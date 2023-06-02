@@ -36,6 +36,10 @@ const TopicDetailsComponent = ({ topicID }) => {
 
     const handleSubmit = (e) => {
         isCurrentUserVerified().then((response) => {
+            if (auth?.currentUser === null) {
+                alertError("You must be logged in to report");
+                return;
+            }
             if (!response) {
                 alertError("You must verify your email to post a comment");
                 return;
@@ -60,15 +64,15 @@ const TopicDetailsComponent = ({ topicID }) => {
 
     const handleReport = async () => {
         isCurrentUserVerified().then(async (response) => {
+            if (auth?.currentUser === null) {
+                alertError("You must be logged in to report");
+                return;
+            }
             if (!response) {
                 alertError("You must verify your email to report a comment");
                 return;
             }
             const text = document.getElementById('report-text').value;
-            if (auth?.currentUser === null) {
-                alertError("You must be logged in to report");
-                return;
-            }
             setResetLoading(true);
             try {
                 await sendReportForum(reportedComment, text);

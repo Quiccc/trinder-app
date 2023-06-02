@@ -129,7 +129,8 @@ export const sendReport = async (chatId, reportText, reportedUser) => {
             reportText: reportText,
             reportFrom: "user",
             createdAt: serverTimestamp(),
-            isActive: true
+            isActive: true,
+            chatId: chatId
         });
     }
     else
@@ -139,6 +140,7 @@ export const sendReport = async (chatId, reportText, reportedUser) => {
         reportText: reportText,
         reportFrom: "user",
         createdAt: serverTimestamp(),
-        isActive: true
+        isActive: true,
+        chatId: chatId
     });
 };
