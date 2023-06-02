@@ -46,27 +46,20 @@ const ReportForumTable = () => {
   const handleDeleteComment = (commentId) => {
     deleteComment(commentId).then((res) => {
       // Handle success or failure, if needed
-      getReportsFromForum().then((res) => {
-        setData(res);
-      });
+
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
       // Handle success or failure, if needed
-      getReportsFromForum().then((res) => {
-        setData(res);
-      });
+  
     });
   };
 
   const handleDeleteReport = (reportId) => {
     deleteReport(reportId).then((res) => {
       // Handle success or failure, if needed
-      getReportsFromForum().then((res) => {
-        setData(res);
-      });
     });
   };
 

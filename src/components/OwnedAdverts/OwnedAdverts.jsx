@@ -9,6 +9,7 @@ import styles from './OwnedAdverts.module.css';
 
 const OwnedAdverts = () => {
     const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [activePage, setActivePage] = useState(
         {
             type: null,
@@ -17,7 +18,6 @@ const OwnedAdverts = () => {
         }
     );
     const columns = [
-        //Columns description,title,type,price
         {
             title: 'Title',
             dataIndex: 'title',
@@ -58,6 +58,7 @@ const OwnedAdverts = () => {
             render: (text, record) => {
                 return (
                     <Button className={styles.updateButton}
+                    disabled={isLoading}
                     onClick={() => {
                         setActivePage({
                             type: "update",
@@ -74,11 +75,14 @@ const OwnedAdverts = () => {
             render: (text, record) => {
                 return (
                     <Button className={styles.updateButton}
+                    disabled={isLoading}
                     onClick={async () => {
+                        setIsLoading(true);
                         //If user not premium, give him a message
                         await changeAdvertStatus(record.advert_id, !record.is_active);
                         //Change the data to force a rerender
                         setData([]);
+                        setIsLoading(false);
                     }}>{record.is_active ? "Active" : "Inactive"}</Button>
                 )
             }

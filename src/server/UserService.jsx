@@ -4,7 +4,7 @@ import { deleteObject, getDownloadURL, listAll, ref, uploadBytes } from "firebas
 import { auth, db, storageRef } from "./config/FirebaseConfig";
 
 export const userRegister = async (newUser) => {
-    await createUserWithEmailAndPassword(auth,newUser.email, newUser.password);
+    await createUserWithEmailAndPassword(auth, newUser.email, newUser.password);
     await setDoc(doc(db, "user", auth.currentUser.uid), {
         name: newUser.name,
         surname: newUser.surname,
@@ -15,8 +15,8 @@ export const userRegister = async (newUser) => {
     });
 };
 
-export const userLogin = async (email,password) => {
-    return await signInWithEmailAndPassword(auth,email, password);
+export const userLogin = async (email, password) => {
+    return await signInWithEmailAndPassword(auth, email, password);
 };
 
 export const userLogout = async () => {
@@ -29,27 +29,35 @@ export const updateProfileFirebase = async (newUser) => {
     let folderRef = ref(storageRef, "user/" + user.uid + "/profilePicture");
     let urlReturn = "";
     if (newUser.profile_image !== null) {
-        //First delete old images in folder reference
-        await listAll(folderRef).then((res) => {
-            res.items.forEach((itemRef) => {
-                deleteObject(itemRef);
-            });
-        });
-
         let imageRef = ref(folderRef, newUser?.profile_image?.name);
-        await uploadBytes(imageRef, newUser.profile_image.originFileObj).then(async (snapshot) => {
-            await getDownloadURL(snapshot.ref).then(async (url) => {
-                await updateDoc(userRef, {
-                    name: newUser.name,
-                    surname: newUser.surname,
-                    profile_image: {
-                        name: newUser.profile_image.name,
-                        url: url,
-                    }
-                });
-                urlReturn = url;
+        if (!newUser?.profile_image?.originFileObj) {
+            await updateDoc(userRef, {
+                name: newUser.name,
+                surname: newUser.surname,
+                email: newUser.email,
             });
-        });
+            urlReturn = newUser.profile_image.url;
+        } else {
+            //First delete old images in folder reference
+            await listAll(folderRef).then((res) => {
+                res.items.forEach((itemRef) => {
+                    deleteObject(itemRef);
+                });
+            });
+            await uploadBytes(imageRef, newUser.profile_image.originFileObj).then(async (snapshot) => {
+                await getDownloadURL(snapshot.ref).then(async (url) => {
+                    await updateDoc(userRef, {
+                        name: newUser.name,
+                        surname: newUser.surname,
+                        profile_image: {
+                            name: newUser.profile_image.name,
+                            url: url,
+                        }
+                    });
+                    urlReturn = url;
+                });
+            });
+        }
     }
     else {
         await updateDoc(userRef, {
@@ -68,8 +76,8 @@ export const changePasswordAuth = async (oldPassword, newPassword) => {
     let errorMessage = "";
     try {
         await reauthenticateWithCredential(user, credential).then(async (res) => {
-          await updatePassword(user, newPassword);
-          errorMessage = "true";
+            await updatePassword(user, newPassword);
+            errorMessage = "true";
         });
     } catch (error) {
         errorMessage = error.code;
@@ -124,7 +132,7 @@ export const getCurrentUserDetails = async () => {
 export const getUserNameById = async (id) => {
     const userRef = doc(db, "user", id);
     const user = await getDoc(userRef);
-    
+
     return user.data().name + " " + user.data().surname;
 };
 
@@ -138,7 +146,10 @@ export const getPremiumDetails = async () => {
 };
 
 export const isCurrentUserAdmin = async () => {
-    const userRef = doc(db, "user", auth.currentUser.uid);
+    if (auth?.currentUser === null) {
+        return false;
+    }
+    const userRef = doc(db, "user", auth?.currentUser?.uid);
     const user = await getDoc(userRef);
     return user.data().isAdmin;
 };

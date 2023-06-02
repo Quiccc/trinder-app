@@ -18,6 +18,9 @@ const useNotification = () => {
           key: "unupdatable",
           message: "Error!",
           description: message,
+          style: {
+            marginTop: "4vh",
+          },
         });
       };
     

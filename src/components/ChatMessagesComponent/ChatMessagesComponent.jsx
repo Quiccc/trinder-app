@@ -19,11 +19,14 @@ const ChatMessagesComponent = ({ chatId }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [resetLoading, setResetLoading] = useState(false)
     const {alertSuccess, alertError} = useNotification();
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleMessageSend = async () => {
+        setIsLoading(true);
         await sendMessage(chatId, newMessage);
         await sendChatNotification(chatId, newMessage);
+        setIsLoading(false);
         setNewMessage(''); // Clear the input after sending the message
     };
 
@@ -80,7 +83,6 @@ const ChatMessagesComponent = ({ chatId }) => {
             alertSuccess("Your report has been sent successfully, we will review it as soon as possible");
             setResetLoading(false)
         } catch (err) {
-            console.log(err);
             alertError("Report could not be sent, please try again later");
             setResetLoading(false)
         }
@@ -158,9 +160,9 @@ const ChatMessagesComponent = ({ chatId }) => {
                             />
                         </Col>
                         <Col>
-                            <Button type='primary' onClick={handleMessageSend} disabled={!newMessage.message} className={styles.loadMoreButton}>
-                                Send
-                            </Button>
+                            <Button type='primary' htmlType="submit" className={styles.loadMoreButton} disabled={isLoading || !newMessage.message} onClick={handleMessageSend}>
+                            {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Send"}
+                        </Button>
                         </Col>
                     </Row>
                 </Col>              

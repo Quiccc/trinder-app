@@ -1,4 +1,4 @@
-import { collection, doc, getCountFromServer, getDoc, getDocs, orderBy, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getCountFromServer, getDoc, getDocs, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { db } from "./config/FirebaseConfig";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { sendWarningAdvertReportNotification, sendWarningChatReportNotification, sendWarningForumReportNotification } from "./NotificationService";
@@ -145,4 +145,27 @@ export const deleteReport = async (reportId) => {
     const deleteReport = httpsCallable(functions, "deleteReport");
     let result = await deleteReport({ reportId: reportId });
     return result;
+};
+
+export const createTopicCategory = async (category) => {
+    //Get the all categories, find the biggest order number and add 1 to it
+    const categoriesRef = collection(db, 'topicCategory');
+    const q = query(categoriesRef, orderBy('order', 'desc'));
+    const categoriesSnapshot = await getDocs(q);
+    let order = 0;
+    if (categoriesSnapshot.docs.length > 0) {
+        order = categoriesSnapshot.docs[0].data().order + 1;
+    }
+    const newCategory = {
+        topicHeader: category.topicHeader,
+        order: order,
+    };
+    await addDoc(collection(db, 'topicCategory'), newCategory);
+};
+
+export const lockTopic = async (topicId) => {
+    console.log(topicId);
+    const topicRef = doc(db, 'topic', topicId);
+    await updateDoc(topicRef, { isLocked: true });
+    return true;
 };

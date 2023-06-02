@@ -2,9 +2,10 @@ import { Button, Card, Col, Divider, Form, Input, Modal, Row, Select, Upload } f
 import { useState } from 'react';
 import styles from './CreateAdvertDetails.module.css';
 import { useEffect } from 'react';
-import { UploadOutlined } from '@ant-design/icons';
+import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { createAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
+
 
 const CreateAdvertDetailsBuyer = () => {
   const { Option } = Select;
@@ -14,6 +15,8 @@ const CreateAdvertDetailsBuyer = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const {alertSuccess, alertError} = useNotification();
   const [advert, setAdvert] = useState({
@@ -29,11 +32,11 @@ const CreateAdvertDetailsBuyer = () => {
   });
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     await createAdvert(advert, 'buyer').then((response) => {
       if (response.status === 200) {
-        alertSuccess(response.message).then(() => {
-          //Navigate
-        });
+        alertSuccess(response.message);
+        setIsLoading(false);
       } else {
         alertError("Something went wrong!");
       }
@@ -348,8 +351,8 @@ const CreateAdvertDetailsBuyer = () => {
                 )
               }
               <Form.Item className={styles.submitButtonContainer}>
-              <Button htmlType="submit" className={styles.submitButton}>
-                  Submit
+              <Button htmlType="submit" className={styles.submitButton} disabled={isLoading}>
+                  {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Submit" }
                 </Button>
               </Form.Item>
             </Form>

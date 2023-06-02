@@ -1,4 +1,4 @@
-import { MailOutlined, RightOutlined, } from '@ant-design/icons';
+import { RightOutlined, } from '@ant-design/icons';
 import { Button, Col, Input, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import useNotification from '../../hooks/UseNotification';
@@ -75,7 +75,7 @@ const ForumComponent = ({ topicId }) => {
                             <Col className={styles.menuContainer}>
                                 {
                                     //Map first 3 items of menu options
-                                    forumMenuOptions.length > 0 && forumMenuOptions.slice(0, 3).map((item, index) => {
+                                    forumMenuOptions.length > 0 && forumMenuOptions.map((item, index) => {
                                         return (
                                             <Row
                                                 className={item.active ? styles.menuTitleActiveRow : styles.menuTitleRow}
@@ -106,7 +106,6 @@ const ForumComponent = ({ topicId }) => {
                                                 key={item.id}
                                             >
                                                 <Row align='middle' className={styles.iconContainer} wrap={false}>
-                                                    <MailOutlined className={styles.menuIcons} />
                                                     <p className={styles.menuTitlePassive}>{item.title}</p>
 
                                                 </Row>

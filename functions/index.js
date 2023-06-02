@@ -73,9 +73,6 @@ exports.purchasePackageCreate = functions.firestore
     .onCreate(async (snapshot, context) => {
         const newValue = snapshot.data();
         const customerId = context.params.customerId;
-        await admin.firestore().collection("log").doc(customerId).set({
-            newValue: newValue
-        });
         const periodStart = newValue.current_period_start;
         const periodEnd = newValue.current_period_end;
         const price = newValue.price;
@@ -283,4 +280,4 @@ exports.deleteReport = functions.https.onCall(async (data, context) => {
 //                 }
 //             });
 //         }
-//     });
+//     }); 

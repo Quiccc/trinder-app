@@ -9,7 +9,7 @@ const ForumPage = () => {
         <>
             <Navbar design={true} />
             {
-                location.state && location.state.topicId ? <ForumComponent topicId={location.state.topicId} /> : <ForumComponent />
+                location?.state?.topicId ? <ForumComponent topicId={location.state.topicId} /> : <ForumComponent />
             }
             <Footer />
         </>

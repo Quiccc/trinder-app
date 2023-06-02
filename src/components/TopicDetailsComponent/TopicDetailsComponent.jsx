@@ -11,6 +11,8 @@ import TextArea from 'antd/es/input/TextArea';
 import { auth } from '../../server/config/FirebaseConfig';
 import { isCurrentUserVerified } from '../../server/UtilsService';
 import { sendForumNotification } from '../../server/NotificationService';
+import { isCurrentUserAdmin } from '../../server/UserService';
+import { lockTopic } from '../../server/AdminService';
 
 const TopicDetailsComponent = ({ topicID }) => {
     const [topicComments, setTopicComments] = useState(null);
@@ -19,7 +21,9 @@ const TopicDetailsComponent = ({ topicID }) => {
     const [resetLoading, setResetLoading] = useState(false)
     const [reportedComment, setReportedComment] = useState(null);
     const [isTopicLocked, setIsTopicLocked] = useState(false);
+    const [isCurrentUserAdminBool, setIsCurrentUserAdminBool] = useState(false);
     const [count, setCount] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
     const handleOk = () => {
         setIsModalOpen(false);
     };
@@ -46,12 +50,14 @@ const TopicDetailsComponent = ({ topicID }) => {
             }
             // Handle the comment submission and file uploads
             let sanitizedContent = DOMPurify.sanitize(comment);
-            createComment(topicID, sanitizedContent).then((response) => {
+            setIsLoading(true);
+            createComment(topicID, sanitizedContent).then(async (response) => {
                 setComment('');
                 if (response) {
                     setCount(count + 1);
                     alertSuccess("Comment created successfully.");
-                    sendForumNotification(topicID, sanitizedContent, response.id);
+                    await sendForumNotification(topicID, sanitizedContent, response.id);
+                    setIsLoading(false);
                 } else {
                     alertError("Error occured while creating comment");
                 }
@@ -87,17 +93,35 @@ const TopicDetailsComponent = ({ topicID }) => {
     };
 
     useEffect(() => {
-        getTopicCommentsByTopicId(topicID,0,10).then((response) => {
+        getTopicCommentsByTopicId(topicID, 0, 10).then((response) => {
             setTopicComments(response?.topicCommentList);
             setCount(response?.count);
         });
         getIsTopicLocked(topicID).then((response) => {
             setIsTopicLocked(response);
         });
+        isCurrentUserAdmin().then((response) => {
+            setIsCurrentUserAdminBool(response);
+        });
     }, [topicID, count]);
 
     return (
         <Col>
+            {
+                !isTopicLocked && isCurrentUserAdminBool && (
+                    <Col className={styles.lockContainer} span={24}>
+                        <Row justify='end'>
+                            <Button className={styles.lockedText} onClick={() => {lockTopic(topicID).then((response) => {
+                                alertSuccess("Topic locked successfully");
+                                setIsTopicLocked(response)
+                                })}}>
+                                Lock Topic
+                                </Button>
+                        </Row>
+                    </Col>
+                )
+            }
+
             <Col className={styles.container} span={24}>
                 {
                     topicComments && topicComments.map((comment, index) => {
@@ -132,7 +156,7 @@ const TopicDetailsComponent = ({ topicID }) => {
                         )
                     })
                 }
-                
+
             </Col>
             <Col>
                 {
@@ -161,9 +185,9 @@ const TopicDetailsComponent = ({ topicID }) => {
                                 <ReactQuill value={comment} onChange={handleChange} className={styles.createCommentInput} ref={quillRef} />
                             </Form.Item>
                             <Form.Item>
-                                <Button type="primary" htmlType="submit" className={styles.createCommentButton}>
-                                    Submit
-                                </Button>
+                                <Button htmlType="submit" className={styles.createCommentButton} disabled={isLoading}>
+                            {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Submit"}
+                        </Button>
                             </Form.Item>
                         </Form>
                     </Form.Provider>

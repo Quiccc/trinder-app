@@ -52,6 +52,9 @@ const AdvertPageComponent = () => {
         } else if (auth.currentUser.emailVerified === false) {
             alertError("You must verify your email to contact");
             return;
+        } else if (auth.currentUser.uid === advert?.user_id) {
+            alertError("You cannot contact with yourself");
+            return;
         } else {
             //Navigate to chat page with advert id
             await createContact(advertId).then((chatId) => {

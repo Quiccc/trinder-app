@@ -4,6 +4,7 @@ import styles from './UpdateAdvertDetails.module.css';
 import { useEffect } from 'react';
 import { updateAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
   const { Option } = Select;
@@ -21,6 +22,8 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const [advert, setAdvert] = useState({
     title: advertPass?.title || '',
     description: advertPass?.description || '',
@@ -35,11 +38,11 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
   });
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     await updateAdvert(advert, 'service').then((response) => {
       if (response.status === 200) {
-        alertSuccess(response.message).then(() => {
-          //Navigate
-        });
+        alertSuccess(response.message);
+        setIsLoading(false);
       } else {
         alertError("Something went wrong!");
       }
@@ -340,9 +343,9 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
               )
             }
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
+            <Button htmlType="submit" className={styles.submitButton} disabled={isLoading}>
+                  {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Submit" }
+                </Button>
             </Form.Item>
           </Form>
 

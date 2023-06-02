@@ -55,19 +55,12 @@ const AdvertsTable = () => {
 
   const handleDeleteAdvert = (advertId) => {
     deleteAdvert(advertId).then((res) => {
-      // Handle success or failure, if needed
-      getAdvertsForAdmin().then((res) => {
-        setData(res);
-      });
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
       // Handle success or failure, if needed
-      getAdvertsForAdmin().then((res) => {
-        setData(res);
-      });
     });
   };
 

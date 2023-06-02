@@ -40,25 +40,19 @@ const ReportAdvertTable = () => {
 
   const handleDeleteAdvert = (advertId) => {
     deleteAdvert(advertId).then((res) => {
-      getReportsFromAdvert().then((res) => {
-        setData(res);
-      });
+
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
-      getReportsFromAdvert().then((res) => {
-        setData(res);
-      });
+
     });
   };
 
   const handleDeleteReport = (reportId) => {
     deleteReport(reportId).then((res) => {
-      getReportsFromAdvert().then((res) => {
-        setData(res);
-      });
+
     });
   }
 

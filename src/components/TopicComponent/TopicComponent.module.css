@@ -35,14 +35,14 @@
   }
   .upIcon{
     color: #55e6c1;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     overflow: hidden;
     white-space: nowrap;
     font-weight: 700;
   }
   .downIcon{
     color: #ac151f;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     overflow: hidden;
     white-space: nowrap;
     font-weight: 700;
@@ -54,6 +54,7 @@
     white-space: nowrap;
     font-weight: 700;
   }
+
   .likeNumberRed{
     color: #ac151f;
     font-size: 1.2rem;

@@ -2,7 +2,7 @@ import { Dropdown } from "antd";
 import { CircleNotificationsRounded } from "@mui/icons-material";
 import { getActiveUserNotifications, deactivateNotification } from "../../server/NotificationService";
 import styles from "./NotificationComponent.module.css"
-import{ useState, useEffect } from "react";
+import{ useState } from "react";
 import { MessageOutlined } from "@ant-design/icons";
 import { ForumOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router";
@@ -55,13 +55,6 @@ const NotificationComponent = () => {
     }
     return response;
   };
-
-  useEffect(() => {
-    getNotifications().then((res) => {
-      setItems(res);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, deactivateNotification]);
 
   const handleOpen = (flag) => {
     setOpen(flag);

@@ -99,7 +99,6 @@ export const sendWarningForumReportNotification = async (userId) => {
 }
 
 export const deactivateNotification = async (notificationId) => {
-    console.log(notificationId);
     const notificationRef = doc(db, "notifications", notificationId);
     await deleteDoc(notificationRef);
 };

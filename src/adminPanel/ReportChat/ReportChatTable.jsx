@@ -49,25 +49,19 @@ const ReportChatTable = () => {
   const handleSendWarning = (chatId) => {
     sendWarningChatReport(chatId).then((res) => {
       // Handle success or failure, if needed
-      getReportsFromChat().then((res) => {
-        setData(res);
-      });
+
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
       // Handle success or failure, if needed
-      getReportsFromChat().then((res) => {
-        setData(res);
-      });
+
     });
   };
   const handleDeleteReport = (reportId) => {
     deleteReport(reportId).then((res) => {
-      getReportsFromChat().then((res) => {
-        setData(res);
-      });
+
     });
   };
 

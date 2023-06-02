@@ -4,6 +4,7 @@ import styles from './CreateAdvertDetails.module.css';
 import { useEffect } from 'react';
 import { createAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const CreateAdvertDetailsSellerService = () => {
   const { Option } = Select;
@@ -13,6 +14,8 @@ const CreateAdvertDetailsSellerService = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const [advert, setAdvert] = useState({
     title: '',
     description: '',
@@ -26,11 +29,11 @@ const CreateAdvertDetailsSellerService = () => {
   });
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     await createAdvert(advert, 'service').then((response) => {
       if (response.status === 200) {
-        alertSuccess(response.message).then(() => {
-          //Navigate
-        });
+        alertSuccess(response.message);
+        setIsLoading(false);
       } else {
         alertError("Something went wrong!");
       }
@@ -327,8 +330,8 @@ const CreateAdvertDetailsSellerService = () => {
                 )
               }
               <Form.Item className={styles.submitButtonContainer}>
-                <Button htmlType="submit" className={styles.submitButton}>
-                  Submit
+              <Button htmlType="submit" className={styles.submitButton} disabled={isLoading}>
+                  {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Submit" }
                 </Button>
               </Form.Item>
             </Form>

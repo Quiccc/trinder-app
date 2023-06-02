@@ -12,6 +12,7 @@ import ReportChatTable from "./ReportChat/ReportChatTable";
 import UsersTable from "./Users/UsersTable";
 import AdvertsTable from "./Adverts/AdvertsTable";
 import { getReportsCount } from "../server/AdminService";
+import CreateTopicCategory from "./CreateTopicCategory/CreateTopicCategory";
 
 function getItem(label, key, description, role, icon, children, type) {
     return {
@@ -39,6 +40,7 @@ const AdminPanel = () => {
             getItem("User Reports", "2-1", "User Reports", "admin"),
             getItem("Forum Reports", "2-2", "Forum Reports", "admin"),
         ]),
+        getItem("Create Topic Category", "3", "Create Topic Category", "admin", null),
     ];
     useEffect(() => {
         isCurrentUserAdmin().then((res) => {
@@ -118,6 +120,8 @@ const AdminPanel = () => {
                                         {current === "2-0" && <ReportAdvertTable />}
                                         {current === "2-1" && <ReportChatTable />}
                                         {current === "2-2" && <ReportForumTable />}
+                                        {current === "3" && <CreateTopicCategory />}
+
                                 </div>
                             </Col>
                         </Row>

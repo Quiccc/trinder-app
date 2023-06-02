@@ -10,7 +10,7 @@ const ChatPage = () => {
         <>
             <Navbar design={true} />
             {
-                location.state && location.state.chatId ? <ChatComponent chatId={location.state.chatId} /> : <ChatComponent />
+                location?.state?.chatId ? <ChatComponent chatId={location.state.chatId} /> : <ChatComponent />
             }
             <Footer />
         </>

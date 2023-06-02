@@ -29,7 +29,18 @@
     background-color: #3e4581;
     font-weight: 600;
     margin-bottom: 1vh;
+    color: white;
 }
+.lockedText{
+    color: #3e4581;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: 700;
+    margin-right: 4vw;
+    margin-bottom: 1vh;
+  }
 .dropzoneText{
     color: #3e4581;
     font-size: 1rem;

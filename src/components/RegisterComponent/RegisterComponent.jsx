@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { emailVerification, userRegister } from '../../server/UserService';
 import useNotification from '../../hooks/UseNotification';
+import { getAlertMessage } from '../../utils/AlertUtils';
 
 const RegisterComponent = () => {
     const navigate = useNavigate();
@@ -28,16 +29,9 @@ const RegisterComponent = () => {
             await emailVerification().then(() => {
                 navigate('/', { state: { register: true } });
             });
-            // await signup(newUser.email, newUser.password);
-            // await registerFirebase(newUser).then(async () => {
-            //     await sendEmailVerificationFirebase();
-            //     //navigate with param register:true
-            //     navigate('/', { state: { register: true } });
-            // });
         } catch (err) {
-            console.log(err);
-            // let errorMessage = getAlertMessage(err.code);
-            alertError("Something went wrong");
+            let errorMessage = getAlertMessage(err.code);
+            alertError(errorMessage);
             setLoading(false)
         }
     };
