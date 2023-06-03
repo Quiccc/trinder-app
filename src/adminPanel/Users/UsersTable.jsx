@@ -1,5 +1,6 @@
 import { Button, Col, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
+import useNotification from "../../hooks/UseNotification";
 import { banUser, getUsersForAdmin } from "../../server/AdminService";
 import styles from "./UsersTable.module.css";
 
@@ -7,7 +8,7 @@ const UsersTable = () => {
   const [data, setData] = useState([]);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState("");
-
+  const {alertSuccess} = useNotification();
   const dataSource = data;
 
   const columns = [
@@ -27,6 +28,13 @@ const UsersTable = () => {
         render: (text) => <div>{text ? "Yes" : "No"}</div>,
     },
     {
+        title: "Warning Count",
+        key: 'warningCount',
+        render: (text) => <div>
+          { text.warningCount ? text.warningCount : 0 }
+        </div>,
+    },
+    {
       title: "Action",
       dataIndex: 'id',
       key: 'id',
@@ -40,10 +48,10 @@ const UsersTable = () => {
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
+      alertSuccess("User banned successfully!");
       // Handle success or failure, if needed
-      getUsersForAdmin().then((res) => {
-        setData(res);
-      });
+      const newData = data.filter((item) => item.id !== userId);
+      setData(newData);
     });
   };
 

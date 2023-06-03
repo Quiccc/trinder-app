@@ -33,6 +33,9 @@ export const getReportsFromAdvert = async () => {
         report.id = reportSnapshot.docs[i].id;
         const advertRef = doc(db, 'adverts', report.advertID);
         const advertSnapshot = await getDoc(advertRef);
+        const userRef = doc(db, 'user', advertSnapshot.data().user_id);
+        const userSnapshot = await getDoc(userRef);
+        report.user = userSnapshot.data();
         report.user_id = advertSnapshot.data().user_id;
         reportList.push(report);
     }
@@ -85,6 +88,7 @@ export const getAdvertsForAdmin = async () => {
         advert.id = advertsSnapshot.docs[i].id;
         const userRef = doc(db, 'user', advert.user_id);
         const userSnapshot = await getDoc(userRef);
+        advert.user = userSnapshot.data();
         advert.userName = userSnapshot.data().name + ' ' + userSnapshot.data().surname;
         advert.userId = userSnapshot.data().id;
         advertList.push(advert);

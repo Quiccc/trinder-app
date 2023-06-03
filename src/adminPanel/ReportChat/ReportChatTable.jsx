@@ -1,5 +1,6 @@
 import { Button, Col, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
+import useNotification from "../../hooks/UseNotification";
 import { banUser, deleteReport, getReportsFromChat, sendWarningChatReport } from "../../server/AdminService";
 import styles from "./ReportChatTable.module.css";
 
@@ -10,7 +11,7 @@ const ReportChatTable = () => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState("");
   const [selectedItemId, setSelectedItemId] = useState("");
-
+  const { alertSuccess } = useNotification();
   const dataSource = data;
 
   const columns = [
@@ -33,12 +34,19 @@ const ReportChatTable = () => {
         render: (text) => <Button onClick={() => { setModalData(text); setModalVisible(true) }}>View Chat</Button>,
     },
     {
+      title: "User Warning Count",
+      key: 'warningCount',
+      render: (text,record) => <div>
+        { record?.user?.warningCount ? record.user.warningCount : 0 }
+      </div>,
+  },
+    {
       title: "Action",
       dataIndex: 'id',
       key: 'id',
       render: (text,record) => (
         <Col>
-          <Button onClick={() => showConfirmModal("sendWarning", text)}>Send Warning</Button>
+          <Button onClick={() => showConfirmModal("sendWarning", record)}>Send Warning</Button>
           <Button onClick={() => showConfirmModal("ban", record.userId)}>Ban User</Button>
           <Button onClick={() => showConfirmModal("deleteReport", text)}>Delete Report</Button>
         </Col>
@@ -46,22 +54,28 @@ const ReportChatTable = () => {
     },
   ];
 
-  const handleSendWarning = (chatId) => {
-    sendWarningChatReport(chatId).then((res) => {
-      // Handle success or failure, if needed
-
+  const handleSendWarning = (record) => {
+    sendWarningChatReport(record.userId).then((res) => {
+      deleteReport(record.id).then((res) => {
+        alertSuccess("Warning sent successfully!");
+        const newData = data.filter((item) => item?.id !== record.id);
+        setData(newData);
+      });
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
-      // Handle success or failure, if needed
-
+      alertSuccess("User banned successfully!");
+      const newData = data.filter((item) => item?.userId !== userId);
+      setData(newData);
     });
   };
   const handleDeleteReport = (reportId) => {
     deleteReport(reportId).then((res) => {
-
+      alertSuccess("Report deleted successfully!");
+      const newData = data.filter((item) => item?.id !== reportId);
+      setData(newData);
     });
   };
 

@@ -40,7 +40,7 @@ const AdvertGrid = ({ data }) => {
                         if (index === 1) {
                             return (
                                 <Fragment key={index}>
-                                    <Col xxl={5} xl={5} lg={5} md={10} sm={10} xs={18} align='middle' key={index}>
+                                    <Col xxl={5} xl={5} lg={5} md={10} sm={10} xs={18} align='middle' key={-100}>
                                         <PremiumAdvertCard />
                                     </Col>
                                     <Col xxl={5} xl={5} lg={5} md={10} sm={10} xs={18} align='middle' key={index}>

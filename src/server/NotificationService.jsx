@@ -1,4 +1,4 @@
-import { collection, getDoc, getDocs, query, where, doc, addDoc, serverTimestamp, orderBy, limit, deleteDoc } from "firebase/firestore";
+import { collection, getDoc, getDocs, query, where, doc, addDoc, serverTimestamp, orderBy, limit, deleteDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "./config/FirebaseConfig";
 import { getUserNameById } from "./UserService"
 import { getTopicById, getCommentById} from "./ForumService";
@@ -74,6 +74,11 @@ export const sendWarningAdvertReportNotification = async (advertId,userId) => {
         to: userId,
         content: `You have been warned for inappropriate advert: ${advertTitle}. If you continue to send inappropriate adverts, your account will be banned.`,
     });
+
+    const userRef = await getDoc(doc(db, "user", userId));
+    await updateDoc(userRef, {
+        warningCount: userRef.data()?.warningCount ? userRef.data().warningCount + 1 : 1,
+    });
 }
 
 export const sendWarningChatReportNotification = async (userId) => {
@@ -85,6 +90,10 @@ export const sendWarningChatReportNotification = async (userId) => {
         to: userId,
         content: "You have been warned for inappropriate chat message. If you continue to send inappropriate messages, your account will be banned.",
     });
+    const userRef = await getDoc(doc(db, "user", userId));
+    await updateDoc(userRef, {
+        warningCount: userRef.data()?.warningCount ? userRef.data().warningCount + 1 : 1,
+    });
 }
 
 export const sendWarningForumReportNotification = async (userId) => {
@@ -95,6 +104,10 @@ export const sendWarningForumReportNotification = async (userId) => {
         sentAt: serverTimestamp(),
         to: userId,
         content: "You have been warned for inappropriate forum comment. If you continue to send inappropriate comments, your account will be banned.",
+    });
+    const userRef = await getDoc(doc(db, "user", userId));
+    await updateDoc(userRef, {
+        warningCount: userRef.data()?.warningCount ? userRef.data().warningCount + 1 : 1,
     });
 }
 

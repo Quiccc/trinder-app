@@ -11,6 +11,10 @@ const indexPriceDesc = algoliaClient.initIndex('price_desc');
 export const createAdvert = async (advert, type) => {
     //Create advert doc with advert data and random id
     try {
+        //Get current user data
+        const userRef = doc(db, "user", auth.currentUser.uid);
+        const document = await getDoc(userRef);
+        const user = document.data();
         await addDoc(collection(db, "adverts"), {
             title: advert?.title || "",
             description: advert?.description || "",
@@ -24,7 +28,7 @@ export const createAdvert = async (advert, type) => {
             model_obj: "",
             type: type || "",
             user_id: auth.currentUser.uid,
-            is_premium: advert?.is_premium || false,
+            is_premium: user?.premiumID ? true : false,
             created_at: serverTimestamp(),
             is_active: true,
         }).then(async (docRef) => {
@@ -68,14 +72,13 @@ export const createAdvert = async (advert, type) => {
                 model_obj: model_url,
             })
         });
-
         //If user is not premium, make the other adverts of user is not active
-        if (!advert?.is_premium) {
+        if (!user?.premiumID) {
             const advertsRef = collection(db, "adverts");
             const q = query(advertsRef, where("user_id", "==", auth.currentUser.uid));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((docCopy) => {
-                if (docCopy.id !== advert.id){
+                if (docCopy.id !== advert.id) {
                     updateDoc(doc(db, "adverts", docCopy.id), {
                         is_active: false,
                     });
@@ -219,7 +222,7 @@ export const getAdverts = async (page, limitNumber, lastIndexId, data) => {
 export const getOwnedAdverts = async () => {
     const user_id = auth.currentUser.uid;
     const advertsRef = collection(db, "adverts");
-    const q = query(advertsRef, where("user_id", "==", user_id));
+    const q = query(advertsRef, where("user_id", "==", user_id), orderBy("created_at", "desc"));
 
     const querySnapshot = await getDocs(q);
     let adverts = [];

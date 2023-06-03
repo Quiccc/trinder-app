@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { updateAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
 import { LoadingOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router';
 
 const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
   const { Option } = Select;
@@ -23,7 +24,7 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  const navigate = useNavigate();
   const [advert, setAdvert] = useState({
     title: advertPass?.title || '',
     description: advertPass?.description || '',
@@ -42,6 +43,9 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
     await updateAdvert(advert, 'service').then((response) => {
       if (response.status === 200) {
         alertSuccess(response.message);
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
         setIsLoading(false);
       } else {
         alertError("Something went wrong!");

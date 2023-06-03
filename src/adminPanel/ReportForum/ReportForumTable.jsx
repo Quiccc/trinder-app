@@ -1,5 +1,6 @@
 import { Button, Col, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
+import useNotification from "../../hooks/UseNotification";
 import { banUser, deleteComment, deleteReport, getReportsFromForum } from "../../server/AdminService";
 import styles from "./ReportForumTable.module.css";
 
@@ -8,7 +9,7 @@ const ReportForumTable = () => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState("");
   const [selectedItemId, setSelectedItemId] = useState("");
-
+  const { alertSuccess } = useNotification();
   const dataSource = data;
 
   const columns = [
@@ -30,6 +31,13 @@ const ReportForumTable = () => {
         render: (text) => <div>{text.name + " " + text.surname}</div>,
     },
     {
+      title: "User Warning Count",
+      key: 'warningCount',
+      render: (text,record) => <div>
+        { record?.user?.warningCount ? record.user.warningCount : 0 }
+      </div>,
+  },
+    {
       title: "Action",
       dataIndex: 'id',
       key: 'id',
@@ -46,20 +54,26 @@ const ReportForumTable = () => {
   const handleDeleteComment = (commentId) => {
     deleteComment(commentId).then((res) => {
       // Handle success or failure, if needed
-
+      alertSuccess("Comment deleted successfully!");
+      const newData = data.filter((item) => item?.commentId !== commentId);
+      setData(newData);
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
       // Handle success or failure, if needed
-  
+      alertSuccess("User banned successfully!");
+      const newData = data.filter((item) => item?.comment.createdBy !== userId);
+      setData(newData);
     });
   };
 
   const handleDeleteReport = (reportId) => {
     deleteReport(reportId).then((res) => {
-      // Handle success or failure, if needed
+      alertSuccess("Report deleted successfully!");
+      const newData = data.filter((item) => item?.id !== reportId);
+      setData(newData);
     });
   };
 

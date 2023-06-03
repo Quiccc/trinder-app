@@ -1,6 +1,7 @@
 import { Button, Col, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useNotification from "../../hooks/UseNotification";
 import { banUser, deleteAdvert, deleteReport, getReportsFromAdvert } from "../../server/AdminService";
 import styles from "./ReportAdvertTable.module.css";
 
@@ -9,7 +10,7 @@ const ReportAdvertTable = () => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState("");
   const [selectedItemId, setSelectedItemId] = useState("");
-
+  const { alertSuccess } = useNotification();
   const dataSource = data;
 
   const columns = [
@@ -23,6 +24,13 @@ const ReportAdvertTable = () => {
         dataIndex: 'advertID',
         key: 'advertID',
         render: (text) => <Link to={"/advert/" + text} target="_blank">View Advert</Link>,
+    },
+    {
+      title: "User Warning Count",
+      key: 'warningCount',
+      render: (text,record) => <div>
+        { record?.user?.warningCount ? record.user.warningCount : 0 }
+      </div>,
     },
     {
       title: "Action",
@@ -40,19 +48,25 @@ const ReportAdvertTable = () => {
 
   const handleDeleteAdvert = (advertId) => {
     deleteAdvert(advertId).then((res) => {
-
+      alertSuccess("Advert deleted successfully!");
+      const newData = data.filter((item) => item?.advertID !== advertId);
+      setData(newData);
     });
   };
 
   const handleBanUser = (userId) => {
     banUser(userId).then((res) => {
-
+      alertSuccess("User banned successfully!");
+      const newData = data.filter((item) => item?.user_id !== userId);
+      setData(newData);
     });
   };
 
   const handleDeleteReport = (reportId) => {
     deleteReport(reportId).then((res) => {
-
+      alertSuccess("Report deleted successfully!");
+      const newData = data.filter((item) => item?.id !== reportId);
+      setData(newData);
     });
   }
 

@@ -34,6 +34,8 @@ const ChangePassword = () => {
                         <Form.Item
                             className={styles.inputContainer}
                             name="oldPassword"
+                            label="Old Password"
+                            labelCol={{ span: 24 }}
                             rules={[
                                 {
                                     required: true,
@@ -58,6 +60,8 @@ const ChangePassword = () => {
                         <Form.Item
                             className={styles.inputContainer}
                             name='new password'
+                            label="New Password"
+                            labelCol={{ span: 24 }}
                             rules={[
                                 {
                                     min: 6,
@@ -82,6 +86,8 @@ const ChangePassword = () => {
                             />
                         </Form.Item>
                         <Form.Item
+                            label="Confirm Password"
+                            labelCol={{ span: 24 }}
                             className={styles.inputContainer}
                             name="confirm"
                             dependencies={["new password"]}
