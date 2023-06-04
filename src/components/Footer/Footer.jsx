@@ -32,7 +32,7 @@ const Footer = () => {
                     </Row>
                     <Row className={styles.designedByContainer} wrap={false}>
                         <Row className={styles.designedBy} align='middle' justify='center' wrap={false}>
-                            <img className={styles.allRightReserved} src="/images/logo.png" alt="logo" />
+                            <img className={styles.allRightReserved} src="/images/logo_footer.png" alt="logo" />
                             <p className={styles.allRightReservedDescription}> <CopyrightOutlined /> 2023 TEDU. All rights reserved. </p>
                         </Row>
                     </Row>

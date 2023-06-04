@@ -5,6 +5,7 @@
     background-color: white;
     padding: 1.1vw;
     border: 1.5px solid #eceeff;
+    cursor: pointer;
   }
   .cardContainer:hover {
     transform: scale(1.05);
