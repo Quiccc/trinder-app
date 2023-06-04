@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import styles from './Navbar.module.css'
 import cityData from '../../assets/formatted_city_data.json'
 import { useState } from "react";
-import { CrownOutlined, MessageOutlined, SearchOutlined } from "@ant-design/icons";
+import { MessageOutlined, SearchOutlined } from "@ant-design/icons";
 import { AdminPanelSettings } from "@mui/icons-material";
 import NotificationComponent from "../NotificationComponent/NotificationComponent";
 
@@ -58,7 +58,7 @@ const Navbar = ({ design, onData, onSearchData }) => {
       <Row align='middle' justify='space-between' className={styles.innerContainer}>
         <Col xxl={4} lg={4} md={5} sm={5} xs={12}>
           <Link to={'/'} className={styles.logoContainer}>
-            <img src="/images/logo.png" alt="frewell logo" />
+            <img src="/images/logo_v2.png" alt="frewell logo" />
           </Link>
         </Col>
         <Col xxl={13} xl={13} lg={13} md={0} sm={0} xs={0} align='middle' >
@@ -75,11 +75,11 @@ const Navbar = ({ design, onData, onSearchData }) => {
             {
               currentUser ? (
                 <Row align='middle' wrap={false}>
-                  {isAdmin && <Link to={'/panel'} className={styles.messageIcon}><AdminPanelSettings style={{fontSize: '3rem'}} /></Link>}
+                  {isAdmin && <Link to={'/admin'} className={styles.messageIcon}><AdminPanelSettings style={{fontSize: '3rem'}} /></Link>}
                   <Link to={'/chat'} className={styles.messageIcon}><MessageOutlined /></Link>
                   <NotificationComponent />
-                  <Link to={'/profile'} className={styles.userName}>{`${userDetails.name} ${userDetails.surname}`} {userDetails.premiumID !== null && <CrownOutlined />}</Link>
-                  <Link to={'/post'} className={styles.appButton}>Create</Link>
+                  <Link to={'/profile'} className={styles.userName}>{`${userDetails.name} ${userDetails.surname}`}</Link>
+                  <Link to={'/new-advert'} className={styles.appButton}>Create</Link>
                 </Row>
               ) : (
                 <>

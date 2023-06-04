@@ -14,9 +14,6 @@ service cloud.firestore {
         allow read: if request.auth.uid == uid;
       }
     }
-		match /{document=**} {
-      allow read, write: if true;
-    }
     match /products/{id} {
       allow read: if true;
 
@@ -27,6 +24,138 @@ service cloud.firestore {
       match /tax_rates/{id} {
         allow read: if true;
       }
+    }
+    function isAdmin (request){
+    	 return request.auth != null && get(/databases/$(database)/documents/user/$(request.auth.uid)).data.isAdmin == true;
+    }
+    function isUserTryingToSetHimselfAdmin(request, resource) {
+  		let isAdmin = resource.data.isAdmin;
+  			return !('isAdmin' in request.resource.data) || !(isAdmin == request.resource.data.isAdmin);
+		}
+
+		function isUserTryingToChangePremiumId(request, resource) {
+  		let premiumID = resource.data.premiumID;
+  			return !('premiumID' in request.resource.data) || !(premiumID == request.resource.data.premiumID);
+		}
+    function isEmailVerified(request){
+    		return request.auth != null && request.auth.token.email_verified;
+    }
+    function isJustUpdateLikeStatus(request,resource){
+    		let reqObj = request.resource.data;
+        let resObj = resource.data;
+        //createdAt, createdBy,isActive,isLocked,topicCategoryId,topicHeader
+        let isUserTryingToChangeOtherAttribute = reqObj.createdAt != resObj.createdAt
+        		|| reqObj.createdBy != resObj.createdBy
+            || reqObj.isActive != resObj.isActive
+            || reqObj.isLocked != resObj.isLocked
+            || reqObj.topicCategoryId != resObj.topicCategoryId
+            || reqObj.topicHeader != resObj.topicHeader;
+        return !isUserTryingToChangeOtherAttribute;
+    }
+		function isUserTryingToGetTheirNotification(request, resource) {
+  		return request.auth != null && request.auth.uid == resource.data.to;
+		}
+    
+    function isUserTryingToDeleteTheirNotification(request, resource){
+    	return request.auth != null && request.auth.uid == resource.data.to;
+    }
+    
+    function isSenderNameCorrect(request) {
+  	return request.auth != null &&
+    	get(/databases/$(database)/documents/user/$(request.auth.uid)).data.name + " " +
+    	get(/databases/$(database)/documents/user/$(request.auth.uid)).data.surname == request.resource.data.senderName;
+		}
+    
+    function isUserParticipantInChat(chatId, request) {
+  		// Get the chat document
+  		let chatDoc = get(/databases/$(database)/documents/chats/$(chatId)).data;
+  	
+  		// Check if the user is the advert owner or the messenger
+  		return request.auth != null && (
+    		chatDoc.advertOwnerId == request.auth.uid ||
+    		chatDoc.messagerId == request.auth.uid
+  		);
+		}
+    function isUserMessager(request){
+    	return request.auth != null && request.resource.data.messagerId == request.auth.uid;
+    }
+
+		function isJustSendMessage(request,resource) {
+  		// Get the old messages array from the existing document
+  		let oldMessagesArray = resource.data.messages;
+
+  		// Get the new messages array from the request
+  		let newMessagesArray = request.resource.data.messages;
+
+  		// Check if the new messages array has exactly one more element than the old messages array
+  		return oldMessagesArray.size() + 1 == newMessagesArray.size();
+		}
+    function isUserTryingToChangeImmutableAttribute(request, resource) {
+  		return (
+    		request.auth != null &&
+    			!(('user_id' in request.resource.data) && (request.resource.data.user_id != resource.data.user_id)) &&
+    			!(('is_premium' in request.resource.data) && (request.resource.data.is_premium != resource.data.is_premium))
+  		);
+		}
+
+		function isUidMatch(request){
+    	return request.resource.data.user_id == request.auth.uid;
+    }
+    match /{document=**} {
+      allow read, write, update: if isAdmin(request);
+    }
+    match /topicCategory/{categoryId}{
+    	allow read: if true;
+      allow update,create: if
+      (request.auth.uid != null && isAdmin(request));
+    }
+    
+    match /topic/{topicId}{
+    	allow read: if true;
+      allow create: if (
+      	isEmailVerified(request)
+      );
+      allow update: if (
+      	isEmailVerified(request) && isJustUpdateLikeStatus(request,resource)
+      );
+    }
+    match /topicComments/{topicCommentId}{
+    	allow read: if true;
+      allow create: if (
+      	isEmailVerified(request)
+      );
+    }
+    
+    match /reports/{reportId}{
+    	allow read: if isAdmin(request);
+      allow create: if isEmailVerified(request) && request.resource.data.senderID == request.auth.uid;
+    }
+    match /premiumUsers/{userId}{
+    	allow read: if userId == request.auth.uid;
+    }
+    
+    match /notifications/{notificationId}{
+    	allow read: if isUserTryingToGetTheirNotification(request, resource);
+      allow delete: if isEmailVerified(request) && isUserTryingToDeleteTheirNotification(request,resource);
+      allow create: if isEmailVerified(request) && isSenderNameCorrect(request);
+    }
+    
+    match /chats/{chatId}{
+    	allow read: if isEmailVerified(request) && isUserParticipantInChat(chatId,request);
+      allow create: if isEmailVerified(request) && isUserMessager(request);
+    	allow update: if isEmailVerified(request) && isJustSendMessage(request,resource);
+    }
+    
+    match /adverts/{advertId}{
+    	allow read: if true;
+      allow create: if isEmailVerified(request) && isUidMatch(request);
+      allow update: if isUserTryingToChangeImmutableAttribute(request,resource);
+    }
+    
+    match /user/{userId}{
+    	allow read: if true;
+      allow create: if true;
+      allow update: if (!isUserTryingToSetHimselfAdmin(request,resource)) && (!isUserTryingToChangePremiumId(request,resource));
     }
   }
 }

@@ -37,7 +37,11 @@ const CancelPremium = () => {
     };
     useEffect(() => {
         getPremiumDetails().then((res) => {
-            setDetails(res);
+            if (res){
+                setDetails(res);
+            }else {
+                setDetails(null);
+            }
         });
         getActiveSubscription().then((res) => {
             setActiveSubscription(res);

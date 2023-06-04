@@ -9,8 +9,8 @@ export const checkOut = async (priceId) => {
         collection(db, "customers", auth.currentUser.uid, "checkout_sessions"),
         {
           price: priceId,
-          success_url: "http://localhost:3000/success",
-          cancel_url: "http://localhost:3000",
+          success_url: "https://trinder-4pp.web.app//success",
+          cancel_url: "https://trinder-4pp.web.app/decline",
           mode: "subscription",
         }
       );

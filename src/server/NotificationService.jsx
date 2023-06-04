@@ -29,7 +29,6 @@ export const sendChatNotification = async (chatId, message) => {
     const notificationRef = collection(db, "notifications");
     await addDoc(notificationRef, {
         content: message.message,
-        from: auth.currentUser.uid,
         senderName: await getUserNameById(auth.currentUser.uid),
         isActive: true,
         sentAt: message.sentAt,
@@ -50,9 +49,7 @@ export const sendForumNotification = async (topicId, comment, responseId) => {
     return;
     const notificationRef = collection(db, "notifications");
     await addDoc(notificationRef, {
-        topicHeader: topic.topicHeader,
         content: comment,
-        from: senderId,
         senderName: await getUserNameById(senderId),
         isActive: true,
         sentAt: serverTimestamp(),

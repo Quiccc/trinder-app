@@ -106,10 +106,6 @@ export const isUserVerified = () => {
     return auth?.currentUser?.emailVerified;
 };
 
-export const deleteAccount = async () => {
-
-};
-
 export const getCurrentUser = () => {
     return auth.currentUser !== null ? auth.currentUser : null;
 };
@@ -140,9 +136,14 @@ export const getUserNameById = async (id) => {
 export const getPremiumDetails = async () => {
     const userRef = doc(db, "premiumUsers", auth.currentUser.uid);
     const user = await getDoc(userRef);
-    let userReturn = user.data();
-    userReturn.premiumEndDate = user.data().periodEnd.toDate().toLocaleDateString();
-    return userReturn;
+    if (user.exists()) {
+        let userReturn = user.data();
+        userReturn.premiumEndDate = user.data().periodEnd.toDate().toLocaleDateString();
+        return userReturn;
+    }else {
+        return null;
+    }
+
 };
 
 export const isCurrentUserAdmin = async () => {

@@ -20,11 +20,11 @@ const CreateAdvert = () => {
             if (!res) {
                 alertError("You need to verify your account to create an advert!");
             } else {
-                if (location.pathname === '/post/details/advert-service') {
+                if (location.pathname === '/new-advert/details/advert-service') {
                     setScreenId(1);
-                } else if (location.pathname === '/post/details/advert-model') {
+                } else if (location.pathname === '/new-advert/details/advert-model') {
                     setScreenId(2);
-                } else if (location.pathname === '/post/details/advert-request') {
+                } else if (location.pathname === '/new-advert/details/advert-request') {
                     setScreenId(3);
                 } else {
                     setScreenId(0);
@@ -50,21 +50,21 @@ const CreateAdvert = () => {
                     </Col>
                     <Col>
                         <Row justify='center' align='middle' >
-                            <Col span={3.5} className={styles.advertTypeChooseCard} onClick={() => { navigate('/post/details/advert-service', { state: { type: 'sell_service' } }) }}>
+                            <Col span={3.5} className={styles.advertTypeChooseCard} onClick={() => { navigate('/new-advert/details/advert-service', { state: { type: 'sell_service' } }) }}>
                                 <Col justify='center' align='middle'>
                                     <p className={styles.advertTypeChooseCardTitle}>Sell Service</p>
                                     <p className={styles.advertTypeChooseCardText}>If you have a 3D Printer</p>
                                     <p className={styles.advertTypeChooseCardText}>and want to sell your service</p>
                                 </Col>
                             </Col>
-                            <Col span={3.5} className={styles.advertTypeChooseCard} onClick={() => { navigate('/post/details/advert-model', { state: { type: 'sell_model' } }) }}>
+                            <Col span={3.5} className={styles.advertTypeChooseCard} onClick={() => { navigate('/new-advert/details/advert-model', { state: { type: 'sell_model' } }) }}>
                                 <Col>
                                     <p className={styles.advertTypeChooseCardTitle}>Sell Model</p>
                                     <p className={styles.advertTypeChooseCardText}>If you have a 3D Model</p>
                                     <p className={styles.advertTypeChooseCardText}>and want to sell it</p>
                                 </Col>
                             </Col>
-                            <Col span={3.5} className={styles.advertTypeChooseCard} onClick={() => { navigate('/post/details/advert-request', { state: { type: 'buy' } }) }}>
+                            <Col span={3.5} className={styles.advertTypeChooseCard} onClick={() => { navigate('/new-advert/details/advert-request', { state: { type: 'buy' } }) }}>
                                 <Col>
                                     <p className={styles.advertTypeChooseCardTitle}>Model Request</p>
                                     <p className={styles.advertTypeChooseCardText}>If you want to buy a 3D Model</p>

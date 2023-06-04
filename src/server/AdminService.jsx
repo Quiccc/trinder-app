@@ -168,7 +168,6 @@ export const createTopicCategory = async (category) => {
 };
 
 export const lockTopic = async (topicId) => {
-    console.log(topicId);
     const topicRef = doc(db, 'topic', topicId);
     await updateDoc(topicRef, { isLocked: true });
     return true;

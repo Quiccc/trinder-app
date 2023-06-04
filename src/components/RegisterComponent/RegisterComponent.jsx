@@ -204,25 +204,6 @@ const RegisterComponent = () => {
                                 }}
                             />
                         </Form.Item>
-                        {/* <Form.Item
-                            className={styles.phoneContainer}
-                            name="phoneNumber"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Phone number is required",
-                                },
-                            ]}
-                        >
-                            <PhoneInput
-                                className={styles.phoneInput}
-                                country={"tr"}
-                                inputProps={{ required: true }}
-                                inputStyle={{ width: "100%" }}
-                                placeholder="Phone number"
-                                onChange={(e) => { setNewUser({ ...newUser, phoneNumber: "+" + e.trim() }); }}
-                            ></PhoneInput>
-                        </Form.Item> */}
                         <button
                             type="submit"
                             className={styles.registerButton}

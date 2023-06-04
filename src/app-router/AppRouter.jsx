@@ -22,6 +22,7 @@ import Successful from "../pages/Successful";
 import AdminPanel from "../adminPanel/AdminPanel";
 import Loading from "../components/Loading/Loading";
 import ForumPage from "../pages/ForumPage";
+import Decline from "../pages/Decline";
 
 const AppRouter = () => {
     const { currentUser, loading } = useAuth();
@@ -48,17 +49,18 @@ const AppRouter = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/chat" element={<ChatPage />} />
                     <Route path="/success" element={<Successful />} />
-                    <Route path="/post" element={<CreateAdvertPage />} >
-                        <Route path="/post/details/advert-service" element={<CreateAdvertPage />} />
-                        <Route path="/post/details/advert-model" element={<CreateAdvertPage />} />
-                        <Route path="/post/details/advert-request" element={<CreateAdvertPage />} />
+                    <Route path="/new-advert" element={<CreateAdvertPage />} >
+                        <Route path="/new-advert/details/advert-service" element={<CreateAdvertPage />} />
+                        <Route path="/new-advert/details/advert-model" element={<CreateAdvertPage />} />
+                        <Route path="/new-advert/details/advert-request" element={<CreateAdvertPage />} />
                     </Route>
-                    <Route path="/panel" element={<AdminPanel />} />
+                    <Route path="/admin" element={<AdminPanel />} />
                 </Route>
                 <Route path="/search" element={<AdvertSearchPage />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="*" element={<PageNotFound />} />
                 <Route path="/forum" element={<ForumPage />} />
+                <Route path="/decline " element={<Decline />} />
 
             </Routes>
             <CookiesComponent />

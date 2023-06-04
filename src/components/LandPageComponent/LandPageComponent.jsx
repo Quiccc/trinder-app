@@ -37,7 +37,7 @@ const LandPage = () => {
             <Col xxl={10} lg={10} md={24} sm={24} xs={24} className={styles.humanContainer}>
             <img
                     className={styles.heroImage}
-                    src={"/images/logo.png"}
+                    src={"/images/printer-3.gif"}
                     alt="frekans wave"
                 />
             </Col>

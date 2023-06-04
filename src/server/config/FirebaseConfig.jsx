@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage, ref } from 'firebase/storage';
+import { getPerformance } from "firebase/performance";
 
 const app = initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -16,6 +17,6 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const fireStorage = getStorage(app);
 export const storageRef = ref(fireStorage);
-
+export const perf = getPerformance(app);
 // Enable authentication persistence
 setPersistence(auth, browserLocalPersistence);
