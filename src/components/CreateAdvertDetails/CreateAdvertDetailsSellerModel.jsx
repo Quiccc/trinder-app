@@ -6,10 +6,11 @@ import { createAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
+import TextArea from 'antd/es/input/TextArea';
 
 const CreateAdvertDetailsSellerModel = () => {
   const { Option } = Select;
-  const {alertSuccess, alertError} = useNotification();
+  const { alertSuccess, alertError } = useNotification();
   const [imageList, setImageList] = useState([]);
   const [cities, setCities] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -126,8 +127,9 @@ const CreateAdvertDetailsSellerModel = () => {
                   },
                 ]}
               >
-                <Input
-                  placeholder="Description"
+                <TextArea
+                  maxLength={500}
+                  placeholder="Max 500 characters"
                   onChange={(e) => {
                     setAdvert({ ...advert, description: e.target.value });
                   }}
@@ -218,7 +220,7 @@ const CreateAdvertDetailsSellerModel = () => {
               <Form.Item
                 name="image"
                 labelCol={{ span: 24 }}
-                label={<label className={styles.label}>You can upload up to 8 images</label>}  
+                label={<label className={styles.label}>You can upload up to 8 images</label>}
                 rules={[
                   {
                     required: true,
@@ -316,8 +318,8 @@ const CreateAdvertDetailsSellerModel = () => {
                 )
               }
               <Form.Item className={styles.submitButtonContainer}>
-              <Button htmlType="submit" className={styles.submitButton} disabled={isLoading}>
-                  {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Submit" }
+                <Button htmlType="submit" className={styles.submitButton} disabled={isLoading}>
+                  {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Submit"}
                 </Button>
               </Form.Item>
             </Form>

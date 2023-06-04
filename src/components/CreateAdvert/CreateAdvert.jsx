@@ -52,14 +52,14 @@ const CreateAdvert = () => {
                         <Row justify='center' align='middle' >
                             <Col span={3.5} className={styles.advertTypeChooseCard} onClick={() => { navigate('/new-advert/details/advert-service', { state: { type: 'sell_service' } }) }}>
                                 <Col justify='center' align='middle'>
-                                    <p className={styles.advertTypeChooseCardTitle}>Sell Service</p>
-                                    <p className={styles.advertTypeChooseCardText}>If you have a 3D Printer</p>
-                                    <p className={styles.advertTypeChooseCardText}>and want to sell your service</p>
+                                    <p className={styles.advertTypeChooseCardTitle}>Printing Service</p>
+                                    <p className={styles.advertTypeChooseCardText}>If you own a 3D printer</p>
+                                    <p className={styles.advertTypeChooseCardText}>and want to receive printing orders.</p>
                                 </Col>
                             </Col>
                             <Col span={3.5} className={styles.advertTypeChooseCard} onClick={() => { navigate('/new-advert/details/advert-model', { state: { type: 'sell_model' } }) }}>
                                 <Col>
-                                    <p className={styles.advertTypeChooseCardTitle}>Sell Model</p>
+                                    <p className={styles.advertTypeChooseCardTitle}>Pre-made Model</p>
                                     <p className={styles.advertTypeChooseCardText}>If you have a 3D Model</p>
                                     <p className={styles.advertTypeChooseCardText}>and want to sell it</p>
                                 </Col>

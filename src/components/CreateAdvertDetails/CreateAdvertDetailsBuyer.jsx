@@ -6,6 +6,7 @@ import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { createAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
 import { useNavigate } from 'react-router';
+import TextArea from 'antd/es/input/TextArea';
 
 
 const CreateAdvertDetailsBuyer = () => {
@@ -131,8 +132,9 @@ const CreateAdvertDetailsBuyer = () => {
                   },
                 ]}
               >
-                <Input
-                  placeholder="Description"
+                <TextArea
+                  maxLength={500}
+                  placeholder="Max 500 characters"
                   onChange={(e) => {
                     setAdvert({ ...advert, description: e.target.value });
                   }}

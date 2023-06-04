@@ -6,6 +6,7 @@ import { updateAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
+import TextArea from 'antd/es/input/TextArea';
 
 const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
   const { Option } = Select;
@@ -98,7 +99,7 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
     <Row className={styles.rowstyle}>
       <Col>
         <Card className={styles.cardstyle}>
-        <p className={styles.formTitle}>Sell Service</p>
+          <p className={styles.formTitle}>Printing Service</p>
           <Form
             name="normal_login"
             initialValues={{
@@ -140,8 +141,9 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
                 },
               ]}
             >
-              <Input
-                placeholder="Description"
+              <TextArea
+                maxLength={500}
+                placeholder="Max 500 characters"
                 onChange={(e) => {
                   setAdvert({ ...advert, description: e.target.value });
                 }}
@@ -287,8 +289,8 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
               </Upload>
             </Form.Item>
             <h4>First image will be used as cover image.</h4>
-              <Divider className={styles.divider} />
-              <p className={styles.subTitle}>Location</p>
+            <Divider className={styles.divider} />
+            <p className={styles.subTitle}>Location</p>
             {
               cities.length > 0 && (
                 <Form.Item
@@ -347,9 +349,9 @@ const UpdateAdvertDetailsSellerService = ({ advertPass }) => {
               )
             }
             <Form.Item>
-            <Button htmlType="submit" className={styles.submitButton} disabled={isLoading}>
-                  {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Submit" }
-                </Button>
+              <Button htmlType="submit" className={styles.submitButton} disabled={isLoading}>
+                {isLoading ? <LoadingOutlined className={styles.loadingGif} /> : "Submit"}
+              </Button>
             </Form.Item>
           </Form>
 

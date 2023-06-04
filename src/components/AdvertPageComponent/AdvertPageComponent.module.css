@@ -80,7 +80,7 @@
   }
   .cardSubheadersLeft{
     color: #000000;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -89,11 +89,10 @@
   .cardDescription{
     color: #000000;
     font-size: 1.2rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
     text-align: left;
     margin-left: 0.5vw;
+    height: 100%;
+    overflow-y: auto;
   }
   .cardSubheadersRight{
     color: #000000;
@@ -102,6 +101,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-align: right;
+    margin-bottom: 1vh;
   }
   .reportText{
     color: #dd0505;;
@@ -113,6 +113,7 @@
     text-align: right;
     margin-right: 2vw;
     margin-top: -1.2vh;
+    cursor: pointer;
   }
   .loadMoreButton{
     cursor: pointer;
@@ -124,7 +125,7 @@
     margin-bottom: 1vh;
   }
   .cardSubheadersLeftBig{
-    font-size: 2rem;
+    font-size: 1.4rem;
     font-weight: 600;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -138,7 +139,7 @@
   }
   .cardSubheadersRightBig{
     color: #000000;
-    font-size: 2rem;
+    font-size: 1.4rem;
     font-weight: 600;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -189,11 +190,14 @@
   border-radius: 0.3vw;
   border-width: 0.1vw;
   padding: 1vw;
-  height: 25vh;
+  min-height: 25vh;
+  height: auto;
   width: 50vw;
   border-radius: 0.4vw;
   margin-left: 7.6vw;
   margin-top: +5vw;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 .line{
   height: 1px;

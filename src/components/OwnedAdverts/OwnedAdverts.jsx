@@ -34,6 +34,13 @@ const OwnedAdverts = () => {
             title: 'Type',
             dataIndex: 'type',
             key: 'type',
+            render: (text, record) => {
+                return (
+                    <div className={styles.titleWrapper}>
+                        <p className={styles.title}>{record.type === "model" ? "Pre-made Model" : record.type === "service" ? "Printing Service" : "Model Request"}</p>
+                    </div>
+                )
+            }
         },
         {
             title: 'Price',
@@ -58,14 +65,14 @@ const OwnedAdverts = () => {
             render: (text, record) => {
                 return (
                     <Button className={styles.updateButton}
-                    disabled={isLoading}
-                    onClick={() => {
-                        setActivePage({
-                            type: "update",
-                            advert: record,
-                            advertType: record.type
-                        })
-                    }}>Update</Button>
+                        disabled={isLoading}
+                        onClick={() => {
+                            setActivePage({
+                                type: "update",
+                                advert: record,
+                                advertType: record.type
+                            })
+                        }}>Update</Button>
                 )
             },
         },
@@ -75,15 +82,15 @@ const OwnedAdverts = () => {
             render: (text, record) => {
                 return (
                     <Button className={styles.updateButton}
-                    disabled={isLoading}
-                    onClick={async () => {
-                        setIsLoading(true);
-                        //If user not premium, give him a message
-                        await changeAdvertStatus(record.advert_id, !record.is_active);
-                        //Change the data to force a rerender
-                        setData([]);
-                        setIsLoading(false);
-                    }}>{record.is_active ? "Active" : "Inactive"}</Button>
+                        disabled={isLoading}
+                        onClick={async () => {
+                            setIsLoading(true);
+                            //If user not premium, give him a message
+                            await changeAdvertStatus(record.advert_id, !record.is_active);
+                            //Change the data to force a rerender
+                            setData([]);
+                            setIsLoading(false);
+                        }}>{record.is_active ? "Active" : "Inactive"}</Button>
                 )
             }
         }

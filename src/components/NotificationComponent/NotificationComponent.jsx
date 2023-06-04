@@ -6,6 +6,7 @@ import{ useEffect, useState } from "react";
 import { MessageOutlined } from "@ant-design/icons";
 import { ForumOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router";
+import { auth } from "../../server/config/FirebaseConfig";
 
 
 const NotificationComponent = () => {
@@ -56,6 +57,7 @@ const NotificationComponent = () => {
     return response;
   };
   useEffect(() => {
+    if (auth.currentUser === null) return;
     getNotifications().then((res) => {
       setItems(res);
     });

@@ -18,7 +18,6 @@ export function AuthProvider({ children }) {
         email: "",
         isAdmin: false,
         premiumID: null,
-        isVerified: false,
         profile_image: null,
     });
     const getDetails = async () => {
@@ -31,9 +30,14 @@ export function AuthProvider({ children }) {
     };
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
-            getDetails();
-            setLoading(false);
+            if (user) {
+                setCurrentUser(user);
+                getDetails();
+                setLoading(false);
+            }else {
+                setCurrentUser(null);
+                setLoading(false);
+            }
         });
 
         const storedUser = localStorage.getItem('currentUser');

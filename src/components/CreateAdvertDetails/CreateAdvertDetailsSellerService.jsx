@@ -6,6 +6,7 @@ import { createAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
+import TextArea from 'antd/es/input/TextArea';
 
 const CreateAdvertDetailsSellerService = () => {
   const { Option } = Select;
@@ -127,8 +128,9 @@ const CreateAdvertDetailsSellerService = () => {
                   },
                 ]}
               >
-                <Input
-                  placeholder="Description"
+                <TextArea
+                  maxLength={500}
+                  placeholder="Max 500 characters"
                   onChange={(e) => {
                     setAdvert({ ...advert, description: e.target.value });
                   }}

@@ -1,6 +1,5 @@
 import { Col, Row } from 'antd'
 import { Link } from 'react-router-dom';
-import { auth } from '../../server/config/FirebaseConfig';
 import styles from './LandPage.module.css'
 
 const LandPage = () => {
@@ -19,19 +18,7 @@ const LandPage = () => {
                 }
     
                 <div className={styles.buttonContainer}>
-                    {
-                        auth.currentUser ?
-                            <>
-                                <Link to={'/forum'} className={styles.userFrequencyButton}>Forum</Link>
-                            </>
-                            :
-                            <>
-                                <Link to={'/login'} className={styles.mottoLoginButton}>Login</Link>
-                                <Link to={'/register'} className={styles.registerButton}>Register</Link>
-                                <Link to={'/forum'} className={styles.frequencyButton}>Forum</Link>
-                            </>
-                    }
-
+                    <Link to={'/forum'} className={styles.forumButton}>Forum</Link>
                 </div>
             </Col>
             <Col xxl={10} lg={10} md={24} sm={24} xs={24} className={styles.humanContainer}>

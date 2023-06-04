@@ -9,6 +9,7 @@ const indexPriceAsc = algoliaClient.initIndex('price_asc');
 const indexPriceDesc = algoliaClient.initIndex('price_desc');
 
 export const createAdvert = async (advert, type) => {
+    let advertId = null;
     //Create advert doc with advert data and random id
     try {
         //Get current user data
@@ -33,7 +34,7 @@ export const createAdvert = async (advert, type) => {
             is_active: true,
         }).then(async (docRef) => {
             //Get id of created advert
-            let advertId = docRef.id;
+            advertId = docRef.id;
             let folderRef = ref(storageRef, `adverts/${auth.currentUser.uid}/${advertId}/`);
             let image_urls = [];
             let model_url = "";
@@ -78,7 +79,9 @@ export const createAdvert = async (advert, type) => {
             const q = query(advertsRef, where("user_id", "==", auth.currentUser.uid));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((docCopy) => {
-                if (docCopy.id !== advert.id) {
+                console.log(docCopy.id);
+                console.log(advertId);
+                if (docCopy.id !== advertId) {
                     updateDoc(doc(db, "adverts", docCopy.id), {
                         is_active: false,
                     });
@@ -90,6 +93,7 @@ export const createAdvert = async (advert, type) => {
             message: "Advert created successfully",
         };
     } catch (error) {
+        console.log(error);
         return {
             status: 500,
             message: "There is an error while creating advert",
@@ -176,7 +180,7 @@ export const getAdverts = async (page, limitNumber, lastIndexId, data) => {
                 location: doc.data().city + ", " + doc.data().district,
                 date: convertTimeStampToDateAdvertCard(doc.data().created_at),
                 advert_id: doc.id,
-                type: doc.data().type === "service" ? "Sell Service" : doc.data().type === "model" ? "Sell Model" : "Model Request",
+                type: doc.data().type === "service" ? "Printing Service" : doc.data().type === "model" ? "Pre-made Model" : "Model Request",
             };
             adverts.push(advertTemp);
         });
@@ -192,7 +196,7 @@ export const getAdverts = async (page, limitNumber, lastIndexId, data) => {
             location: doc.data().city + ", " + doc.data().district,
             date: convertTimeStampToDateAdvertCard(doc.data().created_at),
             advert_id: doc.id,
-            type: doc.data().type === "service" ? "Sell Service" : doc.data().type === "model" ? "Sell Model" : "Model Request",
+            type: doc.data().type === "service" ? "Printing Service" : doc.data().type === "model" ? "Pre-made Model" : "Model Request",
         };
         adverts.push(advertTemp);
     });
@@ -206,7 +210,7 @@ export const getAdverts = async (page, limitNumber, lastIndexId, data) => {
                 location: doc.data().city + ", " + doc.data().district,
                 date: convertTimeStampToDateAdvertCard(doc.data().created_at),
                 advert_id: doc.id,
-                type: doc.data().type === "service" ? "Sell Service" : doc.data().type === "model" ? "Sell Model" : "Model Request",
+                type: doc.data().type === "service" ? "Printing Service" : doc.data().type === "model" ? "Pre-made Model" : "Model Request",
             };
             adverts.push(advertTemp);
         });
@@ -256,32 +260,47 @@ export const updateAdvert = async (advert, type) => {
         //Update images and if type is buyer update model_obj in cloud storage and update datas in firestore
         let images = [];
         for (let i = 0; i < advert?.images.length; i++) {
-            let imageRef = ref(folderRefImages, advert.images[i].name);
-            await uploadBytes(imageRef, advert.images[i].originFileObj).then(async (snapshot) => {
-                //Get download url of uploaded image
-                await getDownloadURL(snapshot.ref).then((url) => {
-                    //Add this url to array of image urls
-                    images.push({
-                        url: url,
-                        name: advert.images[i].name,
+            if (advert?.images[i]?.url) {
+                images.push({
+                    url: advert?.images[i].url,
+                    name: advert?.images[i].name,
+                });
+                continue;
+            }else {
+                let imageRef = ref(folderRefImages, advert.images[i].name);
+                await uploadBytes(imageRef, advert.images[i].originFileObj).then(async (snapshot) => {
+                    //Get download url of uploaded image
+                    await getDownloadURL(snapshot.ref).then((url) => {
+                        //Add this url to array of image urls
+                        images.push({
+                            url: url,
+                            name: advert.images[i].name,
+                        });
                     });
                 });
-            });
+            }
         }
         let model_obj = null;
         if (type === "buyer") {
             if (advert.model_obj) {
-                let model_objRef = ref(folderRefModelObj, advert?.model_obj.name);
-                await uploadBytes(model_objRef, advert?.model_obj.originFileObj).then(async (snapshot) => {
-                    //Get download url of uploaded image
-                    await getDownloadURL(snapshot.ref).then((url) => {
-                        //Add this url to array of image urls
-                        model_obj = {
-                            name: advert.model_obj.name,
-                            url: url,
-                        };
+                if(advert?.model_obj?.url){
+                    model_obj = {
+                        name: advert.model_obj.name,
+                        url: advert.model_obj.url,
+                    };
+                }else {
+                    let model_objRef = ref(folderRefModelObj, advert?.model_obj.name);
+                    await uploadBytes(model_objRef, advert?.model_obj.originFileObj).then(async (snapshot) => {
+                        //Get download url of uploaded image
+                        await getDownloadURL(snapshot.ref).then((url) => {
+                            //Add this url to array of image urls
+                            model_obj = {
+                                name: advert.model_obj.name,
+                                url: url,
+                            };
+                        });
                     });
-                });
+                }
             }
         }
         await updateDoc(advertRef, {
@@ -417,7 +436,7 @@ export const searchAdverts = async (page, limitNumber, data) => {
         date: convertTimeStampToDateAdvertCard(hit.created_at),
         advert_id: hit.objectID,
         type:
-            hit.type === 'service' ? 'Sell Service' : hit.type === 'model' ? 'Sell Model' : 'Model Request',
+            hit.type === 'service' ? 'Printing Service' : hit.type === 'model' ? 'Pre-made Model' : 'Model Request',
     }));
     return { adverts, count };
 };
