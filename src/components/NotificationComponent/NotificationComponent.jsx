@@ -1,9 +1,9 @@
-import { Dropdown } from "antd";
+import { Col, Dropdown } from "antd";
 import { CircleNotificationsRounded } from "@mui/icons-material";
 import { getActiveUserNotifications, deactivateNotification } from "../../server/NotificationService";
 import styles from "./NotificationComponent.module.css"
 import{ useEffect, useState } from "react";
-import { MessageOutlined } from "@ant-design/icons";
+import { MessageOutlined, WarningOutlined } from "@ant-design/icons";
 import { ForumOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import { auth } from "../../server/config/FirebaseConfig";
@@ -25,6 +25,7 @@ const NotificationComponent = () => {
   };
 
   const handleDeleteNotification = async (notificationId) => {
+    setItems(items.filter((item) => item.key !== notificationId));
     await deactivateNotification(notificationId);
   };
   const getNotifications = async () => {
@@ -49,7 +50,7 @@ const NotificationComponent = () => {
           response.push({
             label: <div className={styles.notificationText} onClick={() => handleDeleteNotification(notifications[i].id)}>{notifications[i]?.content}</div>,
             key: notifications[i].id,
-            icon: <ForumOutlined />
+            icon: <WarningOutlined />
           })
         }
       }
@@ -70,7 +71,10 @@ const NotificationComponent = () => {
   if (items.length > 0){
     return (
       <Dropdown menu={{ items }} trigger={["hover"]} open={open} onOpenChange={handleOpen} className={styles.dropdown}> 
-            <CircleNotificationsRounded className={styles.notificationIcon} style={{fontSize:'3rem'}} />
+            <Col>
+              <CircleNotificationsRounded className={styles.notificationIcon} style={{fontSize:'3rem'}} />
+            <div className={styles.notificationCount}>{items?.length}</div>
+            </Col>
       </Dropdown>
     );
   }

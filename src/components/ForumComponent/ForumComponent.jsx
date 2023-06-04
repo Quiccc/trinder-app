@@ -116,49 +116,6 @@ const ForumComponent = ({ topicId }) => {
                                     })
                                 }
                             </Col>
-                            {/* <Col className={styles.menuContainer}>
-                            {
-                                //Map last 3 items of menu options
-                                forumMenuOptions.length > 0 && forumMenuOptions.slice(3, 6).map((item, index) => {
-                                    return (
-                                        <Row
-                                            className={item.active ? styles.menuTitleActiveRow : styles.menuTitleRow}
-                                            span={24}
-                                            justify='space-between'
-                                            align='middle'
-                                            onClick={() => {
-                                                //Make active clicked menu item and make others passive
-                                                const newMenu = forumMenuOptions.map((option) => {
-                                                    if (option.id === item.id) {
-                                                        return {
-                                                            ...option,
-                                                            active: true,
-                                                        };
-                                                    }
-                                                    return {
-                                                        ...option,
-                                                        active: false,
-                                                    };
-                                                })
-                                                setSelectedTopicID(null);
-                                                setCategory(item?.categoryId);
-                                                setMenuOptions(newMenu);
-                                            }}
-                                            wrap={false}
-                                            key={item.id}
-                                        >
-                                            <Row align='middle' className={styles.iconContainer} wrap={false}>
-                                                <MailOutlined className={styles.menuIcons} />
-                                                <p className={styles.menuTitlePassive}>{item.title}</p>
-                                                
-                                            </Row>
-                                            <RightOutlined className={styles.arrow} />
-                                        </Row>
-                                    
-                                    )
-                                })
-                            }
-                    </Col> */}
                         </Col>
                         <Col xxl={16} xl={16} lg={16} md={22} sm={22} xs={22} className={styles.sideComponents}>
 

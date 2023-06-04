@@ -71,10 +71,10 @@ export const sendWarningAdvertReportNotification = async (advertId,userId) => {
         to: userId,
         content: `You have been warned for inappropriate advert: ${advertTitle}. If you continue to send inappropriate adverts, your account will be banned.`,
     });
-
-    const userRef = await getDoc(doc(db, "user", userId));
+    const userRef = doc(db, "user", userId);
+    const user = await getDoc(userRef);
     await updateDoc(userRef, {
-        warningCount: userRef.data()?.warningCount ? userRef.data().warningCount + 1 : 1,
+        warningCount: user.data()?.warningCount ? user.data().warningCount + 1 : 1,
     });
 }
 
@@ -87,9 +87,10 @@ export const sendWarningChatReportNotification = async (userId) => {
         to: userId,
         content: "You have been warned for inappropriate chat message. If you continue to send inappropriate messages, your account will be banned.",
     });
-    const userRef = await getDoc(doc(db, "user", userId));
+    const userRef = doc(db, "user", userId);
+    const user = await getDoc(userRef);
     await updateDoc(userRef, {
-        warningCount: userRef.data()?.warningCount ? userRef.data().warningCount + 1 : 1,
+        warningCount: user.data()?.warningCount ? user.data().warningCount + 1 : 1,
     });
 }
 
@@ -102,9 +103,10 @@ export const sendWarningForumReportNotification = async (userId) => {
         to: userId,
         content: "You have been warned for inappropriate forum comment. If you continue to send inappropriate comments, your account will be banned.",
     });
-    const userRef = await getDoc(doc(db, "user", userId));
+    const userRef = doc(db, "user", userId);
+    const user = await getDoc(userRef);
     await updateDoc(userRef, {
-        warningCount: userRef.data()?.warningCount ? userRef.data().warningCount + 1 : 1,
+        warningCount: user.data()?.warningCount ? user.data().warningCount + 1 : 1,
     });
 }
 

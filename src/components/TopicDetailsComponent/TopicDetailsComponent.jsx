@@ -93,7 +93,7 @@ const TopicDetailsComponent = ({ topicID }) => {
     };
 
     useEffect(() => {
-        getTopicCommentsByTopicId(topicID, 0, 10).then((response) => {
+        getTopicCommentsByTopicId(topicID, 0, 8).then((response) => {
             setTopicComments(response?.topicCommentList);
             setCount(response?.count);
         });
@@ -138,7 +138,7 @@ const TopicDetailsComponent = ({ topicID }) => {
                                 <Row>
                                     <Col span={2} className={styles.topicTitleContainer}>
                                         <p className={styles.userName}>{comment?.user?.name + " " + comment?.user?.surname}</p>
-                                        <img className={styles.userAvatar} src="images/logo.png" alt="profile" />
+                                        <img className={styles.userAvatar} src={comment?.user?.profile_image?.url || '/images/no_profile_image.jpeg'} alt={comment?.user?.profile_image?.name} />
                                     </Col>
                                     <Col span={1} className={styles.topicTitleContainer}>
                                         <div className={styles.borderLineVertical}></div>
@@ -165,8 +165,9 @@ const TopicDetailsComponent = ({ topicID }) => {
                             className={styles.pagination}
                             defaultCurrent={1}
                             total={count}
+                            pageSize={8}
                             onChange={(page, pageSize) => {
-                                getTopicCommentsByTopicId(topicID, page - 1, 10, topicComments[topicComments.length - 1]?.id).then((response) => {
+                                getTopicCommentsByTopicId(topicID, page - 1, pageSize, topicComments[topicComments.length - 1]?.id).then((response) => {
                                     setTopicComments(response?.topicCommentList);
                                 });
                             }}

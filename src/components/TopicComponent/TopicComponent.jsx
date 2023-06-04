@@ -13,7 +13,7 @@ const TopicComponent = ({ category, handleSelectTopic, searchValue }) => {
     const [count, setCount] = useState(0);
     useEffect(() => {
         if(category ) {
-            getTopicsByCategoryId(category,0,10).then((response) => {
+            getTopicsByCategoryId(category,0,8).then((response) => {
                 setTopics(response.topicList);
                 setCount(response.count);
             });
@@ -23,7 +23,7 @@ const TopicComponent = ({ category, handleSelectTopic, searchValue }) => {
     }, [category]);
     useEffect(() => {
         if(searchValue) {
-            getTopicsByText(searchValue,0,10).then((response) => {
+            getTopicsByText(searchValue,0,8).then((response) => {
                 setTopics(response.topicList);
                 setCount(response.count);
             });
@@ -125,15 +125,15 @@ const TopicComponent = ({ category, handleSelectTopic, searchValue }) => {
                 })
                 }
                 {
-                    count > 0 && <Pagination defaultCurrent={1} total={count} className={styles.pagination} onChange={(page, pageSize) => {
+                    count > 0 && <Pagination defaultCurrent={1} total={count} pageSize={8} className={styles.pagination} onChange={(page, pageSize) => {
                         if(searchValue) {
-                            getTopicsByText(searchValue, (page - 1), 10).then((response) => {
+                            getTopicsByText(searchValue, (page - 1), pageSize).then((response) => {
                                 setTopics(response.topicList);
                                 setCount(response.count);
 
                             });
                         }else {
-                            getTopicsByCategoryId(category, (page - 1), 10,topics[topics.length - 1].id).then((response) => {
+                            getTopicsByCategoryId(category, (page - 1), pageSize,topics[topics.length - 1].id).then((response) => {
                                 setTopics(response.topicList);
                                 setCount(response.count);
                             });
