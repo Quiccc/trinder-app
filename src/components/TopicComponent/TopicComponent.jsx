@@ -23,7 +23,9 @@ const TopicComponent = ({ category, handleSelectTopic, searchValue }) => {
     }, [category]);
     useEffect(() => {
         if(searchValue) {
+            console.log(searchValue);
             getTopicsByText(searchValue,0,8).then((response) => {
+                console.log(response);
                 setTopics(response.topicList);
                 setCount(response.count);
             });
@@ -115,7 +117,7 @@ const TopicComponent = ({ category, handleSelectTopic, searchValue }) => {
                                     {
                                         topic?.isLocked && <LockOutlined className={styles.lockIcon} />
                                     }
-                                    <p className={styles.cardSubheaders} ><MessageOutlined /> {topic?.commentsCount}</p>
+                                    <p className={styles.cardSubheaders} ><MessageOutlined /> {topic?.commentCount}</p>
                                     </Row>
                                     
                                 </Col>

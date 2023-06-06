@@ -33,7 +33,6 @@ const ChatMessagesComponent = ({ chatId }) => {
     useEffect(() => {
         getChatMessages(chatId).then((res) => {
             setChatMessages(res.messages);
-            console.log(res.advert);
             setAdvert(res.advert);
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps

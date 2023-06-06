@@ -7,6 +7,7 @@ import useNotification from '../../hooks/UseNotification';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
 import TextArea from 'antd/es/input/TextArea';
+import { getIsUserPremium } from '../../server/PaymentService';
 
 const CreateAdvertDetailsSellerModel = () => {
   const { Option } = Select;
@@ -17,6 +18,7 @@ const CreateAdvertDetailsSellerModel = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
   const navigate = useNavigate();
   const [advert, setAdvert] = useState({
     title: '',
@@ -78,6 +80,9 @@ const CreateAdvertDetailsSellerModel = () => {
   };
 
   useEffect(() => {
+    getIsUserPremium().then((response) => {
+      setIsPremium(response);
+    });
     fetch('/city_data.json')
       .then((response) => response.json())
       .then((data) => {
@@ -90,7 +95,12 @@ const CreateAdvertDetailsSellerModel = () => {
       <Row className={styles.rowstyle}>
         <Col>
           <Card className={styles.cardstyle}>
-            <p className={styles.formTitle}>Sell Model</p>
+            <p className={styles.formTitle}>Pre-made Model</p>
+            {
+              !isPremium && (
+                <p className={styles.premiumTitle}>Seems like you are not a premium member. Regular users can have one active advert.</p>
+                )
+            }
             <Form
               name="normal_login"
               initialValues={{

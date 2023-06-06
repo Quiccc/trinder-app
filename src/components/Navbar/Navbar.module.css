@@ -71,6 +71,7 @@
     color: #3e4581;
     background-color: white;
     margin-bottom: 0;
+    margin-right: 2.5vw;
   }
   .userName:hover {
     color: #434343;
@@ -100,10 +101,11 @@
   }
   .messageIcon{
     color: #3e4581;
-    font-size: 2.7rem;
+    font-size: 2.5vw;
     font-weight: 700;
     display: flex;
-    margin-right: 1vw;
+    margin-right: 0.3vw;
+    margin-left: 0.3vw;
   }
   .loginButton {
     cursor: pointer;

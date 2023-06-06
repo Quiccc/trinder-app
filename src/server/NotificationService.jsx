@@ -1,19 +1,21 @@
-import { collection, getDoc, getDocs, query, where, doc, addDoc, serverTimestamp, orderBy, limit, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, getDoc, query, where, doc, addDoc, serverTimestamp, orderBy, limit, deleteDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "./config/FirebaseConfig";
 import { getUserNameById } from "./UserService"
 import { getTopicById, getCommentById} from "./ForumService";
 
-export const getActiveUserNotifications = async () => {
-    const notificationRef = collection(db, "notifications");
-    const q = query(notificationRef, where("to", "==", auth.currentUser.uid), orderBy("sentAt", "desc"), limit(5));
-    const querySnapshot = await getDocs(q);
+export const subscribeToNotifications = async (callback) => {
     let notifications = [];
-    for(let i = 0; i < querySnapshot.docs.length; i++){
-        let notification = querySnapshot.docs[i].data();
-        notification.id = querySnapshot.docs[i].id;
-        notifications.push(notification);
-    }
-    return notifications;
+    const notificationRef = collection(db, "notifications");
+    const q = query(notificationRef, where("to", "==", auth.currentUser.uid), where("isActive", "==", true), orderBy("sentAt", "desc"), limit(5));
+    onSnapshot(q, (querySnapshot) =>{
+        notifications = [];
+        querySnapshot.forEach((doc) => {
+            let notification = doc.data();
+            notification.id = doc.id;
+            notifications.push(notification);
+        });
+        callback(notifications);
+    })
 };
 
 export const sendChatNotification = async (chatId, message) => {

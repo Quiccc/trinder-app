@@ -7,6 +7,7 @@ import { createAdvert } from '../../server/AdvertService';
 import useNotification from '../../hooks/UseNotification';
 import { useNavigate } from 'react-router';
 import TextArea from 'antd/es/input/TextArea';
+import { getIsUserPremium } from '../../server/PaymentService';
 
 
 const CreateAdvertDetailsBuyer = () => {
@@ -17,6 +18,7 @@ const CreateAdvertDetailsBuyer = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
+  const [isPremium, setIsPremium] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -83,6 +85,9 @@ const CreateAdvertDetailsBuyer = () => {
   };
 
   useEffect(() => {
+    getIsUserPremium().then((response) => {
+      setIsPremium(response);
+    });
     fetch('/city_data.json')
       .then((response) => response.json())
       .then((data) => {
@@ -96,6 +101,11 @@ const CreateAdvertDetailsBuyer = () => {
         <Col>
           <Card className={styles.cardstyle}>
           <p className={styles.formTitle}>Model Request</p>
+          {
+              !isPremium && (
+                <p className={styles.premiumTitle}>Seems like you are not a premium member. Regular users can have one active advert.</p>
+                )
+            }
             <Form
               name="normal_login"
               initialValues={{

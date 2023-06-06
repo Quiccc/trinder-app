@@ -51,7 +51,7 @@
 }
   .cardTitle {
     color: #000000;
-    font-size: 1.9rem;
+    font-size: 1.4rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -60,7 +60,7 @@
   }
   .cardPrice{
     color: #000000;
-    font-size: 2.5rem;
+    font-size: 1.9rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

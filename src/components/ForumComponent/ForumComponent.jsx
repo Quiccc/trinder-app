@@ -20,6 +20,7 @@ const ForumComponent = ({ topicId }) => {
     const { alertError } = useNotification();
     const handleSelectTopic = (topicID) => {
         setSelectedTopicID(topicID);
+        setSearchValue(null);
     };
 
     useEffect(() => {

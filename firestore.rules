@@ -66,16 +66,6 @@ service cloud.firestore {
     	get(/databases/$(database)/documents/user/$(request.auth.uid)).data.surname == request.resource.data.senderName;
 		}
     
-    function isUserParticipantInChat(chatId, request) {
-  		// Get the chat document
-  		let chatDoc = get(/databases/$(database)/documents/chats/$(chatId)).data;
-  	
-  		// Check if the user is the advert owner or the messenger
-  		return request.auth != null && (
-    		chatDoc.advertOwnerId == request.auth.uid ||
-    		chatDoc.messagerId == request.auth.uid
-  		);
-		}
     function isUserMessager(request){
     	return request.auth != null && request.resource.data.messagerId == request.auth.uid;
     }
@@ -90,7 +80,7 @@ service cloud.firestore {
   		// Check if the new messages array has exactly one more element than the old messages array
   		return oldMessagesArray.size() + 1 == newMessagesArray.size();
 		}
-    function isUserTryingToChangeImmutableAttribute(request, resource) {
+    function isUserTryingToChangeMutableAttributes(request, resource) {
   		return (
     		request.auth != null &&
     			!(('user_id' in request.resource.data) && (request.resource.data.user_id != resource.data.user_id)) &&
@@ -113,7 +103,7 @@ service cloud.firestore {
     match /topic/{topicId}{
     	allow read: if true;
       allow create: if (
-      	isEmailVerified(request)
+      	isEmailVerified(request) && request.resource.data.createdBy == request.auth.uid
       );
       allow update: if (
       	isEmailVerified(request) && isJustUpdateLikeStatus(request,resource)
@@ -122,13 +112,13 @@ service cloud.firestore {
     match /topicComments/{topicCommentId}{
     	allow read: if true;
       allow create: if (
-      	isEmailVerified(request)
+      	isEmailVerified(request) && request.resource.data.createdBy == request.auth.uid
       );
     }
     
     match /reports/{reportId}{
     	allow read: if isAdmin(request);
-      allow create: if isEmailVerified(request) && request.resource.data.senderID == request.auth.uid;
+      allow create: if isEmailVerified(request) && request.resource.data.senderId == request.auth.uid;
     }
     match /premiumUsers/{userId}{
     	allow read: if userId == request.auth.uid;
@@ -141,7 +131,9 @@ service cloud.firestore {
     }
     
     match /chats/{chatId}{
-    	allow read: if isEmailVerified(request) && isUserParticipantInChat(chatId,request);
+    	allow read: if isEmailVerified(request) && 
+                (resource.data.advertOwnerId == request.auth.uid ||
+                 resource.data.messagerId == request.auth.uid);
       allow create: if isEmailVerified(request) && isUserMessager(request);
     	allow update: if isEmailVerified(request) && isJustSendMessage(request,resource);
     }
@@ -149,11 +141,12 @@ service cloud.firestore {
     match /adverts/{advertId}{
     	allow read: if true;
       allow create: if isEmailVerified(request) && isUidMatch(request);
-      allow update: if isUserTryingToChangeImmutableAttribute(request,resource);
+      allow update: if isUserTryingToChangeMutableAttributes(request,resource);
     }
     
     match /user/{userId}{
     	allow read: if true;
+      allow get: if true;
       allow create: if true;
       allow update: if (!isUserTryingToSetHimselfAdmin(request,resource)) && (!isUserTryingToChangePremiumId(request,resource));
     }

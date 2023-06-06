@@ -22,7 +22,7 @@ import Successful from "../pages/Successful";
 import AdminPanel from "../adminPanel/AdminPanel";
 import Loading from "../components/Loading/Loading";
 import ForumPage from "../pages/ForumPage";
-import Decline from "../pages/Decline";
+import DeclinePage from "../pages/DeclinePage";
 
 const AppRouter = () => {
     const { currentUser, loading } = useAuth();
@@ -60,7 +60,7 @@ const AppRouter = () => {
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="*" element={<PageNotFound />} />
                 <Route path="/forum" element={<ForumPage />} />
-                <Route path="/decline " element={<Decline />} />
+                <Route path="/decline" element={<DeclinePage />} />
 
             </Routes>
             <CookiesComponent />

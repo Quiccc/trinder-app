@@ -2,7 +2,7 @@ import DeclineComponent from "../components/DeclineComponent/DeclineComponent"
 import Footer from "../components/Footer/Footer"
 import Navbar from "../components/Navbar/Navbar"
 
-const Decline = () => {
+const DeclinePage = () => {
     return (
         <>
             <Navbar design={true} />
@@ -12,4 +12,4 @@ const Decline = () => {
     )
 }
 
-export default Decline
+export default DeclinePage

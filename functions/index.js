@@ -22,6 +22,16 @@ async function purchasePackage(customerId, periodStart,periodEnd,price) {
     await admin.firestore().collection("user").doc(customerId).update({
         premiumID: customerId
     });
+
+    //Make is_active and is_premium = true for all advertisements
+    await admin.firestore().collection("adverts").where("user_id", "==", customerId).get().then((querySnapshot) => {
+        for (let i = 0; i < querySnapshot.docs.length; i++) {
+            const doc = querySnapshot.docs[i];
+            admin.firestore().collection("adverts").doc(doc.id).update({
+                is_premium: true
+            });
+        }
+    });
 }    
 exports.purchasePackageUpdate = functions.firestore
     .document("customers/{customerId}/subscriptions/{subscriptionId}")

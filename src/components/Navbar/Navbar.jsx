@@ -75,7 +75,7 @@ const Navbar = ({ design, onData, onSearchData }) => {
             {
               currentUser ? (
                 <Row align='middle' wrap={false}>
-                  {isAdmin && <Link to={'/admin'} className={styles.messageIcon}><AdminPanelSettings style={{fontSize: '3rem'}} /></Link>}
+                  {isAdmin && <Link to={'/admin'} className={styles.messageIcon}><AdminPanelSettings style={{fontSize: '3vw'}} /></Link>}
                   <Link to={'/chat'} className={styles.messageIcon}><MessageOutlined /></Link>
                   <NotificationComponent />
                   <Link to={'/profile'} className={styles.userName}>{`${userDetails.name} ${userDetails.surname}`}</Link>

@@ -1,12 +1,11 @@
 import { Col, Dropdown } from "antd";
 import { CircleNotificationsRounded } from "@mui/icons-material";
-import { getActiveUserNotifications, deactivateNotification } from "../../server/NotificationService";
+import { deactivateNotification, subscribeToNotifications } from "../../server/NotificationService";
 import styles from "./NotificationComponent.module.css"
 import{ useEffect, useState } from "react";
 import { MessageOutlined, WarningOutlined } from "@ant-design/icons";
 import { ForumOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router";
-import { auth } from "../../server/config/FirebaseConfig";
 
 
 const NotificationComponent = () => {
@@ -28,9 +27,8 @@ const NotificationComponent = () => {
     setItems(items.filter((item) => item.key !== notificationId));
     await deactivateNotification(notificationId);
   };
-  const getNotifications = async () => {
+  const getNotifications = async (notifications) => {
     const response = [];
-    const notifications = await getActiveUserNotifications();
     if (notifications.length > 0) {
       for (let i = notifications.length - 1; i >= 0; i--){
         if (notifications[i].type === "chat"){
@@ -57,13 +55,15 @@ const NotificationComponent = () => {
     }
     return response;
   };
+
   useEffect(() => {
-    if (auth.currentUser === null) return;
-    getNotifications().then((res) => {
-      setItems(res);
+    subscribeToNotifications((newNotifications) => {
+      getNotifications(newNotifications).then((response) => {
+        setItems(response);
+      });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [subscribeToNotifications]);
   const handleOpen = (flag) => {
     setOpen(flag);
   };
@@ -72,7 +72,7 @@ const NotificationComponent = () => {
     return (
       <Dropdown menu={{ items }} trigger={["hover"]} open={open} onOpenChange={handleOpen} className={styles.dropdown}> 
             <Col>
-              <CircleNotificationsRounded className={styles.notificationIcon} style={{fontSize:'3rem'}} />
+              <CircleNotificationsRounded className={styles.notificationIcon} style={{fontSize:'3vw'}} />
             <div className={styles.notificationCount}>{items?.length}</div>
             </Col>
       </Dropdown>
@@ -82,11 +82,11 @@ const NotificationComponent = () => {
   return (
     <Dropdown trigger={["hover"]} open={open} onOpenChange={handleOpen} dropdownRender={() => (
       <div className={styles.noNotificationContainer}>
-        <img className={styles.noNotificationImage} src="/images/no_notification.png" alt="" />
+        <img className={styles.noNotificationImage} sr c="/images/no_notification.png" alt="" />
         <p className={styles.noNotificationText} alt="">You have no notifications.</p>
       </div>
     )}>
-          <CircleNotificationsRounded className={ styles.notificationIcon } style={{fontSize:'3rem'}} />
+          <CircleNotificationsRounded className={ styles.notificationIcon } style={{fontSize:'3vw'}} />
     </Dropdown>
   );
 

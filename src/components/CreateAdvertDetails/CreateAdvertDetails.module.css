@@ -65,3 +65,12 @@
   .loadingGif{
     font-size: 1vw;
   }
+  .premiumTitle{
+    font-size: 0.6rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    color: #8a93e4;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    text-align: left;
+  }

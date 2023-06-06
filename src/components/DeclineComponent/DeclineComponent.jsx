@@ -1,12 +1,10 @@
 import { Col, Result } from 'antd'
-import Navbar from '../Navbar/Navbar';
 import { Link } from 'react-router-dom'
 import styles from './DeclineComponent.module.css'
 
 const DeclineComponent = () => {
     return (
         <>
-            <Navbar design={true} />
             <Col className={styles.cancelContainer}>
                 <Result
                     status="warning"

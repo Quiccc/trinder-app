@@ -22,8 +22,8 @@ const PricingComponent = () => {
             return;
         }else {
             setLoadingSecond(true);
-            await checkOut(priceId);
-            setLoadingSecond(false);
+            await checkOut(priceId).then((res) => {
+            });
         }
     };
 
