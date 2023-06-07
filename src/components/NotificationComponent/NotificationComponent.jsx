@@ -82,7 +82,7 @@ const NotificationComponent = () => {
   return (
     <Dropdown trigger={["hover"]} open={open} onOpenChange={handleOpen} dropdownRender={() => (
       <div className={styles.noNotificationContainer}>
-        <img className={styles.noNotificationImage} sr c="/images/no_notification.png" alt="" />
+        <img className={styles.noNotificationImage} src="/images/no_notification.png" alt="no notification" />
         <p className={styles.noNotificationText} alt="">You have no notifications.</p>
       </div>
     )}>

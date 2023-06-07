@@ -23,9 +23,7 @@ const TopicComponent = ({ category, handleSelectTopic, searchValue }) => {
     }, [category]);
     useEffect(() => {
         if(searchValue) {
-            console.log(searchValue);
             getTopicsByText(searchValue,0,8).then((response) => {
-                console.log(response);
                 setTopics(response.topicList);
                 setCount(response.count);
             });

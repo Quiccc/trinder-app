@@ -67,7 +67,7 @@ export const getTopicsByCategoryId = async (categoryId,pageNumber,pageSize,lastI
         const topicCommentRef = collection(db, 'topicComments');
         const q = query(topicCommentRef, where('topicId', '==', topicList[i].id), where('isActive', '==', true));
         const snapshot = await getCountFromServer(q);
-        topicList[i].commentsCount = snapshot.data().count;
+        topicList[i].commentCount = snapshot.data().count;
         topicList[i].likesCount = topicList[i].likedBy.length
         topicList[i].unlikesCount = topicList[i].unlikedBy.length;
     }
