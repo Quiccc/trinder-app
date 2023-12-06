@@ -27,7 +27,7 @@ and much more...
   <img width="12" />
 </div>
 
-##Explore Trinder
+## Explore Trinder
 Trinder is available for testing. To explore Trinder and its features through [click here.](https://trinder-4pp.firebaseapp.com "click here.")
 
 
